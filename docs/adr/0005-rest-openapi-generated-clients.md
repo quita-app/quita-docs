@@ -1,5 +1,5 @@
 ---
-status: aceita
+status: substituída por 0011
 ---
 
 # 0005 · REST com contrato OpenAPI gerado do código e clients gerados

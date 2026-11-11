@@ -313,6 +313,7 @@ A distribuição entre apps é uma **proposta** para o HLD decidir:
 
 **RN**
 - RN11.1 O sistema recusa combinações de cor sem contraste mínimo (WCAG AA).
+- RN11.2 A Credora informa só a cor do tema claro; o sistema calcula a versão do tema escuro (mesmo matiz, luminosidade ajustada até passar no AA). Sobrescrever a cor escura à mão: a definir (Fase 2).
 
 ---
 
