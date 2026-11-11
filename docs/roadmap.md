@@ -41,7 +41,7 @@ O chat (F20) é o primeiro item a nunca entrar se o backlog também apertar (`do
 | # | Funcionalidade | Fase | Tam. | Dias | Janela prevista | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | – | Planejamento e documentação | – | P | 1 | 10/11 | feito |
-| F01 | Walking skeleton | MVP | G | 5 | 11/11 – 15/11 | a fazer |
+| F01 | Walking skeleton | MVP | G | 5 | 11/11 – 15/11 | planejada (PRD, spec e tarefas) |
 | F02 | Acesso ao backoffice | MVP | G | 5 | 16/11 – 20/11 | a fazer |
 | F03 | Credoras e usuários | MVP | P | 2 | 21/11 – 22/11 | a fazer |
 | F04 | Importação de Carteira | MVP | G | 5 | 23/11 – 27/11 | a fazer |

@@ -13,7 +13,7 @@ Os repos ficam lado a lado na mesma pasta (`quita/`), e os caminhos relativos en
 | `quita-debtor-portal-web` | Next.js: portal público do devedor |
 | `quita-backend-api` | Spring Boot: monólito modular + gateway de pagamento fake |
 
-Os repos de código importam deste o glossário e o LLD da sua frente pelo `CLAUDE.md` deles.
+Cada repo de código tem o próprio harness (`AGENTS.md`, `CLAUDE.md`, regras da stack). O kit inicial de cada um mora em `harness/<repo>/` e é instalado com `harness/install.sh` logo depois do CLI que cria o repo; daí em diante ele pertence ao repo. O `CLAUDE.md` de cada repo importa o glossário daqui e o `.claude/settings.json` dá acesso de leitura a esta pasta. Detalhes em `harness/README.md`.
 
 ## Documentos
 
@@ -26,12 +26,14 @@ Os repos de código importam deste o glossário e o LLD da sua frente pelo `CLAU
 | `docs/lld/<frente>.md` | Detalhe de implementação de cada frente | `database.md`, `api.md`, `backoffice.md` e `portal.md` aprovados |
 | `docs/adr/` | Decisões de arquitetura | aceitas: 0001 a 0013 (0005 substituída) |
 | `docs/design-system.md` | Identidade visual, tokens, componentes, fluxo design → código | a criar |
-| `docs/roadmap.md` | Funcionalidades, dependências e status | a criar |
+| `docs/roadmap.md` | Funcionalidades, dependências e status | rascunho |
 | `design/PRODUCT.md` | Registro de produto para as skills de design (aponta para os documentos donos) | criado pelo Claude Design |
 | `design/ux-writing.md` | Voz, tom, formatos, padrões de mensagem e o catálogo de textos de cada tela | aprovado |
 | `design/DESIGN.md` | Design system Céu: tokens, tipografia, raios, componentes | aprovado com ajustes (F0) |
 | `design/prompts/` | Preâmbulo, ajustes e um prompt por tela (P00–P10, B01–B14) | pronto |
-| `design/hi-fi/` | Telas aprovadas, exportadas do Claude Design | a criar |
+| `design/hi-fi/` | Telas aprovadas, exportadas do Claude Design | aprovado |
+| `docs/features/<NN>-<title>/` | PRD, spec e tarefas de cada funcionalidade | F01 em rascunho |
+| `harness/<repo>/` | Kit de harness de cada repo de código, instalado depois do CLI | pronto |
 
 **Um fato, um lugar.** Cada informação tem um documento dono, e os outros apontam para ele pelo nome do documento e da seção, sem repetir o conteúdo.
 
@@ -71,8 +73,10 @@ Ficam em `.claude/skills/`.
 | `domain-modeling` | Glossário e ADRs | pronta |
 | `grill-with-docs` | Sabatina + glossário e ADRs | pronta |
 | `frontend-design` | Direção visual e acabamento de interface (oficial da Anthropic, Apache 2.0) | instalada |
-| `hld`, `lld` | Arquitetura | a adaptar |
-| `design-system`, `prototype` | Design system e telas | a criar |
-| `prd`, `to-spec`, `to-tasks` | Planejamento de cada funcionalidade | a adaptar |
+| `prd` | PRD de uma funcionalidade do roadmap | pronta |
+| `to-spec` | Spec técnica a partir do PRD | pronta |
+| `to-tasks` | Tarefas (fatias verticais) a partir da spec | pronta |
+
+As regras de cada stack (`spring-rules`, `angular-rules`, `react-rules`, `nextjs-rules`) moram no harness de cada repo de código.
 
 Quando uma skill divergir deste arquivo, vale este arquivo.
