@@ -20,14 +20,18 @@ Os repos de código importam deste o glossário e o LLD da sua frente pelo `CLAU
 | Documento | O que guarda | Status |
 | --- | --- | --- |
 | `docs/foundation/business-requirements.md` | Requisitos de negócio, módulos, regras e o exemplo da Ana | rascunho |
-| `docs/product-brief.md` | O quê e para quem, escopo do MVP | rascunho |
-| `GLOSSARY.md` | Vocabulário do domínio, com o nome em código de cada termo | rascunho |
-| `docs/hld.md` | Arquitetura de alto nível | rascunho |
-| `docs/lld/<frente>.md` | Detalhe de implementação de cada frente | a criar |
-| `docs/adr/` | Decisões de arquitetura (0001 a 0007) | rascunho |
+| `docs/product-brief.md` | O quê e para quem, escopo do MVP | aprovado |
+| `GLOSSARY.md` | Vocabulário do domínio, com o nome em código de cada termo | aprovado |
+| `docs/hld.md` | Arquitetura de alto nível | aprovado |
+| `docs/lld/<frente>.md` | Detalhe de implementação de cada frente | `database.md`, `api.md`, `backoffice.md` e `portal.md` aprovados |
+| `docs/adr/` | Decisões de arquitetura | aceitas: 0001 a 0013 (0005 substituída) |
 | `docs/design-system.md` | Identidade visual, tokens, componentes, fluxo design → código | a criar |
 | `docs/roadmap.md` | Funcionalidades, dependências e status | a criar |
-| `design/` | Protótipos low-fi e hi-fi | a criar |
+| `design/PRODUCT.md` | Registro de produto para as skills de design (aponta para os documentos donos) | criado pelo Claude Design |
+| `design/ux-writing.md` | Voz, tom, formatos, padrões de mensagem e o catálogo de textos de cada tela | aprovado |
+| `design/DESIGN.md` | Design system Céu: tokens, tipografia, raios, componentes | aprovado com ajustes (F0) |
+| `design/prompts/` | Preâmbulo, ajustes e um prompt por tela (P00–P10, B01–B14) | pronto |
+| `design/hi-fi/` | Telas aprovadas, exportadas do Claude Design | a criar |
 
 **Um fato, um lugar.** Cada informação tem um documento dono, e os outros apontam para ele pelo nome do documento e da seção, sem repetir o conteúdo.
 
@@ -66,6 +70,7 @@ Ficam em `.claude/skills/`.
 | `grilling` | Sabatina um plano em rodadas | pronta |
 | `domain-modeling` | Glossário e ADRs | pronta |
 | `grill-with-docs` | Sabatina + glossário e ADRs | pronta |
+| `frontend-design` | Direção visual e acabamento de interface (oficial da Anthropic, Apache 2.0) | instalada |
 | `hld`, `lld` | Arquitetura | a adaptar |
 | `design-system`, `prototype` | Design system e telas | a criar |
 | `prd`, `to-spec`, `to-tasks` | Planejamento de cada funcionalidade | a adaptar |

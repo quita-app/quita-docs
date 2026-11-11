@@ -1,6 +1,6 @@
 # Product Brief: Quita
 
-2026-11-10 · helloWorldRuan · Status: rascunho
+2026-11-10 · helloWorldRuan · Status: aprovado
 
 ## Visão geral
 

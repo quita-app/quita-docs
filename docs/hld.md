@@ -1,6 +1,6 @@
 # HLD: Quita
 
-2026-11-10 · helloWorldRuan · Status: rascunho
+2026-11-10 · helloWorldRuan · Status: aprovado
 
 Arquitetura de alto nível: que partes existem, como conversam e por quê. O detalhe de implementação de cada frente fica em `docs/lld/`. O produto e o escopo estão em `docs/product-brief.md`; o vocabulário, em `GLOSSARY.md`.
 
@@ -250,9 +250,10 @@ Caixas agrupadas são plataformas; setas dizem o gatilho ou o protocolo.
 | [0002](adr/0002-micro-frontend-composition.md) | Shell Angular com remotes por federação; Analytics como Web Component; portal separado |
 | [0003](adr/0003-modular-monolith.md) | Back como monólito modular com eventos dentro da aplicação |
 | [0004](adr/0004-own-authentication.md) | Autenticação própria com JWT curto e refresh em cookie httpOnly |
-| [0005](adr/0005-rest-openapi-generated-clients.md) | REST com OpenAPI gerado do código e clients TypeScript gerados |
+| [0005](adr/0005-rest-openapi-generated-clients.md) | REST com OpenAPI gerado do código (substituída em parte pela 0011) |
 | [0006](adr/0006-tenant-discriminator-column.md) | Multi-tenancy por coluna num banco só |
 | [0007](adr/0007-free-tier-hosting.md) | Vercel, Render e Neon nas camadas gratuitas, com proxy do mesmo site |
+| [0008](adr/0008-no-cross-schema-foreign-keys.md) a [0012](adr/0012-native-federation-and-web-component.md) | Decisões dos LLDs (índice em cada LLD) |
 
 Decisões que ficam só no texto: SSE no lugar de WebSocket (seção "Tempo real"); gateway fake no mesmo deploy da API (seção 5); portal como BFF (seção 5).
 
@@ -269,7 +270,7 @@ Decisões que ficam só no texto: SSE no lugar de WebSocket (seção "Tempo real
 
 ## 12. Questões em aberto
 
-- [ ] Variante de federação no Nx com o Angular atual (Native Federation ou Module Federation com Rspack): LLD do backoffice.
+- [x] Variante de federação: Native Federation (ADR 0012).
 - [ ] Como distribuir o pacote de tokens visuais entre os repos (pacote no GitHub Packages, ou outro).
 - [ ] Banco de prévia por PR com branch do Neon: sim ou não.
 - [ ] Domínio próprio para a demo (custo baixo, mas não zero).
