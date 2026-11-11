@@ -24,7 +24,7 @@ Versões fixadas: <!-- preencher no walking skeleton: Spring Boot, Spring Moduli
 
 | Para | Comando |
 | --- | --- |
-| Subir o banco local | `docker compose -f ../quita-docs/compose.yaml up -d` |
+| Subir o banco local | `docker compose up -d` |
 | Rodar a API (perfil local) | `./mvnw spring-boot:run -Dspring-boot.run.profiles=local` |
 | Testes | `./mvnw test` |
 | Build completo (testes + verificações) | `./mvnw verify` |
@@ -53,6 +53,8 @@ com.quita
 ```
 
 Módulos: `identity`, `portfolio`, `negotiation`, `payment`, `collection`, `notification`, `analytics`, `audit`, `fakegateway`.
+
+O banco local sobe pelo `compose.yaml` na raiz do repo (PostgreSQL na mesma versão do Neon).
 
 Migrações em `src/main/resources/db/migration/<module>/`, com o nome `V<AAAAMMDDHHmm>__<module>_<descricao>.sql`.
 

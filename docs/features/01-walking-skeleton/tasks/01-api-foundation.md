@@ -1,7 +1,7 @@
 # F01-T01 · API foundation running locally
 
 **Status:** a fazer
-**Repos:** `quita-backend-api`, `quita-docs`
+**Repos:** `quita-backend-api`
 **Bloqueada por:** Nenhuma
 
 ## O que construir
@@ -10,7 +10,7 @@ A API nasce pelo Spring Initializr, sobe no perfil local contra o PostgreSQL do 
 
 ## Critérios de aceite
 
-- [ ] **CA1** · `docker compose up` no `quita-docs` sobe o PostgreSQL; a API no perfil `local` responde `UP` em `/actuator/health`, com o componente `db`. (PRD CA1)
+- [ ] **CA1** · `docker compose up` no `quita-backend-api` sobe o PostgreSQL; a API no perfil `local` responde `UP` em `/actuator/health`, com o componente `db`. (PRD CA1)
 - [ ] **CA2** · Com o banco parado, o health responde `DOWN` (503) em poucos segundos, sem travar.
 - [ ] **CA3** · A migração criou os nove schemas e a extensão `pg_trgm`; `flyway_schema_history` registra a versão. (PRD CA2)
 - [ ] **CA4** · `ModularityTests` passa, e um import de `internal` entre módulos, feito de propósito, o faz falhar. (PRD CA14)

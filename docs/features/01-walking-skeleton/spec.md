@@ -47,7 +47,7 @@ O `openapi.json` é gerado e versionado já nesta funcionalidade (vazio de rotas
 
 - Migração `V<carimbo>__shared_create_schemas.sql`: um schema por módulo (`identity`, `portfolio`, `negotiation`, `payment`, `collection`, `notification`, `analytics`, `audit`, `fake_gateway`) e `create extension pg_trgm`.
 - Nenhuma tabela de negócio.
-- `compose.yaml` no `quita-docs`, com o PostgreSQL na mesma versão do Neon.
+- `compose.yaml` na raiz do `quita-backend-api`, com o PostgreSQL na mesma versão do Neon (o banco local de desenvolvimento).
 
 ## Decisões por repo
 
@@ -81,7 +81,6 @@ O `openapi.json` é gerado e versionado já nesta funcionalidade (vazio de rotas
 
 ### quita-docs
 
-- `compose.yaml` com o PostgreSQL.
 - Os kits de `harness/` instalados em cada repo (`harness/install.sh`), com as versões fixadas preenchidas no `AGENTS.md` de cada um.
 
 ## Decisões de teste

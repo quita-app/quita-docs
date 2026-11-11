@@ -18,7 +18,7 @@ Quando uma tabela ganhar a migração dela, a lista de colunas sai daqui e fica 
 ## 1. Plataforma
 
 - **PostgreSQL** gerenciado pelo Neon (versão: a mais recente que o Neon oferecer no plano gratuito, fixada no walking skeleton).
-- **Local:** o mesmo PostgreSQL em contêiner, no `compose.yaml` do `quita-docs`, com a mesma versão.
+- **Local:** o mesmo PostgreSQL em contêiner, no `compose.yaml` do `quita-backend-api`, com a mesma versão.
 - **Conexões:** a aplicação usa o endereço **com pool** do Neon (PgBouncer); o Flyway usa o endereço **direto**, porque migrações não funcionam bem atrás de pool em modo transação. O pool da aplicação (Hikari) fica pequeno, porque o plano gratuito limita conexões.
 - **Extensões:** `pg_trgm` (busca por trecho de nome).
 

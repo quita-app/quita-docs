@@ -94,7 +94,7 @@ Seta: "precisa estar publicada antes". A ordem numérica já respeita todas as s
 - **Objetivo:** todos os apps publicados e conversando de ponta a ponta, sem regra de negócio: o shell carrega o remote Operações e o Web Component do Analytics, o portal renderiza no servidor, e os três mostram o resultado do health check da API, que leu o banco.
 - **Telas:** nenhuma do hi-fi; uma página técnica por app.
 - **Módulos da API:** `shared` (esqueleto), Actuator, primeira migração Flyway.
-- **Repos:** `quita-backend-api`, `quita-backoffice-web`, `quita-debtor-portal-web`, `quita-docs` (`compose.yaml`).
+- **Repos:** `quita-backend-api`, `quita-backoffice-web`, `quita-debtor-portal-web`.
 - **Depende de:** nada.
 - **Entrega também:** CI em cada repo (lint, testes, build), deploy na Vercel, no Render e no Neon, proxy `/api/*`, `main` protegida, tokens de design chegando aos três fronts, harness de cada repo (`AGENTS.md`, `CLAUDE.md`, regras da stack).
 - **Tamanho:** G.
