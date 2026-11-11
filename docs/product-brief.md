@@ -99,7 +99,7 @@ Maior risco: o escopo não caber em 8 semanas para uma pessoa aprendendo as tecn
 | --- | --- |
 | Escopo maior que o prazo | MVP fechado até a semana 5; cada fase tem um corte definido no roadmap, e o chat é o primeiro a sair se atrasar |
 | Integração entre micro front-ends, API e hospedagem dar problema tarde | Walking skeleton na semana 1 resolve a integração antes das regras de negócio |
-| Domínio abstrato para explicar | Exemplo da Ana como roteiro de demonstração e de entrevista |
+| Domínio abstrato para explicar | Exemplo da Ana como roteiro de demonstração |
 | Cálculo de dinheiro errado | Regras com números testáveis e testes de regra de negócio desde a primeira tarefa |
 | Custo de hospedar 5 apps e um banco | Camadas gratuitas e um ambiente só (produção de demonstração) |
 
@@ -114,7 +114,7 @@ Prazo total de 8 semanas a partir de 2026-11-10, com 4 h por dia.
 - **Semana 1, fundação:** planejamento, protótipo e walking skeleton (todos os apps publicados, conversando de ponta a ponta).
 - **Semanas 2 a 5, MVP:** os 8 itens do escopo do MVP, na ordem do fluxo da Ana.
 - **Semanas 6 e 7, profundidade:** versões e exceções de política, régua de cobrança, LGPD e auditoria, white-label.
-- **Semana 8, vitrine:** chat em tempo real (se o prazo permitir), painel completo, carga com 1 milhão de registros, READMEs e demo pública.
+- **Semana 8, lançamento:** chat em tempo real (se o prazo permitir), painel completo, carga com 1 milhão de registros, READMEs e demo pública.
 
 Cada fase só começa com a anterior publicada. A ordem detalhada fica em `docs/roadmap.md`.
 
