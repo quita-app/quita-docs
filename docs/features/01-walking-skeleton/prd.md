@@ -75,5 +75,6 @@ Nenhuma. Os requisitos de qualidade que esta funcionalidade começa a provar est
 ## Questões em aberto
 
 - [ ] Como distribuir o pacote de tokens para o portal (HLD, "Questões em aberto"). No skeleton, o portal copia o CSS gerado.
-- [ ] Versão do PostgreSQL oferecida pelo Neon no plano gratuito (fixar igual no Compose).
-- [ ] Nome da organização e dos projetos nas plataformas (Vercel, Render, Neon).
+- [x] Versão do PostgreSQL oferecida pelo Neon no plano gratuito: **18** (fixada igual no Compose).
+- [x] Nome do projeto no Neon: `quita`, região AWS US East 1 (junto do Render em Virginia).
+- [ ] Nome da organização e dos projetos na Vercel e no Render.
