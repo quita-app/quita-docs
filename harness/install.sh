@@ -22,6 +22,19 @@ for file in AGENTS.md CLAUDE.md .env.example; do
   [ -f "$kit/$file" ] && copy "$kit/$file" "$target/$file"
 done
 
+# README: the CLI-generated one is replaced; a Quita README (already installed) is kept.
+if [ -f "$kit/README.md" ]; then
+  if [ -f "$target/README.md" ] && grep -qF "Quita · cobrança que baixa a tensão" "$target/README.md"; then
+    echo "skip   README.md (Quita README already there)"
+  else
+    cp "$kit/README.md" "$target/README.md"; echo "write  README.md (replaces the CLI default)"
+  fi
+fi
+
+# Banner shown at the top of the README and used as the GitHub social preview
+banner="$script_dir/../design/brand/banners/$repo.png"
+[ -f "$banner" ] && copy "$banner" "$target/.github/assets/banner.png"
+
 while IFS= read -r -d '' file; do
   copy "$file" "$target/.claude/${file#$kit/dot-claude/}"
 done < <(find "$kit/dot-claude" -type f -print0)

@@ -21,6 +21,7 @@ Os repos de código **leem** o `quita-docs` (glossário, LLD, tarefas) e nunca c
 harness/<repo>/
   AGENTS.md                  instruções do repo: o que é, comandos, estrutura, convenções
   CLAUDE.md                  aponta para o AGENTS.md e importa o glossário do quita-docs
+  README.md                  o capítulo do repo no "livro" do Quita (substitui o README gerado pelo CLI)
   dot-claude/                vira .claude/ na instalação
     settings.json            dá ao agente acesso de leitura ao ../quita-docs
     skills/<stack>-rules/    convenções da stack, usadas na revisão de código
@@ -38,7 +39,7 @@ bash quita-docs/harness/install.sh quita-backoffice-web
 bash quita-docs/harness/install.sh quita-debtor-portal-web
 ```
 
-O script copia os arquivos do kit para o repo (sem sobrescrever nada que já exista), renomeia `dot-claude` para `.claude` e acrescenta o trecho do `.gitignore`. Depois dele:
+O script copia os arquivos do kit para o repo (sem sobrescrever nada que já exista), renomeia `dot-claude` para `.claude`, troca o README gerado pelo CLI pelo do Quita, copia o banner de `design/brand/banners/` para `.github/assets/banner.png` e acrescenta o trecho do `.gitignore`. Depois dele:
 
 1. Preencha no `AGENTS.md` do repo as versões fixadas e confira os comandos com o que o CLI gerou.
 2. Faça o commit: `chore: add agent harness`.
