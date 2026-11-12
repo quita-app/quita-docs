@@ -1,6 +1,15 @@
 # B03 · Fila de trabalho
 
-**App:** operations (Angular) · **Rota:** `/operations/queue` · **Quem:** Bruno Lima, operador, o dia todo · **Tamanhos:** desktop 1440 px e 1024 px
+**App:** operations (Angular) · **Rota:** `/operations/queue` · **Quem:** Bruno Lima, operador, o dia todo · **Tamanhos:** desktop 1440 px e celular 390 px
+
+## Na história
+
+- **Ator e papel:** Bruno, o operador: cuida das exceções que o portal não resolveu sozinho.
+- **História:** Como operador, quero uma fila priorizada, para atender primeiro quem mais precisa e seguir para o próximo.
+- **Momento:** Começo do dia, depois do login (B01). Abre a ficha do devedor (B05).
+- **O que a tela precisa deixar claro:**
+  - Que a fila é dele e por que cada devedor está nela (promessa vencida, nunca contatado).
+  - O ritmo: pegar o próximo, entender, agir, seguir.
 
 ## Objetivo
 

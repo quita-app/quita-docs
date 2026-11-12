@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/debts/[debtId]` e `.../breakdown` · **Quem:** a Ana · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: entende de onde vem o valor cobrado.
+- **História:** Como devedora, quero ver a composição do valor (original, multa, juros), para confiar no que estou pagando.
+- **Momento:** Escolheu a dívida na lista (P04). Daqui simula as condições (P06).
+- **O que a tela precisa deixar claro:**
+  - A conta aberta, sem letra miúda.
+  - Que existe uma condição para ela, e o caminho para simular.
+
 ## Objetivo
 
 Responder "por que eu devo isso?" com transparência total. Confiança vem de mostrar a conta.

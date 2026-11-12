@@ -16,8 +16,9 @@ Este arquivo e o `README.md` desta pasta são lidos no começo de cada sessão. 
 3. **Dados e regras reais:** números, nomes, datas e limites do prompt e de `docs/lld/api.md`. Não invente métricas, clientes nem depoimentos.
 4. **Estados completos:** todos os do prompt, lado a lado. Os estados globais (servidor acordando, erro inesperado, sem internet, sessão encerrada, toasts) são desenhados **uma vez só**, na P10 e na B02; nas outras telas, não os repita: escreva no resumo quais se aplicam.
 5. **Só light mode por enquanto.** O dark mode de todas as telas vem numa passada única no fim (item D1 do README), aplicando os tokens escuros do `DESIGN.md`.
-6. **Tamanhos:** portal em 390 e 1280 px; backoffice em 1440, 1024 e 390 px. No celular do backoffice, o trilho vira barra inferior (4 itens + "Mais"), a ficha lateral vira tela cheia e a tabela vira lista de cards. Organize a prancha em seções por tamanho.
+6. **Tamanhos:** uma única versão web, em 1440 px, mais o celular em 390 px, no portal e no backoffice (decisão de 2026-11-11: saíram o 1280 do portal e o 1024 do backoffice). No celular do backoffice, o trilho vira barra inferior (4 itens + "Mais"), a ficha lateral vira tela cheia e a tabela vira lista de cards. Organize a prancha em seções por tamanho.
 7. **Acessibilidade:** contraste AA, foco visível, rótulo em todo campo, alvo de toque ≥ 44 px no portal, nada comunicado só por cor.
+8. **Cada tela conta um pedaço da história.** Use a seção "Na história" do prompt: o título e o subtítulo dizem, nas palavras do ator, para que a tela serve, e fica claro quem está do outro lado (a credora por trás da cobrança, a equipe por trás da fila). É produto de verdade: a demo usa dados de exemplo, nunca "projeto fictício".
 
 ## Ciclo de cada tela
 

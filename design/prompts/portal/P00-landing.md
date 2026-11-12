@@ -1,6 +1,15 @@
 # P00 · Landing page do Quita
 
-**App:** portal (Next.js) · **Rota:** `/` · **Quem:** gestor ou dono de uma credora avaliando o produto · **Tamanhos:** 390, 1280 e 1440 px
+**App:** portal (Next.js) · **Rota:** `/` · **Quem:** gestor ou dono de uma credora avaliando o produto · **Tamanhos:** 1440 e 390 px
+
+## Na história
+
+- **Ator e papel:** Gestor ou dono de uma credora de médio porte: decide se o Quita resolve a cobrança da empresa dele.
+- **História:** Como gestor de uma credora, quero entender em poucos minutos o que o Quita faz e experimentar, para decidir se troco a planilha por ele.
+- **Momento:** Chegou por indicação ou busca. Daqui segue para a demo, que abre o fluxo da Ana (P01) ou o backoffice (B01).
+- **O que a tela precisa deixar claro:**
+  - A abertura diz para quem é o produto e qual dor resolve, nas palavras do gestor.
+  - A seção de como funciona apresenta os três atores (devedor, operador, gestor) e o papel de cada um.
 
 ## Objetivo
 

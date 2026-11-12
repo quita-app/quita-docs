@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/debtors` · **Quem:** operador e gestor · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Operador e gestor: encontram um devedor específico na carteira.
+- **História:** Como operador, quero achar um devedor pelo nome ou CPF, para atender quem ligou ou escreveu.
+- **Momento:** Um devedor entrou em contato fora da fila. Daqui abre a ficha (B05).
+- **O que a tela precisa deixar claro:**
+  - Que a busca é na carteira desta credora.
+  - Como reconhecer a pessoa certa sem expor o CPF inteiro.
+
 ## Objetivo
 
 Achar qualquer Devedor em segundos, por nome, trecho do CPF, contrato ou telefone.

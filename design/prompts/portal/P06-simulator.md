@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/debts/[debtId]` · **Quem:** a Ana · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: escolhe uma condição que cabe no bolso, dentro da Política da credora.
+- **História:** Como devedora, quero comparar à vista e parcelado, para escolher o que consigo pagar.
+- **Momento:** Viu o detalhe da dívida (P05). Escolhida a condição, revisa o acordo (P07).
+- **O que a tela precisa deixar claro:**
+  - Que as condições vêm da Escola Horizonte, e não de uma negociação com uma pessoa.
+  - O efeito de cada escolha no valor da entrada e das parcelas.
+
 ## Objetivo
 
 O coração do produto. A Ana escolhe como pagar e vê, enquanto arrasta, o que muda. Precisa ser gostoso de usar e impossível de entender errado.

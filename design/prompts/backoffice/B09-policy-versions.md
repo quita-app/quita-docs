@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/policies` · **Quem:** Carla, gestora · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Carla, a gestora: decide até onde a credora aceita negociar.
+- **História:** Como gestora, quero ver as versões da Política e qual está em vigor, para saber que regra vale hoje.
+- **Momento:** Depois de importar a carteira (B08), ou quando quer mudar as condições. Daqui edita uma versão (B10).
+- **O que a tela precisa deixar claro:**
+  - Qual versão está valendo e desde quando.
+  - Que mudar a Política muda o que devedores e operadores veem.
+
 ## Objetivo
 
 Ver qual Política está valendo e o histórico de mudanças.

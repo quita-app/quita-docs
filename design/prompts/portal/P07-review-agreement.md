@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/debts/[debtId]` (etapa de revisão) · **Quem:** a Ana · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: confirma o acordo antes de assumir o compromisso.
+- **História:** Como devedora, quero revisar tudo o que estou aceitando, para fechar o acordo sem surpresa.
+- **Momento:** Escolheu a condição no simulador (P06). Ao confirmar, paga a entrada por Pix (P08).
+- **O que a tela precisa deixar claro:**
+  - O que ela está assinando: valores, datas e o que acontece se uma parcela atrasar.
+  - Que dá para voltar e escolher outra condição.
+
 ## Objetivo
 
 Confirmar exatamente o que ela está aceitando, sem letra miúda escondida.

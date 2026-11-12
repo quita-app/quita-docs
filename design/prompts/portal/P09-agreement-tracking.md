@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/agreements/[agreementId]` · **Quem:** a Ana, semanas depois · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: acompanha o acordo até a última parcela.
+- **História:** Como devedora, quero ver o que já paguei e o que falta, para não perder nenhuma parcela.
+- **Momento:** Semanas depois do acordo fechado (P08), volta pelo link para pagar a próxima parcela.
+- **O que a tela precisa deixar claro:**
+  - Em que ponto do acordo ela está, num olhar.
+  - Qual é a próxima ação e a data dela.
+
 ## Objetivo
 
 Ver em que pé está e pagar a próxima parcela em um toque.

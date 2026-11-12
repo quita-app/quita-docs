@@ -1,6 +1,15 @@
 # P01 · Página da credora
 
-**App:** portal (Next.js) · **Rota:** `/c/escola-horizonte` · **Quem:** a Ana, que clicou no link recebido por mensagem · **Tamanhos:** celular 390 px e desktop 1280 px
+**App:** portal (Next.js) · **Rota:** `/c/escola-horizonte` · **Quem:** a Ana, que clicou no link recebido por mensagem · **Tamanhos:** celular 390 px e desktop 1440 px
+
+## Na história
+
+- **Ator e papel:** Ana, a devedora: tem uma mensalidade em atraso com a Escola Horizonte e quer resolver sem constrangimento.
+- **História:** Como devedora, quero confirmar que o link é da minha escola e que posso resolver sozinha, para ter coragem de seguir.
+- **Momento:** Acabou de clicar no link recebido por mensagem. Daqui vai para o acesso por CPF (P02).
+- **O que a tela precisa deixar claro:**
+  - Quem cobra é a Escola Horizonte; o Quita aparece como a ferramenta que ela usa.
+  - O texto fala com a Ana, sem julgamento, e diz quanto tempo leva.
 
 ## Objetivo
 

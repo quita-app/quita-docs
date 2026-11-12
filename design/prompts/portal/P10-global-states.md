@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** todas · **Tamanhos:** celular
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora, quando algo sai do caminho: erro, carregamento, sessão expirada, link inválido.
+- **História:** Como devedora, quero entender o que aconteceu e o que fazer, para não desistir no meio.
+- **Momento:** Pode aparecer em qualquer tela do portal (P01 a P09).
+- **O que a tela precisa deixar claro:**
+  - Cada estado diz o que houve sem culpar a Ana e oferece um próximo passo.
+  - O tom continua o da credora que quer ajudar, nunca o de cobrança.
+
 ## Objetivo
 
 Desenhar uma vez os estados que podem aparecer em qualquer tela, para todas falarem a mesma língua.
