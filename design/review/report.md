@@ -53,6 +53,8 @@ Fechamento das rodadas de geração em lote e de correção (10/11). Os PNGs (s�
 - 20 telas refeitas pela seção 5 de `docs/review/mvp-baseline.md` (P01, P03, P04, P06 a P09, B01 a B08, B10 a B14), com os textos do `ux-writing.md` e a seção "Na história" mantida; dark refeito dessas.
 - P00 · Landing: o Q fantasma do rodapé fica à esquerda, atrás do logo (no 1440, `right: 850px; top: -121px`; no 390, vaza pelo canto de baixo à direita). Posição definida no canvas pela usuária; vale também para o escuro.
 
+- Revisão da auditoria: B08 com aviso de conclusão igual aos contadores (11 erros e 1 linha ignorada) e resumo por tipo completo ("Todos" conta linhas; cada tipo conta as linhas com aquele erro); P03 com a faixa "Na história" atualizada; P07 com a rota da proposta recebida. Também atualizei a faixa "Na história" de B02, B05, B06 e B07, que tinham ficado com o texto antigo do prompt.
+
 ## Ficou para depois
 - Fase 2: contestação ("Não reconheço esta dívida"), exceção ao gestor, "entrar como" da plataforma e a expiração da reserva da ficha.
 - Editor da Política no celular (no 390, a Política é só leitura).

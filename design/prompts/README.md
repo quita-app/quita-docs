@@ -58,7 +58,7 @@ Em 2026-11-11 cada prompt ganhou a seção "Na história" (ator, papel, momento 
 | B09 | Versões da Política | operations | `/operations/policies` | gerada (história), a revisar |
 | B10 | Editor da Política | operations | `/operations/policies/:id` | gerada (auditoria), a revisar |
 | B11 | Pagamentos não conciliados | operations | `/operations/payments` | gerada (auditoria), a revisar |
-| B12 | Usuários e convites | operations | `/operations/admin/users` | gerada (auditoria), a revisar |
+| B12 | Usuários e convites | operations | `/operations/admin/users` | a regenerar (auditoria) |
 | B13 | Credoras | operations | `/operations/admin/creditors` | gerada (auditoria), a revisar |
 | B14 | Painel | analytics | `/analytics` | a regenerar (auditoria) |
 | D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | gerada (história), a revisar |
