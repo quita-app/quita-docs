@@ -105,7 +105,7 @@ GLOSSARY.md          o vocabulário do domínio
 
 | Etapa | Situação |
 | --- | --- |
-| Produto, arquitetura (HLD + 13 ADRs), LLDs e design hi-fi | ✅ aprovados; auditoria de 2026-11-12 aplicada (telas "a regenerar" em `design/prompts/README.md`) |
+| Produto, arquitetura (HLD + 13 ADRs), LLDs e design hi-fi | ✅ aprovados; auditoria de 2026-11-12 aplicada (telas regeneradas, "a revisar" em `design/prompts/README.md`) |
 | Roadmap do MVP (F01 a F14) | ✅ rascunho |
 | F01 · Walking skeleton | 🟡 em construção: API rodando localmente; backoffice e portal a seguir |
 | F02 a F14 · MVP | ⬜ |

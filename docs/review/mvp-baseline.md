@@ -249,7 +249,7 @@ Base: `git diff` de `docs/lld/database.md` e `docs/lld/api.md` contra a versão 
 
 ## 5. Telas a regenerar no protótipo
 
-Todas com status "a regenerar (auditoria)" em `design/prompts/README.md`.
+Todas já regeneradas, com status "gerada (auditoria), a revisar" em `design/prompts/README.md`.
 
 | Tela | O que mudou |
 | --- | --- |

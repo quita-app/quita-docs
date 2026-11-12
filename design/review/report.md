@@ -49,6 +49,10 @@ Fechamento das rodadas de geração em lote e de correção (10/11). Os PNGs (s�
 - Login escuro (B01): o brilho do painel claro ficou mais discreto.
 - P00 · Landing: tom de produto real (sem "portfólio", "fictício" ou GitHub); rodapé com contato, termos de uso e política de privacidade, e um Q fantasma bem apagado ao fundo.
 
+## Rodada de auditoria (2026-11-12)
+- 20 telas refeitas pela seção 5 de `docs/review/mvp-baseline.md` (P01, P03, P04, P06 a P09, B01 a B08, B10 a B14), com os textos do `ux-writing.md` e a seção "Na história" mantida; dark refeito dessas.
+- P00 · Landing: o Q fantasma do rodapé fica à esquerda, atrás do logo (no 1440, `right: 850px; top: -121px`; no 390, vaza pelo canto de baixo à direita). Posição definida no canvas pela usuária; vale também para o escuro.
+
 ## Ficou para depois
 - Fase 2: contestação ("Não reconheço esta dívida"), exceção ao gestor, "entrar como" da plataforma e a expiração da reserva da ficha.
 - Editor da Política no celular (no 390, a Política é só leitura).

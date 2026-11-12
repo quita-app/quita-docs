@@ -165,3 +165,13 @@ Decisões aceitas. "Autoatendimento" no ranking: sim, fica. Números conferidos 
 - [x] Hero: a tela do celular tem a metade de baixo vazia no quadro final. Preencha com o resto da tela real de acordo fechado (**Ver meu acordo** e "Baixar comprovante") ou com o indicador do loop (3 pontinhos: simular → revisar → fechado), para o quadro parado não parecer inacabado.
 - [x] Subtítulo do hero: "deixa o devedor fechar o acordo" → "deixa o cliente fechar o acordo" ("devedor" está na lista de palavras proibidas do portal). Procure "devedor/devedora" no resto da landing e troque por "cliente" (na demo: "Entrar como cliente (Ana)").
 - [x] Reexporte o PNG da P00 e acrescente uma linha no `report.md`.
+
+## Rodada de auditoria · revisão (2026-11-12)
+
+Conferidas: B05 (botão só da gestora, diálogo com a Proposta aberta e "não conta como recuperado", recusa com Acordo vivo), B08 (contadores), P03 (texto neutro), P07 (proposta recebida, vencida e Política mudou). Contato da Escola Horizonte e a escolha do Material didático na B05: ok.
+
+- [ ] **B08 · aviso de conclusão:** "12 linhas com erro não entraram" contradiz os contadores (11 com erro + 1 ignorada). Texto: "Importação concluída com 11 erros e 1 linha ignorada. As linhas com erro não entraram." (e o mesmo no 390).
+- [ ] **B08 · resumo por tipo:** a tabela tem a linha 530 ("O valor precisa ser maior que zero"), mas o resumo não tem esse tipo. E a linha 702 tem dois erros, então ela conta nos dois tipos. Regra: **"Todos" conta linhas; cada tipo conta as linhas que têm aquele erro** (a soma dos tipos pode passar de "Todos"). Exemplo coerente: Todos · 12 · 7 CPF inválido · 3 Vencimento em formato errado · 1 Valor precisa ser maior que zero · 1 Sem e-mail e sem celular · 1 Dívida com acordo ativo, ignorada.
+- [ ] **P03 · faixa "Na história" da prancha:** ainda mostra "Para onde o código foi enviado e quanto tempo ele vale". O prompt mudou para: "Que o código vale por pouco tempo e o que fazer se ele não chegar, sem revelar para onde foi enviado (a resposta é igual exista ou não o CPF)."
+- [ ] **P07 · rota no cabeçalho da prancha:** acrescentar a rota da proposta recebida: `/c/[slug]/proposals/[id]` (estado 5).
+- [ ] Reexporte os PNGs da B08, da P03 e da P07 (claro e escuro) e acrescente uma linha no `report.md`.
