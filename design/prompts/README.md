@@ -29,36 +29,38 @@ Cole primeiro o **preâmbulo** (`00-preamble.md`) e depois o prompt da tela.
 
 O preâmbulo manda ler o `PRODUCT.md`, o `DESIGN.md`, o `ux-writing.md` e o prompt da tela, e parar a cada tela para aprovação. Os textos de todas as telas vêm do `design/ux-writing.md`.
 
+Em 2026-11-12 a auditoria de consistência (`docs/review/consistency-audit.md`) e a entrevista mudaram telas: a lista do que mudou em cada uma está em `docs/review/mvp-baseline.md`, seção 5. Elas estão como "a regenerar (auditoria)".
+
 Em 2026-11-11 cada prompt ganhou a seção "Na história" (ator, papel, momento da jornada) e a regra 8 do preâmbulo. As telas são regeneradas com ela; a P00 também perde as referências a portfólio e ao GitHub.
 
 | # | Tela | App | Rota | Status |
 | --- | --- | --- | --- | --- |
 | F0 | Ajustes do design system (`01-design-system-fixes.md`): aplique no canvas e no `DESIGN.md` | todos | — | aprovada |
 | P00 | Landing page do Quita | portal | `/` | gerada (história), a revisar |
-| P01 | Página da credora | portal | `/c/[slug]` | gerada (história), a revisar |
+| P01 | Página da credora | portal | `/c/[slug]` | a regenerar (auditoria) |
 | P02 | Acesso: CPF | portal | `/c/[slug]/access` | gerada (história), a revisar |
-| P03 | Acesso: código | portal | `/c/[slug]/access/verify` | gerada (história), a revisar |
-| P04 | Suas dívidas | portal | `/c/[slug]/debts` | gerada (história), a revisar |
+| P03 | Acesso: código | portal | `/c/[slug]/access/verify` | a regenerar (auditoria) |
+| P04 | Suas dívidas | portal | `/c/[slug]/debts` | a regenerar (auditoria) |
 | P05 | Detalhe da dívida e composição do valor | portal | `/c/[slug]/debts/[debtId]` + `breakdown` | gerada (história), a revisar |
-| P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | gerada (história), a revisar |
-| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` | gerada (história), a revisar |
-| P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | gerada (história), a revisar |
-| P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | gerada (história), a revisar |
+| P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | a regenerar (auditoria) |
+| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` e `/c/[slug]/proposals/[proposalId]` | a regenerar (auditoria) |
+| P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | a regenerar (auditoria) |
+| P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | a regenerar (auditoria) |
 | P10 | Estados globais do portal | portal | todas | gerada (história), a revisar |
-| B01 | Login e convite | shell | `/login`, `/invitations/:token` | gerada (história), a revisar |
-| B02 | Moldura do backoffice | shell | todas | gerada (história), a revisar |
-| B03 | Fila de trabalho | operations | `/operations/queue` | gerada (história), a revisar |
-| B04 | Busca de Devedores | operations | `/operations/debtors` | gerada (história), a revisar |
-| B05 | Ficha do Devedor | operations | `/operations/debtors/:id` | gerada (história), a revisar |
-| B06 | Negociar pela ficha | operations | `/operations/debtors/:id` | gerada (história), a revisar |
-| B07 | Importações e nova importação | operations | `/operations/imports` | gerada (história), a revisar |
-| B08 | Importação em andamento e relatório de erros | operations | `/operations/imports/:id` | gerada (história), a revisar |
+| B01 | Login e convite | shell | `/login`, `/invitations/:token` | a regenerar (auditoria) |
+| B02 | Moldura do backoffice | shell | todas | a regenerar (auditoria) |
+| B03 | Fila de trabalho | operations | `/operations/queue` | a regenerar (auditoria) |
+| B04 | Busca de Devedores | operations | `/operations/debtors` | a regenerar (auditoria) |
+| B05 | Ficha do Devedor | operations | `/operations/debtors/:id` | a regenerar (auditoria) |
+| B06 | Negociar pela ficha | operations | `/operations/debtors/:id` | a regenerar (auditoria) |
+| B07 | Importações e nova importação | operations | `/operations/imports` | a regenerar (auditoria) |
+| B08 | Importação em andamento e relatório de erros | operations | `/operations/imports/:id` | a regenerar (auditoria) |
 | B09 | Versões da Política | operations | `/operations/policies` | gerada (história), a revisar |
-| B10 | Editor da Política | operations | `/operations/policies/:id` | gerada (história), a revisar |
-| B11 | Pagamentos não conciliados | operations | `/operations/payments` | gerada (história), a revisar |
-| B12 | Usuários e convites | operations | `/operations/admin/users` | gerada (história), a revisar |
-| B13 | Credoras | operations | `/operations/admin/creditors` | gerada (história), a revisar |
-| B14 | Painel | analytics | `/analytics` | gerada (história), a revisar |
+| B10 | Editor da Política | operations | `/operations/policies/:id` | a regenerar (auditoria) |
+| B11 | Pagamentos não conciliados | operations | `/operations/payments` | a regenerar (auditoria) |
+| B12 | Usuários e convites | operations | `/operations/admin/users` | a regenerar (auditoria) |
+| B13 | Credoras | operations | `/operations/admin/creditors` | a regenerar (auditoria) |
+| B14 | Painel | analytics | `/analytics` | a regenerar (auditoria) |
 | D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | gerada (história), a revisar |
 
 O portal vem primeiro porque é a vitrine do produto e onde a identidade aparece mais. Fase 2 e 3 (contestação, régua, white-label, auditoria, chat) ganham prompts quando chegarem.

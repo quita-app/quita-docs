@@ -22,7 +22,7 @@ Em 5 segundos, a Ana entende que está no lugar certo (é a escola dela, não um
 - Três pontos curtos do que ela consegue fazer: ver quanto deve e por quê, simular parcelas, pagar a entrada por Pix.
 - Botão principal: **Consultar minhas dívidas**.
 - Selo de confiança discreto: "Ambiente seguro: seus dados são usados só para este atendimento" e "Operado por quita" (logo do Quita pequeno).
-- Rodapé: contato da credora (telefone e e-mail fictícios), termos e privacidade.
+- Rodapé: "Fale com a Escola Horizonte", com o telefone e o e-mail de atendimento do cadastro da credora; links "Termos de uso" e "Privacidade", que são sempre os do Quita (iguais para todas as credoras).
 
 ## Estados
 
@@ -32,6 +32,6 @@ Em 5 segundos, a Ana entende que está no lugar certo (é a escola dela, não um
 
 ## Notas
 
-- Página white-label: cor de assinatura e logo são da credora. Mostre a versão com o tema padrão do Quita e uma variação com outra cor de assinatura (ex.: verde-azulado), provando que os tokens trocam sem quebrar o contraste.
+- Página white-label: nome de exibição, cor de assinatura, logo e contato são da credora, preenchidos no cadastro dela (B13). Mostre a versão com o tema padrão do Quita e uma variação com outra cor de assinatura (ex.: verde-azulado), provando que os tokens trocam sem quebrar o contraste.
 - Sem foto grande de pessoa e sem vídeo: o peso da página importa.
 - Uma única ação principal. Sem menu de navegação.

@@ -149,7 +149,7 @@ sequenceDiagram
   N->>N: Acordo passa a "ativo"
 ```
 
-Setas cheias são chamadas; tracejadas, respostas ou eventos. Se o Operador fechar um Acordo para a mesma Dívida ao mesmo tempo, o lock otimista deixa só um vencer, e o outro recebe um conflito (detalhes no LLD da API).
+Setas cheias são chamadas; tracejadas, respostas ou eventos. Pelo backoffice, o Operador não cria Acordo: ele envia uma Proposta, a Ana recebe o link e aceita neste mesmo portal, e o Acordo nasce do mesmo jeito. Se duas confirmações chegarem ao mesmo tempo para a mesma Dívida, o índice único e o lock otimista deixam só uma vencer, e a outra recebe um conflito (detalhes no LLD da API).
 
 ### 6.2 O shell carrega um remote
 
@@ -165,7 +165,7 @@ O Gestor envia o arquivo; a API responde na hora com o id da importação e proc
 
 ### 6.4 Quebra de Acordo
 
-Um job agendado diário encontra Parcelas em atraso além da tolerância, quebra os Acordos e publica `AgreementBreached`. Atendimento devolve a Dívida à Fila; Analytics atualiza os números.
+Um job agendado diário, horas depois do fim do prazo de pagamento, encontra Parcelas em atraso além da tolerância, confere que nenhum pagamento feito no prazo ficou para trás, quebra os Acordos e publica `AgreementBreached`. Uma Quebra nunca é desfeita. Atendimento devolve a Dívida à Fila; Analytics atualiza os números.
 
 ## 7. Dados
 
@@ -274,4 +274,4 @@ Decisões que ficam só no texto: SSE no lugar de WebSocket (seção "Tempo real
 - [ ] Como distribuir o pacote de tokens visuais entre os repos (pacote no GitHub Packages, ou outro).
 - [ ] Banco de prévia por PR com branch do Neon: sim ou não.
 - [ ] Domínio próprio para a demo (custo baixo, mas não zero).
-- [ ] Pagamento depois da Quebra: crédito ou estorno (regra de negócio, LLD da API).
+- [x] Pagamento depois da Quebra: sem crédito nem estorno no MVP; vai para a conciliação manual (LLD da API, 5.6).

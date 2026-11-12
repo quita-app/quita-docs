@@ -17,8 +17,8 @@ O lugar onde o operador passa o dia. Precisa ser escaneável, previsível e ráp
 
 ## Conteúdo
 
-- Três indicadores no topo: **Na sua fila: 37** · **Acordos hoje: 6** · **Recuperado hoje: R$ 4.812,30**.
-- Filtros em pílula por Faixa de atraso (Todas, 0–30, 31–90, 91–180, 181–360, +360) e por situação (Promessa vencida, Nunca contatado).
+- Três indicadores no topo: **Na sua fila: 37** · **Acordos hoje: 6** · **Recuperado hoje: R$ 4.812,30**. São os números do Bruno: contam os Acordos dos Devedores que estavam na Fila dele quando o Acordo nasceu.
+- Filtros em pílula por Faixa de atraso e por situação (Promessa vencida, Nunca contatado). As pílulas de Faixa vêm da Política publicada da credora (de 1 a 5 Faixas); no exemplo, as 5 padrão: Todas, 0–30, 31–90, 91–180, 181–360, +360.
 - Lista (tabela) com colunas: Devedor · CPF mascarado · Faixa · Valor atualizado · Última tratativa · Próxima ação. Exemplo:
   1. Ana Souza · ***.456.789-** · 91–180 · R$ 1.060,00 · ligação há 2 dias · promessa vence hoje
   2. Marcos Pereira · ***.112.334-** · +360 · R$ 3.420,18 · nunca contatado · —

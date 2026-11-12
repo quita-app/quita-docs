@@ -43,7 +43,7 @@ As métricas do produto são hipóteses de portfólio, sem dados reais; servem p
 | Conversão do autoatendimento | Devedores que fecharam acordo ÷ devedores que acessaram o portal | Calculada e exibida no painel |
 | Taxa de quebra | Acordos quebrados ÷ acordos fechados | Calculada e exibida no painel |
 | Fluxo da Ana de ponta a ponta | Do link ao acordo pago, no ambiente publicado | Funciona em menos de 3 minutos no celular |
-| Entrega do projeto | Módulos do roadmap publicados | MVP na semana 5, projeto completo na semana 8 |
+| Entrega do projeto | Módulos do roadmap publicados | MVP publicado em 8 semanas; Fases 2 e 3 viram backlog (`docs/roadmap.md`) |
 
 ## Escopo do MVP
 
@@ -55,7 +55,7 @@ Plataforma web: backoffice para credoras, portal público para devedores e API.
 4. O devedor entra no portal com CPF e código, vê as dívidas com o valor atualizado e o que o compõe.
 5. O devedor simula condições, fecha o acordo e paga a entrada por Pix simulado.
 6. O pagamento é confirmado sozinho, e o acordo fica ativo; parcela em atraso além da tolerância quebra o acordo.
-7. O operador trabalha a fila, abre a ficha do devedor, registra tratativas e negocia pelo devedor.
+7. O operador trabalha a fila, abre a ficha do devedor, registra tratativas e envia propostas, que o devedor aceita pelo portal. O gestor registra a dívida paga fora do Quita.
 8. O gestor vê os indicadores principais da carteira.
 
 ## Fora de escopo
@@ -112,9 +112,10 @@ Maior risco: o escopo não caber em 8 semanas para uma pessoa aprendendo as tecn
 Prazo total de 8 semanas a partir de 2026-11-10, com 4 h por dia.
 
 - **Semana 1, fundação:** planejamento, protótipo e walking skeleton (todos os apps publicados, conversando de ponta a ponta).
-- **Semanas 2 a 5, MVP:** os 8 itens do escopo do MVP, na ordem do fluxo da Ana.
-- **Semanas 6 e 7, profundidade:** versões e exceções de política, régua de cobrança, LGPD e auditoria, white-label.
-- **Semana 8, lançamento:** chat em tempo real (se o prazo permitir), painel completo, carga com 1 milhão de registros, READMEs e demo pública.
+- **Semanas 2 a 8, MVP:** os 8 itens do escopo do MVP, na ordem do fluxo da Ana, e a vitrine (READMEs e demo pública).
+- **Depois do prazo (backlog):** versões e exceções de política, régua de cobrança, LGPD e auditoria, white-label (Fase 2); chat, painel completo, carga com 1 milhão de registros (Fase 3).
+
+O plano original punha o MVP até a semana 5 e as fases seguintes nas semanas 6 a 8; com uma pessoa aprendendo as tecnologias, o MVP ocupa o prazo inteiro (`docs/roadmap.md`, "O que cabe e o que sai").
 
 Cada fase só começa com a anterior publicada. A ordem detalhada fica em `docs/roadmap.md`.
 
@@ -122,8 +123,8 @@ Cada fase só começa com a anterior publicada. A ordem detalhada fica em `docs/
 
 - [ ] Valores do modelo de negócio (mensalidade e taxa de sucesso).
 - [ ] Pesquisa de preços e detalhes dos concorrentes.
-- [ ] Pagamento que chega depois da quebra: crédito ou estorno.
-- [ ] Pix e boleto, ou só Pix no MVP.
+- [x] Pagamento que chega depois da quebra: sem crédito nem estorno no MVP; vai para a conciliação manual (2026-11-12).
+- [x] Só Pix no MVP; boleto depois (2026-11-12).
 
 ## Glossário
 

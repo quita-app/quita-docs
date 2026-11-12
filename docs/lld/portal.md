@@ -33,8 +33,8 @@ Sem biblioteca de estado global nem de cache no cliente: o servidor entrega os d
 O portal tem duas metades, no mesmo app Next.js: o **front** (as telas que rodam no navegador, mais o HTML gerado no servidor) e o **BFF** (Backend for Frontend: a camada de servidor que fala com a API em nome dessas telas). O navegador do Devedor **nunca fala com a API**: fala só com o servidor do Next, que fala com a API (HLD, "Segurança e privacidade").
 
 - **Server Components** buscam os dados direto da API, no servidor, com o token da sessão.
-- **Server Actions** fazem as mudanças (pedir código, entrar, fechar Acordo, gerar Pix, contestar).
-- **Route handlers** (`app/bff/...`) atendem as leituras interativas do navegador que precisam ser canceláveis e rápidas (simulação enquanto o slider se move, status do Pix). Server Actions não servem para isso: elas rodam uma de cada vez e não são feitas para buscar dados.
+- **Server Actions** fazem as mudanças (pedir código, entrar, fechar Acordo, aceitar a Proposta do Operador, gerar Pix; contestar é da Fase 2).
+- **Route handlers** (`app/c/[slug]/bff/...`, dentro do caminho da Credora para receber o cookie da sessão, seção 5) atendem as leituras interativas do navegador que precisam ser canceláveis e rápidas (simulação enquanto o slider se move, status do Pix). Server Actions não servem para isso: elas rodam uma de cada vez e não são feitas para buscar dados.
 - Todo acesso à API fica em `lib/api/` (funções de servidor com o pacote `server-only`, que quebra o build se alguém importar no cliente).
 
 ## 3. Rotas
@@ -50,8 +50,10 @@ Nomes de pasta em inglês (`AGENTS.md`). `[slug]` é o identificador público da
 | `/c/[slug]/debts` | Lista de Dívidas com Valor atualizado | Devedor | dinâmica, por usuário, streaming |
 | `/c/[slug]/debts/[debtId]` | Detalhe + simulador | Devedor | dinâmica |
 | `/c/[slug]/debts/[debtId]/breakdown` | "O que compõe este valor" | Devedor | modal por rota interceptada sobre a lista; página inteira se acessada direto |
+| `/c/[slug]/proposals/[proposalId]` | Proposta enviada pelo Operador: a revisão da P07, com "Proposta enviada por {nome}, válida até {data}" e o aceite | Devedor | dinâmica |
 | `/c/[slug]/agreements/[agreementId]` | Acompanhar o Acordo: Parcelas pagas e próximas | Devedor | dinâmica |
 | `/c/[slug]/agreements/[agreementId]/installments/[installmentId]/pay` | Pix: QR Code, copia-e-cola, status ao vivo | Devedor | dinâmica |
+| `/demo/inbox` | Caixa de saída simulada da Credora de demonstração (onde o código aparece) | público, **só no ambiente de demonstração** | dinâmica |
 | `/c/[slug]/debts/[debtId]/dispute` | Contestar (Fase 2) | Devedor | dinâmica |
 | `/c/[slug]/chat` | Atendimento (Fase 3) | Devedor | dinâmica |
 
@@ -101,10 +103,11 @@ sequenceDiagram
 
 Setas cheias são chamadas; tracejadas, respostas.
 
-- **Cookies do portal**, no domínio do portal: `quita_debtor_access` (token de acesso) e `quita_debtor_refresh` (refresh), ambos `HttpOnly`, `Secure`, `SameSite=Lax`. O JavaScript do navegador nunca vê os tokens.
+- **Cookies do portal**, no domínio do portal: `quita_debtor_access` (token de acesso) e `quita_debtor_refresh` (refresh), ambos `HttpOnly`, `Secure`, `SameSite=Lax`, com `Path=/c/<slug>`. O JavaScript do navegador nunca vê os tokens.
+- **Uma Credora por sessão** (LLD da API, 5.7): a sessão vale só para a Credora do slug em que nasceu (o token leva o `tid`). Como o caminho do cookie inclui o slug, as sessões de duas Credoras convivem no mesmo navegador sem se misturar. Se a Ana, logada na escola, abrir o link da academia, não há cookie para aquele caminho e o `proxy` a manda para o acesso da academia, sem erro. Uma visão única de várias Credoras ("Meu Quita") é questão para depois do MVP (seção 13).
 - **Renovação:** toda chamada do servidor à API passa por uma função que, com o token de acesso vencido, renova pelo refresh e regrava os cookies antes de seguir.
 - **Inatividade:** o refresh do Devedor expira com `DEBTOR_SESSION_IDLE_TIMEOUT` sem uso; a próxima ação leva de volta para `/access` com aviso.
-- **Proteção das rotas:** o `proxy` do Next (antigo `middleware`) redireciona para `/access` quem chega a uma rota `(authenticated)` sem o cookie de sessão. A checagem de verdade é a da API: o `proxy` só evita renderizar a página à toa.
+- **Proteção das rotas:** o `proxy` do Next (antigo `middleware`) redireciona para `/access` quem chega a uma rota `(authenticated)` sem o cookie de sessão, guardando a rota pedida (`?next=`, só caminhos dentro de `/c/<slug>`). Depois do código, a Ana volta para ela: é assim que o link da Proposta, recebido por e-mail ou SMS, abre a Proposta. A checagem de verdade é a da API: o `proxy` só evita renderizar a página à toa.
 - **Sair:** Server Action que chama a API, apaga os cookies e volta para a página da Credora.
 
 ## 6. Formulários e interação
@@ -113,18 +116,21 @@ Setas cheias são chamadas; tracejadas, respostas.
 | --- | --- | --- |
 | CPF e código | Server Action + `useActionState` + `useFormStatus` | Valida com Zod no cliente e no servidor; erro por campo; botão desabilitado enquanto envia; funciona com JavaScript desligado |
 | Simulador | Client Component + route handler | Slider de Parcelas e campo de Entrada; recalcula na API sem travar o arraste (valor adiado com `useDeferredValue`); cancela a requisição anterior com `AbortController`; mostra o último resultado válido enquanto calcula |
-| Fechar Acordo | Server Action com `Idempotency-Key` gerada uma vez por tela | Duplo clique não cria dois Acordos; 409 `AGREEMENT_ALREADY_EXISTS` explica que o acordo já foi fechado e leva até ele |
+| Fechar Acordo e aceitar Proposta | Server Action com `Idempotency-Key` gerada uma vez por tela | Duplo clique não cria dois Acordos; 409 `AGREEMENT_ALREADY_EXISTS` explica que o acordo já foi fechado e leva até ele; 409 `PROPOSAL_EXPIRED` na Proposta recebida diz que ela não vale mais e leva às Dívidas |
 | Pix | Client Component com polling | Copiar o código com retorno visual; consulta o status a cada 3 s, só com a aba visível; para ao pagar ou expirar; confirmação aparece sem recarregar |
-| "Já paguei" | `useOptimistic` | Mostra "pagamento em processamento" na hora, e o polling confirma ou desfaz |
+| "Já paguei" | `useOptimistic` | Mostra "pagamento em processamento" na hora, e o polling confirma ou desfaz. A Quebra nunca chega antes do pagamento feito no prazo (LLD da API, 5.6) |
 
 Os valores de tempo (intervalo do polling, validade do Pix) seguem `docs/lld/api.md`, "Valores e configuração", quando são regra; o intervalo de 3 s é desta tela.
 
 ## 7. White-label
 
-- O `layout.tsx` de `/c/[slug]` busca a marca (logo, cor de assinatura, textos) e aplica as cores como CSS custom properties no elemento raiz. Os componentes só usam os tokens; nenhum componente conhece a cor de uma Credora.
-- Sem marca configurada, vale o tema padrão do Quita.
-- Contraste mínimo AA garantido na publicação da marca (RN11.1), não no portal.
-- No MVP, só logo e cor de assinatura vindos do cadastro; o editor de marca é da Fase 2.
+- O `layout.tsx` de `/c/[slug]` busca a marca pela rota pública `GET /api/v1/public/creditors/{slug}` (nome de exibição, cor clara e escura, e-mail e telefone de atendimento, `logoUrl`) e aplica as cores como CSS custom properties no elemento raiz. Os componentes só usam os tokens; nenhum componente conhece a cor de uma Credora.
+- O logo passa pelo `next/image`: o otimizador do Next busca o arquivo na API, no servidor, e o navegador continua sem falar com a API. A URL do logo leva o `sha256`, então o cache é eterno.
+- Sem marca configurada, vale o tema padrão do Quita; sem logo, as iniciais num círculo.
+- O contato da Credora (rodapé da P01, ajuda da P09) vem de `support_email` e `support_phone`.
+- **Termos e privacidade** são sempre os do Quita, para todas as Credoras (rodapé da P01 e da P00).
+- Contraste mínimo AA garantido pela API ao gravar a cor (RN11.1), não no portal.
+- No MVP, a marca (nome de exibição, logo, cor, contato) vem do cadastro da Credora feito pelo admin da plataforma (B13); o editor de marca do Gestor é da Fase 2 (F18).
 
 ## 8. Servidor da API acordando
 
@@ -170,5 +176,6 @@ No texto: Server Actions para mudanças e route handlers para leituras interativ
 ## 13. Questões em aberto
 
 - [ ] Editor de marca e revalidação sob demanda (Fase 2).
-- [ ] Contestação com anexo: onde guardar o arquivo (Fase 2).
+- [ ] Contestação com anexo: onde guardar o arquivo (Fase 2). O logo fica no PostgreSQL; um serviço de arquivos entra com os anexos (F19).
+- [ ] "Meu Quita" (depois do MVP): a Ana, com o próprio consentimento, vê em que Credoras tem pendências e entra em cada uma.
 - [ ] Chat (Fase 3).

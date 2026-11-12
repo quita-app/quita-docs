@@ -18,8 +18,8 @@ web
 ## Users
 
 - **Devedor:** pessoa física (ou jurídica) que deve a uma credora de médio porte. Muitas vezes envergonhado, no celular, à noite ou no fim de semana. Quer entender quanto deve e por quê, simular e fechar um acordo sozinho, sem falar com ninguém, pagando a entrada por Pix em poucos minutos.
-- **Operador:** pessoa da credora que trabalha a fila o dia todo no desktop, abre a ficha do devedor, registra tratativas e negocia pelo devedor dentro da política.
-- **Gestor:** dono ou gerente financeiro da credora. Importa carteiras, define a política por faixa de atraso, aprova exceções e acompanha quanto recuperou. É o comprador.
+- **Operador:** pessoa da credora que trabalha a fila o dia todo no desktop, abre a ficha do devedor, registra tratativas e envia propostas ao devedor dentro da política (o acordo nasce quando o devedor aceita no portal).
+- **Gestor:** dono ou gerente financeiro da credora. Importa as dívidas, define a política por faixa de atraso, registra dívidas pagas fora do Quita e acompanha quanto recuperou (aprovar exceções é da Fase 2). É o comprador.
 - **Admin da plataforma:** time do Quita; cadastra credoras e dá suporte.
 
 Definições: `GLOSSARY.md`. Perfil e gatilho de compra: `docs/product-brief.md`, seção Público-alvo.
@@ -37,15 +37,15 @@ A credora de médio porte ganha o autoatendimento que hoje só grandes credoras 
 ## Operating Context
 
 - **Devedor:** recebe o link pela régua, entra com CPF e código de 6 dígitos, vê as dívidas com valor original, valor atualizado e o que o compõe, simula de 1x a 10x, fecha o acordo e paga a entrada por Pix. O acordo só fica ativo depois que a entrada é paga.
-- **Operador:** fila priorizada, filtro por faixa de atraso, ficha com linha do tempo de tratativas, promessa de pagamento, proposta e pedido de exceção.
-- **Gestor:** importação de CSV com pré-visualização e relatório de erros, política por faixa de atraso, aprovação de exceções, painel com indicadores da carteira.
+- **Operador:** fila priorizada, filtro por faixa de atraso, ficha com linha do tempo de tratativas, promessa de pagamento e proposta enviada ao devedor (pedido de exceção: Fase 2).
+- **Gestor:** importação de CSV com pré-visualização e relatório de erros, política por faixa de atraso, pagamento fora do Quita, painel com indicadores da carteira (aprovação de exceções: Fase 2).
 - **Estados da dívida e do acordo** (aberta, em negociação, em acordo, quitada, quebrada) e as regras de quebra: `docs/foundation/business-requirements.md`.
 - **Hospedagem gratuita:** a API dorme após 15 minutos sem uso e leva cerca de 1 minuto para acordar. As telas precisam de um estado de espera honesto para isso (`docs/adr/0007-free-tier-hosting.md`).
 
 ## Capabilities and Constraints
 
 - Escopo do MVP, fora de escopo e prazo (8 semanas, uma pessoa, 4 h por dia): `docs/product-brief.md`.
-- Pix simulado; e-mail e SMS vão para uma caixa de saída simulada. Pix e boleto, ou só Pix no MVP: em aberto.
+- Pix simulado (só Pix no MVP; boleto depois); e-mail e SMS vão para uma caixa de saída simulada.
 - Dinheiro: o valor atualizado é principal + multa (máximo de 2%) + juros + correção. O desconto cai com o número de parcelas, a entrada mínima é de 15% e o centavo de resíduo vai para a última parcela. Regras e números: `docs/foundation/business-requirements.md`, exemplo da Ana (seção 2.4).
 - Interface em pt-BR, moeda BRL, fuso de São Paulo. Valores sempre com algarismos tabulares.
 - Light e dark mode, os dois de primeira classe.

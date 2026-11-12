@@ -57,7 +57,7 @@ O navegador só fala com domínios do próprio front; a API nunca é chamada dir
 
 ## Por onde começar
 
-Leia na ordem; cada documento parte do anterior.
+Leia na ordem; cada documento parte do anterior. Para começar a programar, a porta de entrada é a [linha de base do MVP](docs/review/mvp-baseline.md): escopo, regras, decisões e o impacto no banco, num lugar só.
 
 1. [Product brief](docs/product-brief.md): o quê, para quem, o escopo do MVP e como medir o sucesso.
 2. [Requisitos de negócio](docs/foundation/business-requirements.md): como a cobrança funciona, com o exemplo da Ana em números.
@@ -91,6 +91,7 @@ docs/
   adr/               decisões de arquitetura (0001 a 0013)
   features/          uma pasta por funcionalidade: prd.md, spec.md e tasks/
   roadmap.md         funcionalidades, ondas e datas
+  review/            auditoria de consistência e a linha de base do MVP
 design/
   DESIGN.md          design system "Céu" (tokens, tipografia, componentes)
   ux-writing.md      textos de tela e mapa de erros
@@ -104,7 +105,7 @@ GLOSSARY.md          o vocabulário do domínio
 
 | Etapa | Situação |
 | --- | --- |
-| Produto, arquitetura (HLD + 13 ADRs), LLDs e design hi-fi | ✅ aprovados |
+| Produto, arquitetura (HLD + 13 ADRs), LLDs e design hi-fi | ✅ aprovados; auditoria de 2026-11-12 aplicada (telas "a regenerar" em `design/prompts/README.md`) |
 | Roadmap do MVP (F01 a F14) | ✅ rascunho |
 | F01 · Walking skeleton | 🟡 em construção: API rodando localmente; backoffice e portal a seguir |
 | F02 a F14 · MVP | ⬜ |

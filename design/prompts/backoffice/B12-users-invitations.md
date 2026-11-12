@@ -17,7 +17,7 @@ Gerenciar quem da Escola Horizonte usa o Quita.
 
 ## Conteúdo
 
-- Tabela de usuários: nome, e-mail, papel (gestor, operador, auditor), situação, último acesso. Exemplo: Carla Mendes (gestora), Bruno Lima (operador), Rita Souza (operadora), Pedro Nunes (auditor, convite pendente).
+- Tabela de usuários: nome, e-mail, papel (gestor ou operador; no MVP não há papel só de leitura), situação, último acesso. Exemplo: Carla Mendes (gestora), Bruno Lima (operador), Rita Souza (operadora), Pedro Nunes (operador, convite pendente).
 - **Convidar pessoa**: formulário curto (e-mail, papel) num painel lateral.
 - Ações por linha: reenviar convite, mudar papel, desativar.
 

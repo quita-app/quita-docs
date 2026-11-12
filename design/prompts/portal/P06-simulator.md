@@ -33,6 +33,7 @@ O coração do produto. A Ana escolhe como pagar e vê, enquanto arrasta, o que 
 3. Recalculando: os números ficam com o último valor válido e um indicador sutil de atualização (nunca somem nem piscam).
 4. Entrada abaixo do mínimo: "A entrada mínima para 5x é R$ 135,15."
 5. Parcela abaixo do mínimo (dívida pequena): "Para esta dívida, o máximo é 5 parcelas" (Material didático, R$ 288,87: em 6x cada parcela daria R$ 42,97, abaixo do mínimo de R$ 50,00 da RN3.1), com o controle limitado.
+6. Condições ainda não disponíveis (a credora não publicou a Política): sem simulador e sem **Revisar acordo**; texto calmo "As condições para esta dívida ainda não estão disponíveis. Fale com a Escola Horizonte." com o telefone e o e-mail de atendimento.
 
 ## Notas
 

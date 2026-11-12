@@ -9,7 +9,7 @@
 - **Momento:** Envolve todas as telas do backoffice (B03 a B14).
 - **O que a tela precisa deixar claro:**
   - Nome, papel (operador ou gestor) e credora visíveis o tempo todo.
-  - O menu mostra só o que o papel permite.
+  - O menu mostra só o que o papel permite. No MVP, os papéis da credora são só gestor e operador (sem papel só de leitura): desenhe as duas versões do menu, mais a do admin da plataforma.
 
 ## Objetivo
 
@@ -24,7 +24,7 @@ A moldura que envolve todas as telas: navegação, identidade do usuário, notif
 ## Estados
 
 1. Menu aberto e recolhido.
-2. Notificações abertas: lista curta ("Pagamento conciliado: Ana Souza, R$ 135,15", "Importação de outubro concluída com 12 erros").
+2. Notificações abertas: lista curta ("Pagamento conciliado: Ana Souza, R$ 135,15", "Importação de outubro concluída com 12 erros"). No MVP, são só as que chegaram ao vivo nesta sessão, sem histórico (somem ao recarregar); mostre também o vazio "Nenhuma notificação nesta sessão."
 3. **Servidor acordando:** faixa global discreta no topo, "Conectando ao servidor… isso pode levar alguns segundos.", sem bloquear a tela.
 4. **Uma área (remote) não carregou:** só a área de conteúdo mostra "Não foi possível carregar esta área" com **Tentar de novo**; menu e barra continuam funcionando.
 5. Sem permissão para a página.

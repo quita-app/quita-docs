@@ -8,7 +8,7 @@
 - **História:** Como devedora, quero confirmar com um código que chega no meu telefone, para ter certeza de que só eu vejo minhas dívidas.
 - **Momento:** Informou o CPF (P02). Com o código certo, vê suas dívidas (P04).
 - **O que a tela precisa deixar claro:**
-  - Para onde o código foi enviado e quanto tempo ele vale.
+  - Que o código vale por pouco tempo e o que fazer se ele não chegar, sem revelar para onde foi enviado (a resposta é igual exista ou não o CPF).
   - O que fazer se o código não chegou.
 
 ## Objetivo
@@ -18,7 +18,7 @@ Digitar o código de 6 dígitos com o mínimo de atrito.
 ## Conteúdo
 
 - Título: "Digite o código que enviamos".
-- Texto: "Enviamos para a***@gmail.com e (11) 9****-4321." (dados mascarados).
+- Texto neutro: "Se o seu CPF tiver cadastro na Escola Horizonte, enviamos um código para o e-mail e o celular informados por ela." Nunca mostrar o e-mail nem o telefone, nem mascarados: a tela é igual exista ou não o CPF, para não revelar quem deve.
 - Campo de código com 6 caixas; aceita colar o código inteiro e o preenchimento automático do SMS no celular.
 - Botão **Entrar**.
 - "Não recebeu? Enviar de novo", com contagem regressiva ("disponível em 0:45").
@@ -36,4 +36,4 @@ Digitar o código de 6 dígitos com o mínimo de atrito.
 ## Notas
 
 - O código vale 10 minutos e aceita 5 tentativas (`docs/lld/api.md`, "Valores e configuração").
-- Na demo, uma faixa de ambiente de demonstração, visualmente separada do produto, aponta para a "caixa de saída simulada", onde o código aparece.
+- Na demo, uma faixa de ambiente de demonstração, visualmente separada do produto, aponta para a "caixa de saída simulada" (`/demo/inbox`), onde o código aparece.

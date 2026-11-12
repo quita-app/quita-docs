@@ -17,7 +17,8 @@ Resolver à mão os pagamentos que o sistema não conseguiu ligar a uma Parcela.
 
 ## Conteúdo
 
-- Lista: data, valor recebido, valor esperado, Devedor provável, motivo ("valor diferente da parcela", "cobrança não encontrada"). Exemplo: "13/11 · recebido R$ 100,00 · esperado R$ 191,46 · Paulo Henrique · valor diferente".
+- Lista: data, valor recebido, valor esperado, Devedor provável, motivo ("valor diferente da parcela", que inclui o pagamento incompleto; "cobrança não encontrada"; "cobrança encerrada", quando o acordo foi cancelado ou quebrado antes do pagamento). Exemplos: "13/11 · recebido R$ 100,00 · esperado R$ 191,46 · Paulo Henrique · valor diferente"; "23/01 · recebido R$ 191,46 · Roberto Alves · cobrança encerrada".
+- No MVP não há crédito nem estorno: a gestora resolve à mão e registra na nota o que combinou com o devedor.
 - Ao selecionar: detalhes do pagamento e as ações **Associar à parcela** (com busca da Parcela) e **Marcar como resolvido** (com nota obrigatória).
 
 ## Estados

@@ -77,7 +77,8 @@ Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum a
 
 ## 3. Shell
 
-- **Responsabilidades:** login e renovação de sessão, layout (menu lateral, barra superior, área de conteúdo), guarda de rotas por papel, carga dos remotes, conexão SSE, notificações globais e o aviso de "servidor acordando".
+- **Responsabilidades:** login, recuperação de senha e renovação de sessão, layout (menu lateral, barra superior, área de conteúdo), guarda de rotas por papel, carga dos remotes, conexão SSE, notificações globais e o aviso de "servidor acordando".
+- **Notificações no MVP:** vêm só do SSE, sem histórico. O sino mostra as que chegaram nesta sessão, e elas somem ao recarregar. A lista guardada (`in_app_notification`) entra na F16.
 - **O que o shell não faz:** nenhuma tela de negócio. Tudo que é do domínio fica num remote.
 - **Manifesto de remotes:** `federation.manifest.json`, servido junto com o shell, com o endereço de cada remote no ambiente. É lido na inicialização, nunca entra em cache (`Cache-Control: no-cache`), e cada ambiente tem o seu.
 - **Falha de um remote:** se o manifesto ou o código de um remote não carrega, a rota mostra um estado de erro com "tentar de novo" só naquela área. O menu e os outros remotes continuam funcionando.
@@ -95,7 +96,7 @@ Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum a
 | Direção | Mecanismo | O quê |
 | --- | --- | --- |
 | Shell → Analytics | propriedade `getAccessToken` | Função que devolve o token atual (o Analytics nunca guarda token) |
-| Shell → Analytics | propriedade `filters` | Filtros atuais (período, Carteira, Faixa, Operador) |
+| Shell → Analytics | propriedade `filters` | Filtros atuais (período, Faixa, Operador). Não há filtro de Carteira: a Carteira é uma só por Credora (`GLOSSARY.md`); a comparação por safra é da F21 |
 | Shell → Analytics | propriedade `user` | Nome, papel e tenant, para o Operador ver só os números dele |
 | Analytics → Shell | evento `quita-filters-change` | Novos filtros; o shell grava na URL |
 | Analytics → Shell | evento `quita-navigate` | Pede ao shell para navegar (ex.: abrir a ficha de um Devedor) |
@@ -109,10 +110,12 @@ Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum a
 | --- | --- | --- | --- |
 | `/login` | shell | Login | público |
 | `/invitations/:token` | shell | Aceitar convite e criar senha | público |
+| `/password-reset` | shell | Pedir o link de nova senha | público |
+| `/password-reset/:token` | shell | Criar a nova senha | público |
 | `/` | shell | Redireciona: operador → Fila; gestor → painel | logado |
 | `/operations/queue` | operations | Fila de trabalho | operador, gestor |
-| `/operations/debtors` | operations | Busca de Devedores | operador, gestor |
-| `/operations/debtors/:id` | operations | Ficha do Devedor (Dívidas, Acordos, linha do tempo, negociação) | operador, gestor |
+| `/operations/debtors` | operations | Busca de Devedores e "Nova dívida" (cadastro manual, painel lateral) | operador, gestor |
+| `/operations/debtors/:id` | operations | Ficha do Devedor (Dívidas, Acordos, linha do tempo, envio de Proposta; "Registrar pagamento fora do Quita" só para o gestor) | operador, gestor |
 | `/operations/imports` | operations | Histórico de importações + nova importação | gestor |
 | `/operations/imports/:id` | operations | Progresso ao vivo e relatório de erros | gestor |
 | `/operations/policies` | operations | Versões da Política | gestor |
@@ -138,8 +141,9 @@ Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum a
 | Fluxo | Comportamento exigido |
 | --- | --- |
 | Busca de Devedor | Ignora digitação com menos de 300 ms de pausa e termos com menos de 3 caracteres; não repete a mesma busca seguida; cancela a busca anterior quando chega uma nova; em erro, tenta 3 vezes com intervalo crescente antes de mostrar o erro |
+| Pré-validação da importação | Lê e valida o **arquivo inteiro** num Web Worker, sem travar a tela, com as mesmas regras de formato da API (cabeçalho do modelo, CPF/CNPJ, e-mail ou celular, valor, data). Mostra "{total} linhas · {n} com problema" e o resumo por tipo de erro antes de enviar. A API continua sendo a fonte da verdade |
 | Progresso da importação | Atualiza pelo SSE; se o SSE cair, passa a consultar a cada 5 s até reconectar; para sozinho quando a importação termina |
-| Reserva do Devedor | Renova a cada `DEBTOR_LOCK_HEARTBEAT` enquanto a ficha está aberta e visível; libera ao sair; se outro Operador está com ela, mostra quem e oferece "avisar quando liberar" |
+| Reserva do Devedor | Renova a cada `DEBTOR_LOCK_HEARTBEAT` enquanto a ficha está aberta e visível; libera ao sair; se outro Operador está com ela, mostra quem e até quando (`lockedBy`, `lockedUntil` do 409 `DEBTOR_LOCKED`), em modo só leitura. Sem aviso de liberação no MVP |
 | Renovação de sessão | Num 401, faz **uma** renovação só, mesmo com várias requisições falhando ao mesmo tempo; as outras esperam a renovação e são repetidas; se a renovação falhar, vai para o login guardando a rota atual |
 | Servidor acordando | Em 502, 503 ou tempo esgotado, tenta de novo com intervalo crescente por até 90 s, mostrando o aviso global "acordando o servidor" |
 | Pagamento confirmado | Evento SSE atualiza a ficha aberta sem recarregar a página |
@@ -153,9 +157,9 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 | Tipo | Artefato | Problema que resolve |
 | --- | --- | --- |
 | Pipe | `brl` | Exibir dinheiro que chega como string, em BRL |
-| Pipe | `document` | Mascarar CPF/CNPJ (`***.456.789-**`) ou formatar por inteiro, conforme a permissão |
+| Pipe | `document` | Mascarar CPF/CNPJ (`***.456.789-**`). No MVP, sempre mascarado para o Operador; o CPF completo com permissão chega na F17 |
 | Pipe | `relativeTime` | "há 5 min" na linha do tempo, atualizando sozinho |
-| Pipe | `agingBucket` | Rótulo e cor da Faixa de atraso a partir da data de vencimento |
+| Pipe | `agingBucket` | Rótulo e cor da Faixa de atraso a partir da data de vencimento, com as Faixas da **Política publicada** (de 1 a 5, carregadas uma vez por sessão), nunca uma lista fixa. Antes da primeira publicação, as 5 Faixas padrão. Os filtros da Fila e da Busca usam a mesma lista |
 | Diretiva estrutural | `*hasRole` | Mostrar ou esconder trechos por papel, sem `@if` repetido |
 | Diretiva de atributo | `autofocus`, `clickOutside`, `copyToClipboard` | Foco ao abrir a ficha, fechar painéis, copiar o código Pix |
 | Controle de formulário (`ControlValueAccessor`) | `money-input`, `percent-input`, `document-input` | Campos que digitam num formato e entregam outro ao formulário (máscara → valor) |
@@ -182,6 +186,8 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 - **Dados:** TanStack Query, com a chave da consulta derivada dos filtros; tempo de "dado fresco" de 60 s (o painel tem até 5 min de atraso por natureza).
 - **Componentização:** um hook por consulta (`useRecoverySummary(filters)`), um componente por indicador ou gráfico, `memo` só onde o perfil do React mostrar render desnecessário.
 - **Estados:** carregando (esqueleto do card), vazio ("ainda sem acordos no período"), erro por card (um gráfico quebrado não derruba o painel, com error boundary por card).
+- **Faixas:** o filtro de Faixa e o gráfico de aging usam as Faixas da Política publicada, que vêm da API (`/analytics/aging`), nunca uma lista fixa.
+- **Números por Operador:** a visão do Operador lê `operator_performance` (LLD da API, 5.12); funil, conversão e ranking ficam para a F21.
 - **Exportação:** CSV gerado no navegador a partir dos dados da tela; PDF fica para a Fase 3.
 - **Propriedades do Web Component como fonte externa:** o shell muda `filters` e `user` por fora do React; a árvore lê esses valores por uma assinatura externa (`useSyncExternalStore`), sem cópia em estado local.
 - **Painel de filtros:** estado com várias transições (aplicar, limpar, desfazer) num `useReducer`; filtragem de tabelas grandes sem travar a digitação (`useTransition` / `useDeferredValue`).
@@ -190,9 +196,9 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 
 ## 9. Formulários (Política)
 
-- Formulário reativo tipado com um `FormArray` de regras por Faixa de atraso.
-- **Validação cruzada:** as Faixas não se sobrepõem, não deixam buraco e a última não tem teto; desconto entre 0 e 100%; Parcelas ≥ 1; Entrada mínima entre 0 e 100%.
-- **Simulador ao lado:** mudar a regra recalcula, na API, o exemplo de uma Dívida fictícia (com o mesmo controle de tempo da busca).
+- Formulário reativo tipado com um `FormArray` de regras por Faixa de atraso: de 1 a 5 Faixas. A primeira Política começa com as 5 Faixas padrão (0–30, 31–90, 91–180, 181–360, > 360); o Gestor edita, acrescenta até 5 e remove até sobrar 1 (LLD da API, 5.10).
+- **Validação cruzada:** a primeira Faixa começa em 0; as Faixas não se sobrepõem, não deixam buraco e só a última não tem teto; de 1 a 5 Faixas; desconto entre 0 e 100%; Parcelas ≥ 1; Entrada mínima entre 0 e 100%.
+- **Simulador ao lado:** mudar a regra recalcula, na API, uma Dívida de exemplo (com o mesmo controle de tempo da busca).
 - **Concorrência:** salvar envia a `version`; um 409 `STALE_VERSION` mostra o que mudou e oferece recarregar.
 - **Saída sem salvar:** guarda de rota pergunta antes de descartar alterações.
 
@@ -211,7 +217,7 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 | Unidade | Utilitários, stores, interceptors, validadores | Vitest |
 | Componente | Telas pelo que o usuário vê e faz, com a API simulada | Vitest + Testing Library + MSW |
 | Fluxos de tempo | Busca, renovação de sessão, retry | Vitest com relógio falso e testes de marble do RxJS |
-| Ponta a ponta | Login → Fila → ficha → Acordo; importação; Política | Playwright, contra a API local |
+| Ponta a ponta | Login → Fila → ficha → Proposta enviada; importação; Política | Playwright, contra a API local |
 
 ## 12. Publicação
 

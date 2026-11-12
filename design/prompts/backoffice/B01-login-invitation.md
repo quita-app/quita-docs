@@ -26,6 +26,10 @@ Entrar rápido no sistema de trabalho. É a porta do backoffice: sóbria, confi�
 - "A Escola Horizonte convidou você como Operador."
 - Nome, criar senha (com os critérios visíveis conforme digita), confirmar senha, **Criar conta e entrar**.
 
+**Recuperar senha** (rotas `/password-reset` e `/password-reset/:token`)
+- "Esqueci minha senha" leva a um formulário só com o e-mail e **Enviar link**. A resposta é sempre a mesma, exista ou não o e-mail: "Se o e-mail tiver cadastro, o link chega em alguns minutos."
+- O link do e-mail abre "Crie uma nova senha", com os mesmos critérios do convite, e **Salvar nova senha**.
+
 ## Estados
 
 1. Login vazio, preenchido, entrando.
@@ -33,6 +37,8 @@ Entrar rápido no sistema de trabalho. É a porta do backoffice: sóbria, confi�
 3. Muitas tentativas: "Muitas tentativas. Tente de novo em 1 minuto."
 4. Sessão expirada: aviso no topo do login, "Sua sessão terminou. Entre de novo para continuar de onde parou."
 5. Convite vencido ou já usado.
+6. Recuperar senha: formulário e confirmação de envio (texto neutro).
+7. Link de nova senha vencido ou já usado: "Este link venceu ou já foi usado. Peça um novo." com **Pedir novo link**.
 
 ## Notas
 

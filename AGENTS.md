@@ -33,6 +33,7 @@ Cada repo de código tem o próprio harness (`AGENTS.md`, `CLAUDE.md`, regras da
 | `design/prompts/` | Preâmbulo, ajustes e um prompt por tela (P00–P10, B01–B14) | pronto |
 | `design/hi-fi/` | Telas aprovadas, exportadas do Claude Design | aprovado |
 | `docs/features/<NN>-<title>/` | PRD, spec e tarefas de cada funcionalidade | F01 em rascunho |
+| `docs/review/` | Auditoria de consistência e a linha de base do MVP (`mvp-baseline.md`: escopo, regras, decisões, impacto no banco) | aplicada em 2026-11-12 |
 | `harness/<repo>/` | Kit de harness de cada repo de código, instalado depois do CLI | pronto |
 
 **Um fato, um lugar.** Cada informação tem um documento dono, e os outros apontam para ele pelo nome do documento e da seção, sem repetir o conteúdo.
