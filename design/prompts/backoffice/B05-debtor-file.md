@@ -1,6 +1,15 @@
 # B05 · Ficha do Devedor
 
-**App:** operations (Angular) · **Rota:** `/operations/debtors/:id` · **Quem:** Bruno, atendendo a Ana · **Tamanhos:** desktop 1440 px e 1024 px
+**App:** operations (Angular) · **Rota:** `/operations/debtors/:id` · **Quem:** Bruno, atendendo a Ana · **Tamanhos:** desktop 1440 px e celular 390 px
+
+## Na história
+
+- **Ator e papel:** Bruno, o operador, atendendo a Ana: vê a história completa dela com a credora.
+- **História:** Como operador, quero ver dívidas, acordos e tratativas da Ana num lugar só, para atender sem pedir que ela repita tudo.
+- **Momento:** Veio da fila (B03) ou da busca (B04). Se a Ana quiser negociar, abre o painel de negociação (B06).
+- **O que a tela precisa deixar claro:**
+  - Quem é a Ana para a credora, o que ela deve e o que já foi tentado.
+  - Que o operador está com a ficha reservada, e outro colega não atende ao mesmo tempo.
 
 ## Objetivo
 

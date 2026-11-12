@@ -1,6 +1,15 @@
 # B02 · Moldura do backoffice (shell)
 
-**App:** shell (Angular) · **Rota:** todas as do backoffice · **Quem:** operador e gestor · **Tamanhos:** desktop 1440 px e 1024 px
+**App:** shell (Angular) · **Rota:** todas as do backoffice · **Quem:** operador e gestor · **Tamanhos:** desktop 1440 px e celular 390 px
+
+## Na história
+
+- **Ator e papel:** Operador e gestor: a moldura mostra quem está logado, de qual credora e com que papel.
+- **História:** Como pessoa da equipe, quero saber sempre onde estou e o que meu papel permite, para não me perder entre as áreas.
+- **Momento:** Envolve todas as telas do backoffice (B03 a B14).
+- **O que a tela precisa deixar claro:**
+  - Nome, papel (operador ou gestor) e credora visíveis o tempo todo.
+  - O menu mostra só o que o papel permite.
 
 ## Objetivo
 

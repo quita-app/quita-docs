@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/payments` · **Quem:** Carla · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Carla, a gestora: resolve pagamentos que não se ligaram a nenhum acordo.
+- **História:** Como gestora, quero ver e resolver os pagamentos não conciliados, para que nenhum dinheiro fique sem dono.
+- **Momento:** Aparece quando um Pix chega fora do esperado (por exemplo, depois da quebra de um acordo).
+- **O que a tela precisa deixar claro:**
+  - Por que cada pagamento está aqui.
+  - O que cada ação de resolução faz.
+
 ## Objetivo
 
 Resolver à mão os pagamentos que o sistema não conseguiu ligar a uma Parcela.

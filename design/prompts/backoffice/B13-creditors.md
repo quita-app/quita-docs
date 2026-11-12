@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/admin/creditors` · **Quem:** time do Quita · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Time do Quita: cadastra as credoras que usam o produto.
+- **História:** Como administrador do Quita, quero cadastrar uma credora e seu primeiro gestor, para que ela comece a usar o produto.
+- **Momento:** Primeiro passo de uma credora nova. Depois, a gestora convida a equipe (B12).
+- **O que a tela precisa deixar claro:**
+  - Que esta área é do Quita, não de uma credora.
+  - Em que situação cada credora está.
+
 ## Objetivo
 
 Cadastrar e acompanhar as Credoras que usam o Quita.

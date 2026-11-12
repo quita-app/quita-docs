@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/policies/:id` · **Quem:** Carla · **Tamanhos:** desktop 1440 px
 
+## Na história
+
+- **Ator e papel:** Carla, a gestora: define descontos e parcelas por faixa de atraso.
+- **História:** Como gestora, quero ajustar as condições por faixa e ver o efeito antes de publicar, para negociar com regra e não no improviso.
+- **Momento:** Veio da lista de versões (B09). Publicada, a Política vale para o simulador da Ana (P06) e para o Bruno (B06).
+- **O que a tela precisa deixar claro:**
+  - Que esta é a regra única da credora para todos os canais.
+  - A diferença entre rascunho e versão publicada.
+
 ## Objetivo
 
 Editar as regras com segurança, vendo o efeito na hora num exemplo, antes de publicar.

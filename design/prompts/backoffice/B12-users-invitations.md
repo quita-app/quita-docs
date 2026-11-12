@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/admin/users` · **Quem:** Carla, gestora · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Carla, a gestora: monta a equipe de cobrança da credora.
+- **História:** Como gestora, quero convidar operadores e controlar quem tem acesso, para que só a minha equipe veja a carteira.
+- **Momento:** Depois que a credora foi cadastrada (B13). O convidado entra pelo convite (B01).
+- **O que a tela precisa deixar claro:**
+  - O papel de cada pessoa e o que ele permite.
+  - Quais convites ainda estão pendentes.
+
 ## Objetivo
 
 Gerenciar quem da Escola Horizonte usa o Quita.

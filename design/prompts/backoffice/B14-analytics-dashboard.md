@@ -1,6 +1,15 @@
 # B14 · Painel
 
-**App:** analytics (React, dentro do shell Angular) · **Rota:** `/analytics` · **Quem:** Carla (vê tudo) e Bruno (vê só os números dele) · **Tamanhos:** desktop 1440 px e 1024 px
+**App:** analytics (React, dentro do shell Angular) · **Rota:** `/analytics` · **Quem:** Carla (vê tudo) e Bruno (vê só os números dele) · **Tamanhos:** desktop 1440 px e celular 390 px
+
+## Na história
+
+- **Ator e papel:** Carla (vê tudo) e Bruno (vê só os números dele): acompanham quanto foi recuperado.
+- **História:** Como gestora, quero ver quanto recuperei, onde e com quem, para saber se a cobrança está funcionando.
+- **Momento:** Fim do dia ou do mês, depois do trabalho na fila (B03) e dos acordos fechados (B06, P08).
+- **O que a tela precisa deixar claro:**
+  - Que os números são da carteira desta credora e de que período.
+  - O que cada papel enxerga: a gestora vê tudo, o operador vê os números dele.
 
 ## Objetivo
 

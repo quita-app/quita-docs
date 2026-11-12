@@ -1,6 +1,15 @@
 # B01 · Login e aceite de convite
 
-**App:** shell (Angular) · **Rotas:** `/login`, `/invitations/:token` · **Quem:** Bruno Lima (operador) e Carla Mendes (gestora) da Escola Horizonte · **Tamanhos:** desktop 1440 px e 1024 px
+**App:** shell (Angular) · **Rotas:** `/login`, `/invitations/:token` · **Quem:** Bruno Lima (operador) e Carla Mendes (gestora) da Escola Horizonte · **Tamanhos:** desktop 1440 px e celular 390 px
+
+## Na história
+
+- **Ator e papel:** Bruno (operador) e Carla (gestora) da Escola Horizonte: entram no backoffice da credora.
+- **História:** Como pessoa da equipe de cobrança, quero aceitar meu convite e entrar, para começar a trabalhar na carteira da minha empresa.
+- **Momento:** Recebeu o convite que a Carla enviou (B12) ou volta para o dia de trabalho. Depois de entrar, cai na moldura (B02) e na fila (B03) ou no painel (B14).
+- **O que a tela precisa deixar claro:**
+  - De qual credora é este acesso e quem convidou.
+  - Que é a área da equipe, diferente do portal do devedor.
 
 ## Objetivo
 

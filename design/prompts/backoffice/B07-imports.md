@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/imports` · **Quem:** Carla Mendes, gestora · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Carla, a gestora: alimenta o Quita com a carteira de inadimplentes.
+- **História:** Como gestora, quero subir a planilha da carteira, para que os devedores possam resolver pelo portal.
+- **Momento:** Começa aqui o trabalho da credora no Quita. Enviada a planilha, acompanha a importação (B08).
+- **O que a tela precisa deixar claro:**
+  - O formato esperado do arquivo, antes do envio.
+  - O histórico das importações anteriores.
+
 ## Objetivo
 
 Subir a carteira do mês sem medo de errar, vendo antes o que vai entrar.

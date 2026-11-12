@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/debts` · **Quem:** a Ana, logada · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: vê tudo o que deve a esta credora.
+- **História:** Como devedora, quero ver minhas dívidas com valores claros, para escolher qual resolver primeiro.
+- **Momento:** Acabou de entrar (P03). Escolhe uma dívida e abre o detalhe (P05).
+- **O que a tela precisa deixar claro:**
+  - Que estas são as dívidas com a Escola Horizonte, e só com ela.
+  - O próximo passo óbvio: escolher uma dívida para resolver.
+
 ## Objetivo
 
 Mostrar com clareza quanto ela deve, sem constranger, e levar ao próximo passo.

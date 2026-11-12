@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/agreements/[agreementId]/installments/[installmentId]/pay` · **Quem:** a Ana · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: paga a entrada e vê o acordo fechado.
+- **História:** Como devedora, quero pagar a entrada pelo Pix e ver na hora que deu certo, para sentir que resolvi.
+- **Momento:** Confirmou o acordo (P07). Depois do pagamento, acompanha o acordo (P09).
+- **O que a tela precisa deixar claro:**
+  - Que o Pix vai para a Escola Horizonte e quanto tempo o código vale.
+  - A comemoração diz o que mudou para ela e qual é a próxima parcela.
+
 ## Objetivo
 
 Pagar a entrada sem sair do fluxo e viver o momento mais importante do produto: o acordo fechado.

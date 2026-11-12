@@ -366,11 +366,11 @@ Uma fonte manuscrita pode aparecer **uma vez por tela**, só como bilhete da cre
 ## Layout
 
 - **Espaço:** base 4 (4, 8, 12, 16, 20, 24, 32, 48, 64).
-- **Tamanhos obrigatórios:** toda tela tem versão celular (390 px). Portal: 390 e 1280. Backoffice: 1440, 1024 e 390.
+- **Tamanhos obrigatórios:** toda tela tem versão celular (390 px). Portal e backoffice: 1440 e 390. Uma única versão web, em 1440 (decisão de 2026-11-11).
 - **Portal em 390:** margem de 20 px, uma decisão por tela, botão principal no pé da tela. Alvos de toque de pelo menos 44 px.
-- **Portal em 1280:** o mesmo conteúdo em duas colunas, no máximo 1104 px de largura: leitura à esquerda, decisão à direita (card de 480 px). Barra superior de 76 px com o logo e "para {credora}".
+- **Portal em 1440:** o mesmo conteúdo em duas colunas, no máximo 1104 px de largura: leitura à esquerda, decisão à direita (card de 480 px). Barra superior de 76 px com o logo e "para {credora}".
 - **Backoffice em 1440:** trilho de navegação de 76 px com botões redondos, cabeçalho com busca, 3 indicadores, filtros em pílula, tabela e ficha lateral fixa de 380 px. Gap de 20 a 24 px.
-- **Backoffice em 1024:** trilho de 64 px; a tabela perde a coluna de CPF e ocupa a largura toda; a ficha abre como painel (Sheet) de 380 px sobre a fila, com fundo escurecido.
+- **Backoffice entre 1024 e 1439 px** (só na implementação, não é desenhado): trilho de 64 px; a tabela perde a coluna de CPF e ocupa a largura toda; a ficha abre como painel (Sheet) de 380 px sobre a fila, com fundo escurecido.
 - **Backoffice em 390:** o trilho vira barra inferior com 4 itens + "Mais" (Fila, Importações, Painel, Política, Mais); a tabela vira lista de cards (nome, valor, faixa, última tratativa); a ficha vira tela cheia, com as ações fixas no rodapé. Indicadores e filtros rolam na horizontal.
 - **Painel:** grade bento de 4 colunas, um número grande por card e um card de assinatura.
 

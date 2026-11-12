@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/imports/:id` · **Quem:** Carla · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Carla, a gestora: acompanha a importação e corrige o que veio errado.
+- **História:** Como gestora, quero ver o progresso e o relatório de erros, para corrigir só as linhas com problema.
+- **Momento:** Enviou a planilha (B07). Terminada a importação, os devedores entram na fila (B03) e podem acessar o portal (P01).
+- **O que a tela precisa deixar claro:**
+  - Quantas linhas entraram, quantas falharam e por quê.
+  - O que fazer com as linhas que falharam.
+
 ## Objetivo
 
 Acompanhar ao vivo e corrigir o que deu errado.

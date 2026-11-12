@@ -29,35 +29,37 @@ Cole primeiro o **preâmbulo** (`00-preamble.md`) e depois o prompt da tela.
 
 O preâmbulo manda ler o `PRODUCT.md`, o `DESIGN.md`, o `ux-writing.md` e o prompt da tela, e parar a cada tela para aprovação. Os textos de todas as telas vêm do `design/ux-writing.md`.
 
+Em 2026-11-11 cada prompt ganhou a seção "Na história" (ator, papel, momento da jornada) e a regra 8 do preâmbulo. As telas são regeneradas com ela; a P00 também perde as referências a portfólio e ao GitHub.
+
 | # | Tela | App | Rota | Status |
 | --- | --- | --- | --- | --- |
 | F0 | Ajustes do design system (`01-design-system-fixes.md`): aplique no canvas e no `DESIGN.md` | todos | — | aprovada |
-| P00 | Landing page do Quita | portal | `/` | aprovada |
-| P01 | Página da credora | portal | `/c/[slug]` | aprovada |
-| P02 | Acesso: CPF | portal | `/c/[slug]/access` | aprovada |
-| P03 | Acesso: código | portal | `/c/[slug]/access/verify` | aprovada |
-| P04 | Suas dívidas | portal | `/c/[slug]/debts` | aprovada |
-| P05 | Detalhe da dívida e composição do valor | portal | `/c/[slug]/debts/[debtId]` + `breakdown` | aprovada |
-| P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | aprovada |
-| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` | aprovada |
-| P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | aprovada |
-| P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | aprovada |
-| P10 | Estados globais do portal | portal | todas | aprovada |
-| B01 | Login e convite | shell | `/login`, `/invitations/:token` | aprovada |
-| B02 | Moldura do backoffice | shell | todas | aprovada |
-| B03 | Fila de trabalho | operations | `/operations/queue` | aprovada |
-| B04 | Busca de Devedores | operations | `/operations/debtors` | aprovada |
-| B05 | Ficha do Devedor | operations | `/operations/debtors/:id` | aprovada |
-| B06 | Negociar pela ficha | operations | `/operations/debtors/:id` | aprovada |
-| B07 | Importações e nova importação | operations | `/operations/imports` | aprovada |
-| B08 | Importação em andamento e relatório de erros | operations | `/operations/imports/:id` | aprovada |
-| B09 | Versões da Política | operations | `/operations/policies` | aprovada |
-| B10 | Editor da Política | operations | `/operations/policies/:id` | aprovada |
-| B11 | Pagamentos não conciliados | operations | `/operations/payments` | aprovada |
-| B12 | Usuários e convites | operations | `/operations/admin/users` | aprovada |
-| B13 | Credoras | operations | `/operations/admin/creditors` | aprovada |
-| B14 | Painel | analytics | `/analytics` | aprovada |
-| D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | aprovada |
+| P00 | Landing page do Quita | portal | `/` | a regenerar (história) |
+| P01 | Página da credora | portal | `/c/[slug]` | a regenerar (história) |
+| P02 | Acesso: CPF | portal | `/c/[slug]/access` | a regenerar (história) |
+| P03 | Acesso: código | portal | `/c/[slug]/access/verify` | a regenerar (história) |
+| P04 | Suas dívidas | portal | `/c/[slug]/debts` | a regenerar (história) |
+| P05 | Detalhe da dívida e composição do valor | portal | `/c/[slug]/debts/[debtId]` + `breakdown` | a regenerar (história) |
+| P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | a regenerar (história) |
+| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` | a regenerar (história) |
+| P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | a regenerar (história) |
+| P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | a regenerar (história) |
+| P10 | Estados globais do portal | portal | todas | a regenerar (história) |
+| B01 | Login e convite | shell | `/login`, `/invitations/:token` | a regenerar (história) |
+| B02 | Moldura do backoffice | shell | todas | a regenerar (história) |
+| B03 | Fila de trabalho | operations | `/operations/queue` | a regenerar (história) |
+| B04 | Busca de Devedores | operations | `/operations/debtors` | a regenerar (história) |
+| B05 | Ficha do Devedor | operations | `/operations/debtors/:id` | a regenerar (história) |
+| B06 | Negociar pela ficha | operations | `/operations/debtors/:id` | a regenerar (história) |
+| B07 | Importações e nova importação | operations | `/operations/imports` | a regenerar (história) |
+| B08 | Importação em andamento e relatório de erros | operations | `/operations/imports/:id` | a regenerar (história) |
+| B09 | Versões da Política | operations | `/operations/policies` | a regenerar (história) |
+| B10 | Editor da Política | operations | `/operations/policies/:id` | a regenerar (história) |
+| B11 | Pagamentos não conciliados | operations | `/operations/payments` | a regenerar (história) |
+| B12 | Usuários e convites | operations | `/operations/admin/users` | a regenerar (história) |
+| B13 | Credoras | operations | `/operations/admin/creditors` | a regenerar (história) |
+| B14 | Painel | analytics | `/analytics` | a regenerar (história) |
+| D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | a regenerar (história) |
 
 O portal vem primeiro porque é a vitrine do produto e onde a identidade aparece mais. Fase 2 e 3 (contestação, régua, white-label, auditoria, chat) ganham prompts quando chegarem.
 
@@ -65,7 +67,7 @@ O portal vem primeiro porque é a vitrine do produto e onde a identidade aparece
 
 - [ ] Usa só tokens e componentes do design system aprovado (ou diz qual componente novo criou e por quê).
 - [ ] Tem todos os estados pedidos no prompt (carregando, vazio, erro e os específicos).
-- [ ] Light mode (o dark vem no D1); portal em 390 e 1280 px; backoffice em 1440, 1024 e 390 px.
+- [ ] Light mode (o dark vem no D1); portal e backoffice em 1440 e 390 px (uma única versão web).
 - [ ] Estados globais não repetidos (só citados no resumo).
 - [ ] Textos em pt-BR, no tom do `PRODUCT.md`, sem palavras proibidas no portal.
 - [ ] Números conferem com o exemplo da Ana e com as regras de `docs/lld/api.md`.

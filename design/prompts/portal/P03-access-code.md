@@ -2,6 +2,15 @@
 
 **App:** portal · **Rota:** `/c/escola-horizonte/access/verify` · **Quem:** a Ana · **Tamanhos:** celular e desktop
 
+## Na história
+
+- **Ator e papel:** Ana, a devedora: confirma o acesso com o código de uso único.
+- **História:** Como devedora, quero confirmar com um código que chega no meu telefone, para ter certeza de que só eu vejo minhas dívidas.
+- **Momento:** Informou o CPF (P02). Com o código certo, vê suas dívidas (P04).
+- **O que a tela precisa deixar claro:**
+  - Para onde o código foi enviado e quanto tempo ele vale.
+  - O que fazer se o código não chegou.
+
 ## Objetivo
 
 Digitar o código de 6 dígitos com o mínimo de atrito.

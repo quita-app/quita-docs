@@ -2,6 +2,15 @@
 
 **App:** operations (Angular) · **Rota:** `/operations/debtors/:id` (painel de negociação) · **Quem:** Bruno, ao telefone com a Ana · **Tamanhos:** desktop
 
+## Na história
+
+- **Ator e papel:** Bruno, ao telefone com a Ana: fecha o acordo por ela, dentro da Política.
+- **História:** Como operador, quero oferecer as mesmas condições que a Ana teria no portal, para fechar o acordo sem inventar desconto.
+- **Momento:** Está na ficha da Ana (B05). Fechado o acordo, a Ana recebe o Pix e acompanha pelo portal (P08, P09).
+- **O que a tela precisa deixar claro:**
+  - Que os limites vêm da Política da credora (B10), não do operador.
+  - Que o acordo é em nome da Ana, com o registro de quem negociou.
+
 ## Objetivo
 
 O mesmo simulador do portal, na versão densa do operador, que mostra também os limites da Política e permite pedir exceção.
