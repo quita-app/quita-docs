@@ -107,7 +107,7 @@ Seta: "precisa estar publicada antes". A ordem numérica já respeita todas as s
 - **Objetivo:** o usuário da Credora entra com e-mail e senha, recupera a senha pelo link enviado por e-mail, continua logado ao recarregar, vê a moldura com o menu do papel dele e é mandado ao login quando a sessão acaba, sem perder a rota.
 - **Telas:** B01 (login e "Esqueci minha senha"), B02 (moldura).
 - **Módulos da API:** `identity` (login, refresh com rotação, logout, limite de taxa, recuperação de senha com `password_reset`), `notification` (e-mail na caixa de saída), `shared/tenant`, `shared/web` (Problem Details, `X-Request-Id`).
-- **Repos:** `quita-backend-api`, `quita-backoffice-web` (shell, `libs/angular/session`, `data-access`, `ui`).
+- **Repos:** `quita-backend-api`, `quita-backoffice-web` (shell, `libs/shared/angular/session`, `data-access`, `ui`).
 - **Depende de:** F01.
 - **Tamanho:** G.
 
@@ -125,7 +125,7 @@ Seta: "precisa estar publicada antes". A ordem numérica já respeita todas as s
 - **Objetivo:** o Gestor baixa o modelo em português, solta um CSV (UTF-8 ou o do Excel), vê o arquivo inteiro validado no navegador com o resumo por tipo de erro, envia vendo o progresso do upload, acompanha o processamento ao vivo e baixa o relatório de erros (as linhas originais com a coluna "Erro"), que corrige e reenvia.
 - **Telas:** B07 (importações e nova importação), B08 (andamento e erros).
 - **Módulos da API:** `portfolio` (importação em lotes, Devedores, Dívidas), SSE (`/events/stream`).
-- **Repos:** `quita-backend-api`, `quita-backoffice-web` (`feature-imports`, `libs/angular/realtime`).
+- **Repos:** `quita-backend-api`, `quita-backoffice-web` (`libs/operations/feature-imports`, `libs/shared/angular/realtime`).
 - **Depende de:** F03.
 - **Tamanho:** G.
 
@@ -219,7 +219,7 @@ Seta: "precisa estar publicada antes". A ordem numérica já respeita todas as s
 - **Objetivo:** o Gestor vê quanto recuperou, a taxa de recuperação, Acordos ativos e quebrados, a recuperação por semana e o aging da Carteira, com filtros na URL (período e Operador, este só para o Gestor); o Operador vê só os números dele. O aging já mostra o valor por Faixa; o filtro por Faixa é da F21. A F14 também liga os indicadores "Acordos hoje" e "Recuperado hoje" da Fila (B03).
 - **Telas:** B14 (painel), B03 (indicadores do Operador).
 - **Módulos da API:** `analytics` (modelos de leitura por evento, `operator_performance` com a atribuição ao Operador da Fila, job de aging pelas Faixas da Política publicada, rotas de resumo).
-- **Repos:** `quita-backend-api`, `quita-backoffice-web` (`apps/analytics`, `libs/react/ui`, shell).
+- **Repos:** `quita-backend-api`, `quita-backoffice-web` (`apps/analytics`, `libs/analytics/feature-dashboard`, `libs/analytics/ui`, shell).
 - **Depende de:** F02, F10, F11.
 - **Tamanho:** M.
 

@@ -41,39 +41,50 @@ quita-backoffice-web/
     analytics/                 React + Vite · Web Component <quita-analytics>
     shell-e2e/                 Playwright · fluxos de ponta a ponta
   libs/
-    shared/
+    shared/                    usado por mais de um app
       api-types/               tipos gerados do openapi.json (sem código de chamada)
       design-tokens/           tokens (CSS custom properties + preset do Tailwind)
       util/                    dinheiro, CPF/CNPJ, datas, cursor (TypeScript puro, sem framework)
-    angular/
-      ui/                      componentes visuais Angular (Spartan estilizado)
-      data-access/             HttpClient: interceptors, serviços de API por domínio
-      session/                 sessão do usuário (SignalStore singleton)
-      realtime/                conexão SSE única, distribuída por tipo de evento
-    operations/
+      angular/                 só shell e Operações (singleton na federação, seção 4)
+        ui/                    componentes visuais Angular (Spartan estilizado)
+        data-access/           HttpClient: interceptors, APP_CONFIG e os serviços que o shell também usa (auth, busca global, health)
+        session/               sessão do usuário (SignalStore singleton)
+        realtime/              conexão SSE única, distribuída por tipo de evento
+    operations/                só o Operações
       feature-queue/           Fila e ficha do Devedor
       feature-imports/         importação de Carteira
       feature-policies/        Política de negociação
       feature-payments/        pagamentos não conciliados
       feature-admin/           Credoras e usuários
-    react/
+      data-access/             serviços de API do domínio (Fila, importação, Política, pagamentos, admin)
+    analytics/                 só o Analytics
+      feature-dashboard/       as telas do Painel (o app fica fino: entrada, Web Component e composição)
       ui/                      componentes visuais React (shadcn estilizado)
 ```
 
-**Regras de fronteira** (tags do Nx, verificadas pelo lint):
+**Critério de agrupamento:** a primeira pasta de `libs/` é o **domínio** (quem usa). O que só um app usa fica em `libs/<app>/`; o que dois ou mais usam fica em `libs/shared/`, e dentro dela `angular/` agrupa o que só os apps Angular entendem. O framework não é pasta: é tag. É o layout agrupado da documentação do Nx (`libs/<domínio>/<tipo>-<nome>`). Decisão registrada em `docs/review/libs-structure-coherence.md`.
+
+**Nomes:** o projeto é o caminho com hífens (`shared-angular-ui`, `operations-feature-queue`), e o apelido de import é `@quita/` + o nome do projeto.
+
+**Regras de fronteira** (tags do Nx, verificadas pelo lint). Todo projeto tem três tags, e um import precisa passar nas três:
 
 | Tag | Pode depender de |
 | --- | --- |
-| `type:app` | qualquer lib |
+| `type:app` | `type:feature`, `type:ui`, `type:data-access`, `type:util` |
+| `type:e2e` | nada |
 | `type:feature` | `type:ui`, `type:data-access`, `type:util` |
 | `type:data-access` | `type:util` |
 | `type:ui` | `type:util` |
 | `type:util` | nada |
-| `scope:angular` | `scope:angular`, `scope:shared` |
-| `scope:react` | `scope:react`, `scope:shared` |
+| `scope:shell` | `scope:shared` |
+| `scope:operations` | `scope:operations`, `scope:shared` |
+| `scope:analytics` | `scope:analytics`, `scope:shared` |
 | `scope:shared` | `scope:shared` |
+| `framework:angular` | `framework:angular`, `framework:none` |
+| `framework:react` | `framework:react`, `framework:none` |
+| `framework:none` | `framework:none` |
 
-Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum aos dois é TypeScript puro em `shared`.
+Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum aos dois é TypeScript puro (`framework:none`) em `shared`.
 
 ## 3. Shell
 
@@ -82,12 +93,12 @@ Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum a
 - **O que o shell não faz:** nenhuma tela de negócio. Tudo que é do domínio fica num remote.
 - **Manifesto de remotes:** `federation.manifest.json`, servido junto com o shell, com o endereço de cada remote no ambiente. É lido na inicialização, nunca entra em cache (`Cache-Control: no-cache`), e cada ambiente tem o seu.
 - **Falha de um remote:** se o manifesto ou o código de um remote não carrega, a rota mostra um estado de erro com "tentar de novo" só naquela área. O menu e os outros remotes continuam funcionando.
-- **Proxy da API:** a configuração da Vercel do shell redireciona `/api/*` para a API (HLD, "Segurança e privacidade"). No ambiente local, o servidor de desenvolvimento faz o mesmo proxy.
+- **Proxy da API:** a configuração da Vercel do shell redireciona `/api/*` para a API (HLD, "Segurança e privacidade"). No ambiente local, o servidor de desenvolvimento faz o mesmo proxy. As rotas `/api/actuator/*` perdem o prefixo `/api` no proxy (o Actuator da API não fica sob `/api`); as demais são repassadas como estão.
 
 ## 4. Comunicação entre shell e remotes
 
 **Shell ↔ Operações (Angular com Angular)**
-- As bibliotecas do Angular, RxJS e as libs `angular/session`, `angular/realtime` e `angular/data-access` são compartilhadas como **singleton** na federação. O remote recebe as mesmas instâncias de serviço que o shell criou: a sessão de login é uma só.
+- As bibliotecas do Angular, RxJS e as libs `shared/angular/session`, `shared/angular/realtime` e `shared/angular/data-access` são compartilhadas como **singleton** na federação. O remote recebe as mesmas instâncias de serviço que o shell criou: a sessão de login é uma só.
 - O remote expõe as **rotas** dele (`./routes`), e o shell as carrega com `loadChildren`.
 
 **Shell ↔ Analytics (Angular com React)**
@@ -152,7 +163,7 @@ Os valores citados pelo nome estão em `docs/lld/api.md`, "Valores e configuraç
 
 ### Peças de base do Angular
 
-Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-access`, cada um com o problema que resolve no Quita:
+Artefatos reutilizáveis planejados em `libs/shared/angular/ui` e `libs/shared/angular/data-access`, cada um com o problema que resolve no Quita:
 
 | Tipo | Artefato | Problema que resolve |
 | --- | --- | --- |
@@ -171,7 +182,7 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 
 ## 7. Chamadas à API (Angular)
 
-- **Tipos** de `libs/shared/api-types`; **serviços** por domínio em `libs/angular/data-access`, com `HttpClient` e funções que devolvem `Observable`.
+- **Tipos** de `libs/shared/api-types`; **serviços** do Operações em `libs/operations/data-access`; os que o shell também usa (auth, busca global, health) em `libs/shared/angular/data-access`. Sempre com `HttpClient` e funções que devolvem `Observable`.
 - **Interceptors funcionais**, nesta ordem:
   1. `requestId`: acrescenta `X-Request-Id`.
   2. `auth`: acrescenta o token; num 401, coordena a renovação única.
