@@ -34,32 +34,32 @@ Em 2026-11-11 cada prompt ganhou a seção "Na história" (ator, papel, momento 
 | # | Tela | App | Rota | Status |
 | --- | --- | --- | --- | --- |
 | F0 | Ajustes do design system (`01-design-system-fixes.md`): aplique no canvas e no `DESIGN.md` | todos | — | aprovada |
-| P00 | Landing page do Quita | portal | `/` | a regenerar (história) |
-| P01 | Página da credora | portal | `/c/[slug]` | a regenerar (história) |
-| P02 | Acesso: CPF | portal | `/c/[slug]/access` | a regenerar (história) |
-| P03 | Acesso: código | portal | `/c/[slug]/access/verify` | a regenerar (história) |
-| P04 | Suas dívidas | portal | `/c/[slug]/debts` | a regenerar (história) |
-| P05 | Detalhe da dívida e composição do valor | portal | `/c/[slug]/debts/[debtId]` + `breakdown` | a regenerar (história) |
-| P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | a regenerar (história) |
-| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` | a regenerar (história) |
-| P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | a regenerar (história) |
-| P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | a regenerar (história) |
-| P10 | Estados globais do portal | portal | todas | a regenerar (história) |
-| B01 | Login e convite | shell | `/login`, `/invitations/:token` | a regenerar (história) |
-| B02 | Moldura do backoffice | shell | todas | a regenerar (história) |
-| B03 | Fila de trabalho | operations | `/operations/queue` | a regenerar (história) |
-| B04 | Busca de Devedores | operations | `/operations/debtors` | a regenerar (história) |
-| B05 | Ficha do Devedor | operations | `/operations/debtors/:id` | a regenerar (história) |
-| B06 | Negociar pela ficha | operations | `/operations/debtors/:id` | a regenerar (história) |
-| B07 | Importações e nova importação | operations | `/operations/imports` | a regenerar (história) |
-| B08 | Importação em andamento e relatório de erros | operations | `/operations/imports/:id` | a regenerar (história) |
-| B09 | Versões da Política | operations | `/operations/policies` | a regenerar (história) |
-| B10 | Editor da Política | operations | `/operations/policies/:id` | a regenerar (história) |
-| B11 | Pagamentos não conciliados | operations | `/operations/payments` | a regenerar (história) |
-| B12 | Usuários e convites | operations | `/operations/admin/users` | a regenerar (história) |
-| B13 | Credoras | operations | `/operations/admin/creditors` | a regenerar (história) |
-| B14 | Painel | analytics | `/analytics` | a regenerar (história) |
-| D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | a regenerar (história) |
+| P00 | Landing page do Quita | portal | `/` | gerada (história), a revisar |
+| P01 | Página da credora | portal | `/c/[slug]` | gerada (história), a revisar |
+| P02 | Acesso: CPF | portal | `/c/[slug]/access` | gerada (história), a revisar |
+| P03 | Acesso: código | portal | `/c/[slug]/access/verify` | gerada (história), a revisar |
+| P04 | Suas dívidas | portal | `/c/[slug]/debts` | gerada (história), a revisar |
+| P05 | Detalhe da dívida e composição do valor | portal | `/c/[slug]/debts/[debtId]` + `breakdown` | gerada (história), a revisar |
+| P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | gerada (história), a revisar |
+| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` | gerada (história), a revisar |
+| P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | gerada (história), a revisar |
+| P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | gerada (história), a revisar |
+| P10 | Estados globais do portal | portal | todas | gerada (história), a revisar |
+| B01 | Login e convite | shell | `/login`, `/invitations/:token` | gerada (história), a revisar |
+| B02 | Moldura do backoffice | shell | todas | gerada (história), a revisar |
+| B03 | Fila de trabalho | operations | `/operations/queue` | gerada (história), a revisar |
+| B04 | Busca de Devedores | operations | `/operations/debtors` | gerada (história), a revisar |
+| B05 | Ficha do Devedor | operations | `/operations/debtors/:id` | gerada (história), a revisar |
+| B06 | Negociar pela ficha | operations | `/operations/debtors/:id` | gerada (história), a revisar |
+| B07 | Importações e nova importação | operations | `/operations/imports` | gerada (história), a revisar |
+| B08 | Importação em andamento e relatório de erros | operations | `/operations/imports/:id` | gerada (história), a revisar |
+| B09 | Versões da Política | operations | `/operations/policies` | gerada (história), a revisar |
+| B10 | Editor da Política | operations | `/operations/policies/:id` | gerada (história), a revisar |
+| B11 | Pagamentos não conciliados | operations | `/operations/payments` | gerada (história), a revisar |
+| B12 | Usuários e convites | operations | `/operations/admin/users` | gerada (história), a revisar |
+| B13 | Credoras | operations | `/operations/admin/creditors` | gerada (história), a revisar |
+| B14 | Painel | analytics | `/analytics` | gerada (história), a revisar |
+| D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | gerada (história), a revisar |
 
 O portal vem primeiro porque é a vitrine do produto e onde a identidade aparece mais. Fase 2 e 3 (contestação, régua, white-label, auditoria, chat) ganham prompts quando chegarem.
 
