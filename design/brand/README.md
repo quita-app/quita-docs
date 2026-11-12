@@ -16,6 +16,12 @@ Símbolo + "quita" em Geist 600, fundo transparente.
 ## icones/
 Ícone quadrado com fundo, para avatar, app e favicon: `tinta` (céu sobre tinta, com o ponto menta), `ceu` (tinta sobre céu) e `claro` (tinta sobre branco, check em céu). PNG 1024 px e SVG.
 
+## favicon/
+Favicon do portal e do backoffice (o mesmo nos dois): Q tinta sobre céu, quadrado arredondado, sem o ponto.
+- `favicon.ico`: 16, 32 e 48 px num arquivo só.
+- `favicon.svg`: vetorial, para navegadores que aceitam SVG.
+- `apple-touch-icon.png`: 180 px, atalho na tela inicial do celular.
+
 ## banners/
 Prévia social dos repositórios no GitHub (1280×640): docs, mentor e backend-api em fundo escuro; portal e backoffice em fundo claro.
 
