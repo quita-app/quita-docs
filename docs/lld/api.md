@@ -260,14 +260,19 @@ Entradas: a Dívida, o número de Parcelas `n` (1 = à vista) e, opcionalmente, 
 
 A simulação não grava nada e pode ser chamada quantas vezes for preciso.
 
+**Simulação com o rascunho (B10):** `POST /policies/simulations` (gestor) recebe as regras como estão no formulário (sem salvar), as configurações gerais (`proposal_validity_hours`, `breach_tolerance_days`, `min_installment_amount`) e uma Dívida de exemplo `{ principalAmount, overdueDays }`. Valida as regras (seção 5.10, `VALIDATION_FAILED` com `errors[]` por Faixa) e devolve o mesmo formato de uma simulação normal, sem gravar nada. Por quê: o simulador ao lado precisa reagir à edição ainda não salva, e salvar o rascunho a cada tecla bateria na checagem de `version`.
+
 ### 5.4 Proposta e Acordo
 
 - **Uma Dívida por Acordo** no MVP: cada Proposta e cada Acordo apontam para uma Dívida só. Um Devedor com duas Dívidas fecha dois Acordos. Juntar várias Dívidas num Acordo é questão da Fase 2 (seção 14).
 - A Proposta guarda os valores calculados no momento (`updated_amount`, `negotiated_amount`, `down_payment_amount`) e vale até `expires_at = agora + proposal_validity_hours` da Política.
+- **A versão da Política que vale é a da Proposta** (`proposal.negotiation_policy_id`): `proposal_validity_hours`, `breach_tolerance_days` e `min_installment_amount` daquela versão valem para o Acordo pela vida inteira dele. O job de Quebra e a janela do Pix leem a tolerância por Acordo → Proposta → versão da Política. Por quê: publicar uma Política nova nunca muda acordos já feitos (RF3.2).
 - **O Operador nunca cria Acordo direto.** Na ficha (B06), "Enviar proposta à Ana" (`POST /proposals`) cria uma Proposta `approved`, com `channel = backoffice` e `created_by_user_id`. O `ProposalCreated` faz o `notification` mandar à Ana, por e-mail e SMS, o link `/c/<slug>/proposals/<id>`. Ela entra com o código, vê a Proposta na P07 ("Proposta enviada por Bruno, válida até 14/11") e aceita com "Li e concordo" (`POST /debtor/proposals/{id}/accept`). O aceite dela é a prova do Acordo.
 - **Uma Proposta aberta por Dívida** (índice único parcial, `docs/lld/database.md`, 5.3). Enviar uma Proposta nova encerra a anterior (`canceled`) na mesma transação. Com Acordo vivo, `POST /proposals` devolve 409 `AGREEMENT_ALREADY_EXISTS`.
+- **`POST /proposals` exige a reserva do Devedor** (seção 5.8): quem envia (operador ou gestor) precisa estar com a reserva; senão, 409 `DEBTOR_LOCKED`, com `lockedBy` e `lockedUntil`. Por quê: dois atendentes nunca negociam o mesmo Devedor ao mesmo tempo (RN7.2), e a B06 vive dentro da ficha, que já reserva.
 - **A Ana pode ignorar a Proposta** e fechar outra condição sozinha no portal (`POST /debtor/agreements`): o primeiro Acordo vale, e a Proposta aberta é encerrada (`canceled`) na mesma transação que cria o Acordo.
 - **`ProposalClosed`** só é publicado quando a Proposta vence sem nada no lugar (a Dívida volta a `open`). Quando ela é encerrada por outra Proposta, por um Acordo ou por pagamento fora do Quita, o evento do que veio no lugar já leva a Dívida ao estado certo.
+- **Fechar no portal:** `POST /debtor/agreements` recebe só a escolha, `{ debtId, installments, downPayment }`, com o `Idempotency-Key`; a API recalcula a condição ao criar e nunca usa valores vindos do cliente.
 - **Criar o Acordo** (uma transação; o mesmo caso de uso nos dois canais):
   1. Recalcula a simulação **na data de referência da Proposta** (o dia em que ela foi criada) e confere se bate com ela. Protege contra mudança de Política entre a simulação e o aceite; os juros que correm durante a validade não invalidam a Proposta.
   2. Confere, pela `PortfolioApi`, se a Dívida está `open` ou `negotiating`.
@@ -276,7 +281,7 @@ A simulação não grava nada e pode ser chamada quantas vezes for preciso.
   5. Exige o cabeçalho `Idempotency-Key`: a mesma chave devolve o mesmo Acordo, sem criar outro.
   6. Dois Acordos vivos para a mesma Dívida batem no índice único parcial; a API devolve 409 `AGREEMENT_ALREADY_EXISTS` (`docs/lld/database.md`, seção 5.3).
 - **Uma trava por Dívida:** enviar Proposta, criar Acordo (nos dois canais) e registrar pagamento fora do Quita pegam, no começo da transação, a mesma trava da Dívida no PostgreSQL (`pg_advisory_xact_lock` com o id da Dívida). Assim essas ações nunca se cruzam para a mesma Dívida; a trava some sozinha no fim da transação.
-- **Aceitar uma Proposta que não está aberta** (vencida ou encerrada) → 409 `PROPOSAL_EXPIRED`. Se a Dívida já tem Acordo vivo, a resposta é `AGREEMENT_ALREADY_EXISTS`.
+- **Aceitar uma Proposta que não está aberta** (vencida ou encerrada) → 409 `PROPOSAL_EXPIRED`. O aceite confere o `expires_at`, não só o status: uma Proposta vencida que o job ainda não marcou já é recusada. Se a Dívida já tem Acordo vivo, a resposta é `AGREEMENT_ALREADY_EXISTS`.
 - **Onde a Proposta aberta aparece:** `GET /debtor/debts` e `GET /debtors/{id}` trazem, em cada Dívida, a Proposta aberta (`openProposal`: id, valores, `expiresAt`, quem enviou). A P04 mostra no card; a B05, na Dívida.
 - **Vencimentos:** a Entrada vence em `DOWN_PAYMENT_DUE_DAYS` dias; a Parcela `k` vence `k − 1` meses depois da Entrada, no mesmo dia do mês, ou no último dia do mês quando ele não existe (31/01 → 28/02).
 
@@ -290,7 +295,7 @@ A simulação não grava nada e pode ser chamada quantas vezes for preciso.
 - **Conciliação:** Cobrança `pending` e valor pago igual ao dela → Pagamento `reconciled`, Cobrança `paid`, evento `InstallmentPaid`. Valor diferente (incompleto ou a mais), ou Cobrança que não está mais `pending` (vencida ou cancelada, por exemplo depois de uma Quebra) → Pagamento `unreconciled`, para o Gestor resolver na B11. O motivo que a B11 mostra vem dos dados: sem Cobrança, "Cobrança não encontrada"; valor diferente, "Valor diferente da parcela"; Cobrança encerrada, "Cobrança encerrada".
 - **Pagamento sem Cobrança:** o tenant vem da `external_reference` que o gateway devolve (a API a envia ao criar a Cobrança, com o tenant e o id da Cobrança). Sem nenhuma referência reconhecível, o Pagamento fica `unreconciled` sem tenant e vai para a fila do **admin da plataforma**, não da Credora.
 - **Quem cria a Cobrança:** a Cobrança da Entrada nasce com o Acordo, pelo evento `AgreementCreated`. A rota `POST /debtor/installments/{id}/charges` gera a Cobrança sob demanda: um Pix novo quando o anterior venceu (P08, estado 5) e o Pix das Parcelas seguintes (P09).
-- **Expiração:** o Pix vale até `PIX_EXPIRATION_HOURS` depois de emitido **ou** até o fim do último dia de pagamento da Parcela (23:59:59, fuso de São Paulo), o que vier primeiro. Último dia de pagamento: o vencimento, para a Entrada; o vencimento + `breach_tolerance_days`, para as outras Parcelas. Pedir de novo o Pix de uma Parcela com Cobrança vencida cria uma Cobrança nova; depois do último dia de pagamento, a rota devolve 409 `PAYMENT_WINDOW_CLOSED`.
+- **Expiração:** o Pix vale até `PIX_EXPIRATION_HOURS` depois de emitido **ou** até o fim do último dia de pagamento da Parcela (23:59:59, fuso de São Paulo), o que vier primeiro. Último dia de pagamento: o vencimento, para a Entrada; o vencimento + `breach_tolerance_days` (da versão da Política do Acordo, seção 5.4), para as outras Parcelas. Pedir de novo o Pix de uma Parcela com Cobrança vencida cria uma Cobrança nova; depois do último dia de pagamento, a rota devolve 409 `PAYMENT_WINDOW_CLOSED`.
 - **Acordo encerrado:** ao receber `AgreementBreached` ou `AgreementCanceled`, o `payment` cancela as Cobranças `pending` daquele Acordo. Um pagamento que ainda chegue para elas cai na B11 ("Cobrança encerrada").
 - **Pagamento depois da Quebra:** não vira crédito nem estorno no MVP. Vai para a B11, e o Gestor resolve à mão (`POST /payments/{id}/resolve`, com nota).
 
@@ -299,7 +304,8 @@ A simulação não grava nada e pode ser chamada quantas vezes for preciso.
 **Regra de ouro: uma Quebra nunca é desfeita.** A Ana nunca vê "acordo cancelado" para depois ver o acordo voltar.
 
 - O job de Quebra roda todo dia às `BREACH_JOB_CRON` (03:00), 3 horas depois do fim do último dia de pagamento. Como o Pix já venceu às 23:59:59 (seção 5.5), um pagamento feito no prazo teve tempo de chegar.
-- Procura Parcelas `pending` com `due_date + breach_tolerance_days < hoje`.
+- **Por condição, não por data:** qualquer passada a partir das 03:00 (fuso de São Paulo) quebra o que está vencido naquele dia. Se a API estava dormindo às 03:00, a primeira passada depois disso faz o trabalho; rodar duas vezes não quebra nada a mais (seção 9).
+- Procura Parcelas `pending` com `due_date + breach_tolerance_days < hoje`, com a tolerância da versão da Política do Acordo (seção 5.4).
 - **Antes de quebrar, confere pela `PaymentApi`** se há, para aquela Parcela: um Pagamento `reconciled` com `paid_at` até o fim do último dia de pagamento (o `InstallmentPaid` ainda não foi processado), ou um `webhook_event` recebido e ainda não processado para uma Cobrança dela. Se houver, a Parcela fica de fora hoje e é vista de novo na próxima passada. Para a Ana, nesse meio-tempo, vale "pagamento em processamento".
 - Pagamento dentro da tolerância, mas **menor** que a Parcela, é incompleto: fica `unreconciled` (B11), a Parcela continua `pending`, e o Acordo quebra normalmente.
 - Para cada Parcela que quebra: o Acordo vira `breached`, as Parcelas `pending` viram `canceled`, e o evento `AgreementBreached` leva o total pago.
@@ -363,7 +369,7 @@ A simulação não grava nada e pode ser chamada quantas vezes for preciso.
 - Cada Política tem **de 1 a 5 Faixas de atraso** (`policy_bucket_rule`). A primeira Política da Credora começa com as 5 Faixas padrão: 0–30, 31–90, 91–180, 181–360 e mais de 360 dias.
 - O Gestor edita os limites e os valores de cada Faixa, acrescenta (até 5) e remove (até sobrar 1).
 - Regras, validadas no rascunho e na publicação: a primeira começa em 0; as Faixas não se sobrepõem nem deixam buraco; só a última não tem teto (`max_overdue_days` nulo). Falha → `VALIDATION_FAILED`, com `errors[]` por Faixa.
-- **Quem lê as Faixas:** a Faixa de atraso de uma Dívida é sempre calculada com as Faixas da Política publicada da Credora. Os filtros da Fila, da Busca e do painel e o aging (`analytics.portfolio_aging`) usam essas Faixas, não uma lista fixa. Antes da primeira publicação, valem as 5 Faixas padrão.
+- **Quem lê as Faixas:** a Faixa de atraso de uma Dívida é sempre calculada com as Faixas da Política publicada da Credora. Os filtros da Fila e da Busca e o aging do painel (`analytics.portfolio_aging`) usam essas Faixas, não uma lista fixa. Antes da primeira publicação, valem as 5 Faixas padrão.
 
 ### 5.11 Marca da Credora
 
@@ -384,6 +390,8 @@ A simulação não grava nada e pode ser chamada quantas vezes for preciso.
 
 ### 5.13 Acesso do backoffice: senha e usuários
 
+- **Login sem escolher a Credora:** no MVP, um e-mail é de uma Credora só (Requisitos RN1.5; índice único `lower(email)` global em `identity.app_user`, `docs/lld/database.md`). `POST /auth/login` procura o usuário pelo e-mail fora do filtro de tenant, e o tenant da sessão vem do usuário encontrado. Por quê: a tela de login fica só com e-mail e senha; uma pessoa que trabalha para duas Credoras é necessidade de depois.
+- **Convite com e-mail já usado:** `POST /invitations` com um e-mail que já é de um usuário de qualquer Credora → 409 `EMAIL_ALREADY_IN_USE`. O aceite do convite confere de novo (dois convites para o mesmo e-mail em Credoras diferentes: o segundo aceite recebe o mesmo 409).
 - **Recuperar senha:** `POST /auth/password-resets` com o e-mail. A resposta é **sempre a mesma**, exista ou não o e-mail. Se existir, grava em `identity.password_reset` o hash de um token aleatório, válido por `PASSWORD_RESET_TTL` e de uso único, e publica `PasswordResetRequested`; o e-mail com o link vai para a caixa de saída.
 - **Nova senha:** `POST /auth/password-resets/{token}` com a nova senha (mesmos critérios do convite). Token vencido, usado ou inexistente → `PASSWORD_RESET_INVALID`. Trocar a senha revoga os refresh tokens do usuário.
 - **Gestão de usuários** (B12): `POST /invitations/{id}/resend` gera um token novo e invalida o anterior; `PATCH /users/{id}` muda o papel ou a situação. Desativar revoga os refresh tokens do usuário.
@@ -478,7 +486,8 @@ Os `code` estáveis que a API devolve. O texto que cada front mostra para cada u
 | `AGREEMENT_ALREADY_EXISTS` | 409 | Já há Acordo vivo para a Dívida (ao fechar, ao enviar Proposta ou ao registrar pagamento fora do Quita); `agreementId` no corpo | 5.4, 5.15 |
 | `DEBT_NOT_NEGOTIABLE` | 409 | Dívida contestada, quitada ou cancelada | 5.4, 5.15 |
 | `PAYMENT_WINDOW_CLOSED` | 409 | Pedido de Pix depois do último dia de pagamento da Parcela; `lastPaymentDate` no corpo | 5.5 |
-| `DEBTOR_LOCKED` | 409 | Outro Operador reservou o Devedor; `lockedBy` e `lockedUntil` no corpo | 5.8 |
+| `DEBTOR_LOCKED` | 409 | Outro usuário reservou o Devedor, ou `POST /proposals` sem a reserva; `lockedBy` e `lockedUntil` no corpo | 5.4, 5.8 |
+| `EMAIL_ALREADY_IN_USE` | 409 | Convite (ou aceite) com e-mail que já é de um usuário de qualquer Credora | 5.13 |
 | `IMPORT_ALREADY_RUNNING` | 409 | Já existe importação `processing` na Credora | 5.9 |
 | `IMPORT_FILE_INVALID` | 422 | Não é CSV, passou do tamanho ou das linhas, ou faltam colunas do modelo; `missingColumns` (nomes do modelo em português) no corpo | 5.9 |
 | `STALE_VERSION` | 409 | `version` desatualizada | seção 7 |
@@ -497,15 +506,16 @@ Os `code` estáveis que a API devolve. O texto que cada front mostra para cada u
 | Importação | `POST /portfolio-imports`, `GET /portfolio-imports`, `GET /portfolio-imports/{id}`, `GET /portfolio-imports/{id}/errors.csv`, `GET /portfolio-imports/template.csv` | gestor |
 | Devedores e Dívidas | `GET /debtors?q=`, `GET /debtors/{id}`, `GET /debtors/{id}/timeline`, `GET /debts`, `POST /debts` | gestor, operador |
 | Pagamento fora do Quita | `POST /debts/{id}/external-payment` | gestor |
-| Política | `GET /policies`, `POST /policies`, `PUT /policies/{id}`, `POST /policies/{id}/publish` | gestor |
+| Política | `GET /policies`, `POST /policies`, `PUT /policies/{id}`, `POST /policies/{id}/publish`, `POST /policies/simulations` (rascunho, sem gravar) | gestor |
 | Negociação | `POST /simulations`, `POST /proposals` (envia a Proposta à Ana; o aceite é só dela, no portal) | gestor, operador |
 | Acordos | `GET /agreements/{id}`, `GET /debtors/{id}/agreements` | gestor, operador |
 | Portal | `GET /debtor/debts`, `POST /debtor/simulations`, `POST /debtor/agreements`, `GET /debtor/proposals/{id}`, `POST /debtor/proposals/{id}/accept`, `GET /debtor/agreements`, `GET /debtor/agreements/{id}`, `POST /debtor/installments/{id}/charges` | Devedor |
 | Pagamentos | `GET /payments?status=unreconciled`, `POST /payments/{id}/resolve` | gestor (os sem tenant, só o admin) |
 | Fila e atendimento | `GET /work-queue`, `POST /debtors/{id}/lock`, `DELETE /debtors/{id}/lock`, `POST /debtors/{id}/interactions` | operador |
-| Analytics | `GET /analytics/summary`, `GET /analytics/recovery`, `GET /analytics/aging` | gestor, operador |
+| Analytics | `GET /analytics/summary`, `GET /analytics/recovery`, `GET /analytics/aging`; filtros `from`, `to` e `operatorId` (só gestor; o operador recebe só os números dele). Sem filtro de Faixa no MVP (F21): o aging já mostra o valor por Faixa | gestor, operador |
 | Tempo real | `GET /events/stream` | backoffice |
 | Webhook | `POST /webhooks/payment-gateway` | gateway |
+| Interno | `POST /internal/jobs/run` (cabeçalho `X-Jobs-Secret`; seção 9) | workflow agendado do GitHub Actions |
 | Gateway fake | `POST /fake-gateway/charges`, `POST /fake-gateway/charges/{id}/pay` | API, demo |
 
 ## 8. Segurança
@@ -530,6 +540,13 @@ Os `code` estáveis que a API devolve. O texto que cada front mostra para cada u
 | Eventos pendentes | a cada 5 min | Reprocessa eventos não concluídos do registro do Modulith |
 
 Todos percorrem as Credoras uma a uma, com o tenant definido em cada passada. Com uma instância só, não há trava distribuída; com mais de uma, seria preciso ShedLock (a definir).
+
+**API dormindo (ADR 0007):** o Render gratuito dorme depois de 15 min sem uso, e uma API dormindo nunca roda o job das 03:00. Por isso:
+- Os jobs continuam no processo (`@Scheduled`).
+- Um workflow agendado do GitHub Actions no `quita-backend-api` chama `POST /api/v1/internal/jobs/run` a cada hora, com o cabeçalho `X-Jobs-Secret` igual a `JOBS_TRIGGER_SECRET` (senão, 401). A chamada acorda a API e roda todos os jobs devidos. A rota não passa pelo proxy dos fronts.
+- **Todo job é idempotente e trabalha por condição**, não por data ("tudo o que venceu até agora"): rodar atrasado ou duas vezes é seguro. A Quebra e a Entrada vencida rodam em qualquer passada a partir das 03:00 daquele dia (seção 5.6).
+- **As leituras também conferem o vencimento:** aceitar uma Proposta confere `expires_at` (seção 5.4) e pagar confere a janela da Cobrança (seção 5.5). Um job atrasado só arruma o status.
+- Custo: com a API acordada o dia todo, um serviço gasta cerca de 744 das 750 horas gratuitas do Render no mês.
 
 ## 10. Gateway fake
 
@@ -564,6 +581,7 @@ Os exemplos numéricos da seção 5 são casos de teste obrigatórios.
 | `JWT_SECRET` | Assinatura dos tokens |
 | `GATEWAY_WEBHOOK_SECRET` | Assinatura do webhook |
 | `API_PUBLIC_URL` | Endereço público da API, para o gateway fake chamar o webhook |
+| `JOBS_TRIGGER_SECRET` | Segredo do cabeçalho `X-Jobs-Secret` de `POST /internal/jobs/run` (seção 9); o mesmo valor fica nos secrets do workflow |
 | `CORS_ALLOWED_ORIGINS` | Só no perfil `local` |
 | `JAVA_TOOL_OPTIONS` | Ajuste de memória da JVM |
 

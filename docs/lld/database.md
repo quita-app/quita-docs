@@ -71,6 +71,8 @@ Um schema por módulo da API. Cada módulo só escreve no próprio schema.
 - O filtro é aplicado pela camada de persistência (`@TenantId` do Hibernate), com o tenant tirado do token da requisição. Nenhuma consulta escreve o filtro à mão.
 - **Todo índice e toda restrição única de tabela com tenant começam por `tenant_id`.** Assim, o índice serve à consulta filtrada e duas Credoras podem ter o mesmo número de contrato.
 - Tabelas globais, sem tenant: `identity.creditor`, `identity.creditor_logo` (lida pelas rotas públicas do portal), `identity.password_reset` (o pedido chega sem tenant), `fake_gateway.*`, tabelas de bibliotecas.
+- **Exceção à regra do índice:** `identity.app_user` tem índice único `lower(email)` global, sem `tenant_id`. No MVP, um e-mail é de uma Credora só (Requisitos RN1.5), e o login acha o usuário só pelo e-mail.
+- **Exceção ao filtro:** o login procura o `app_user` pelo e-mail fora do filtro de tenant; o tenant da sessão vem do usuário encontrado.
 - **Exceção ao filtro:** a contagem de devedores ativos por Credora, na lista do admin (B13), é uma consulta própria fora do filtro de tenant, liberada só para o papel `platform_admin`, que devolve só a contagem.
 - Jobs que rodam para todas as Credoras (como a Quebra) percorrem as Credoras uma a uma, com o tenant definido em cada passada.
 - Defesa extra com Row Level Security do PostgreSQL: a definir (Fase 3).
@@ -134,7 +136,7 @@ Uma linha por relação; `||--o{` é "um para muitos".
 | --- | --- | --- |
 | `creditor` | `legal_name`, `display_name`, `document` (CNPJ), `slug` (único), `kind` (escola, clínica...), `plan`, `status`, `brand_color` (hex do tema claro, nulo = tema padrão), `support_email`, `support_phone`, `logo_version` | planejada |
 | `creditor_logo` | chave `creditor_id`, `content_type` (`image/png`, `image/webp`), `bytes` (`bytea`), `sha256`, `updated_at` | planejada |
-| `app_user` | `email`, `name`, `password_hash`, `role` (`platform_admin`, `manager`, `operator`), `status`, `last_login_at` · único `(tenant_id, email)` | planejada |
+| `app_user` | `email`, `name`, `password_hash`, `role` (`platform_admin`, `manager`, `operator`), `status`, `last_login_at` · único `lower(email)` em toda a tabela (global, seção 4) | planejada |
 | `user_invitation` | `email`, `role`, `token_hash`, `expires_at`, `accepted_at` | planejada |
 | `password_reset` | `user_id`, `token_hash` (único), `expires_at`, `used_at` | planejada |
 | `refresh_token` | `subject_type` (`user`, `debtor`), `subject_id`, `token_hash`, `family_id`, `expires_at`, `revoked_at`, `replaced_by_id` | planejada |

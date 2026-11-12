@@ -51,6 +51,8 @@ Requisitos = `docs/foundation/business-requirements.md`; API = `docs/lld/api.md`
 | RN1.3 | Código do Devedor: 6 dígitos, 10 min, 5 tentativas, depois 15 min de bloqueio | Equilíbrio entre segurança e atrito no celular | API 5.7 e 6 | F07 |
 | A1 | Pedir código responde sempre igual e a P03 nunca mostra o contato | Não revelar quem deve (enumeração) | API 5.7; ux P03 | F07 |
 | RN1.4 | Sessão do Devedor expira com 15 min sem uso | Celular compartilhado, dado financeiro | API 6; Portal 5 | F07 |
+| Portal 5 | O token do Devedor é renovado no `proxy` (e em Server Actions e route handlers), nunca num Server Component | Server Component não grava cookie | Portal 5 | F07 |
+| RN1.5 | Um e-mail é de uma Credora só (único em toda a plataforma); login só com e-mail e senha; convite com e-mail já usado → `EMAIL_ALREADY_IN_USE` | Login sem escolher a Credora; duas Credoras por pessoa fica para depois | Requisitos M1; API 5.13; Banco 4 | F02, F03 |
 | RN4.6 | Uma Credora por sessão; cookie com o caminho `/c/<slug>` | LGPD (cada Credora é dona dos dados), marca e isolamento | Requisitos M4; API 5.7; Portal 5 | F07 |
 | RF1.3 | Recuperar senha: resposta sempre igual, token de 1 h e uso único; trocar a senha revoga as sessões | Não revelar e-mails; link roubado vale pouco | API 5.13 | F02 |
 | RF1.1 | O admin cadastra nome de exibição, logo (PNG ou WebP, até 256 KB, sem SVG), cor (com contraste AA) e contato | O portal precisa da marca já no MVP; SVG pode carregar script | API 5.11; Requisitos M11 | F03 |
@@ -80,6 +82,7 @@ Requisitos = `docs/foundation/business-requirements.md`; API = `docs/lld/api.md`
 | --- | --- | --- | --- | --- |
 | RF3.1 | De 1 a 5 Faixas, começando pelas 5 padrão; sem sobreposição nem buraco; só a última sem teto | Liberdade para a Credora, com limite do mercado | API 5.10 | F06 |
 | RF3.2 | Política publicada é imutável; a Proposta aponta a versão que a regeu | Acordo feito não muda quando a regra muda | Banco 5.3 | F06 |
+| RF3.3 | O simulador do editor usa as regras não salvas (`POST /policies/simulations`) e não grava nada | Reagir à edição sem bater na checagem de `version` | API 5.3; Backoffice 9 | F06 |
 | RN3.2 | Valor atualizado = principal − pago + multa 2% + juros 1% a.m. pró-rata + correção da estratégia | Limites do CDC; nunca gravado, sempre calculado | API 5.2 | F05, F08 |
 | RN3.5 | Desconto = máximo × (máx. − n + 1) ÷ máx. | Menos parcelas, mais desconto | API 5.3 | F06, F08 |
 | RN3.1 | Parcela mínima R$ 50,00; o `n` máximo é recalculado | Parcela pequena custa mais do que rende | API 5.3 | F08 |
@@ -95,13 +98,16 @@ Requisitos = `docs/foundation/business-requirements.md`; API = `docs/lld/api.md`
 | RF7.4 | O Operador nunca cria Acordo: envia uma Proposta, e a Ana aceita no portal com "Li e concordo" | Sem o aceite dela, é um compromisso que ela não assinou | API 5.4 | F12 |
 | RN4.9 | Uma Proposta aberta por Dívida; a nova encerra a anterior (`canceled`) | A Ana nunca vê duas condições do Quita ao mesmo tempo | API 5.4; Banco 5.3 | F12 |
 | RN4.10 | Com Proposta aberta, a Ana pode fechar outra condição sozinha: o primeiro Acordo vale | O autoatendimento não fica refém do Operador | API 5.4 | F12 |
+| Portal 6 | A escolha do simulador viaja pela URL até a P07; a API recalcula na revisão e ao criar (`{ debtId, installments, downPayment }`) | Nada a perder ao recarregar; dinheiro nunca calculado no navegador | Portal 3, 6; API 5.4 | F09 |
+| 5.4 | `POST /proposals` exige a reserva do Devedor (409 `DEBTOR_LOCKED`) | Dois atendentes nunca negociam o mesmo Devedor (RN7.2) | API 5.4 | F12 |
 | RN4.3 | Um Acordo vivo por Dívida (índice único parcial; 409 `AGREEMENT_ALREADY_EXISTS`) | Duas confirmações simultâneas, um só Acordo | Banco 5.3; API 5.4 | F09 |
 | 5.4 | Enviar Proposta, criar Acordo e pagamento fora do Quita pegam a mesma trava por Dívida (`pg_advisory_xact_lock`) | Essas ações nunca se cruzam | API 5.4 | F09, F12 |
 | 5.4 | O aceite recalcula na data de referência da Proposta | Os juros que correm em 48 h não invalidam a Proposta; a Política nova invalida | API 5.4 | F09, F12 |
 | 5.4 | `Idempotency-Key` em criar Acordo e aceitar Proposta | Duplo clique não cria dois Acordos | API 5.4 e 7 | F09, F12 |
 | 5.4 | Entrada vence em 2 dias; Parcela `k` no mesmo dia do mês (ou no último dia) | Datas previsíveis para a Ana | API 5.4 | F09 |
-| RN5.1 | Tolerância de 10 dias (★) | Atraso curto não desfaz um Acordo | API 6 | F13 |
+| RN5.1 | Tolerância de 10 dias (★), da versão da Política que regeu a Proposta, pela vida inteira do Acordo (vale também para validade e parcela mínima) | Atraso curto não desfaz um Acordo; Política nova não muda acordo feito | API 5.4 e 6 | F09, F13 |
 | RN5.3 | Uma Quebra nunca é desfeita: o Pix vence no fim do prazo e a Quebra roda às 03:00 conferindo pagamentos no prazo | A Ana nunca vê "cancelado" e depois "ativo" | API 5.5 e 5.6 | F10, F13 |
+| 9 | Jobs idempotentes e por condição; um workflow do GitHub Actions chama `POST /internal/jobs/run` a cada hora e acorda a API; aceite e Pix conferem o vencimento na leitura | API dormindo não roda o job das 03:00 | ADR 0007; API 9 | F13 |
 | RN5.5 | Só quebra sem pagamento no prazo ou com pagamento incompleto | Pagou dentro da tolerância, está pago | API 5.6 | F13 |
 | RN5.2 | Na Quebra, o pago abate a Dívida, o desconto se perde e a Dívida volta a `open` e à Fila | O desconto era condicionado ao Acordo inteiro | API 5.6 | F13 |
 | RF7.7 / RN7.6 | Pagamento fora do Quita: só o Gestor, com nota; quita a Dívida, encerra a Proposta aberta, tira da Fila; recusado com Acordo vivo; não conta como recuperado | Zera uma Dívida sem dinheiro passar pelo Quita (risco de fraude) | API 5.15 | F12 |
@@ -137,7 +143,7 @@ Requisitos = `docs/foundation/business-requirements.md`; API = `docs/lld/api.md`
 | RN7.5 | O Acordo conta para o Operador que tinha o Devedor na Fila quando ele nasceu; sem Operador, só no total | Mérito de quem trabalhou o caso | API 5.12 | F11, F14 |
 | RN9.1 | O Operador vê só os números dele | Painel de equipe, não de vigilância | Requisitos M9 | F14 |
 | RN9.2 | Até 5 min de atraso, e a tela diz | Modelos de leitura por evento | Requisitos M9 | F14 |
-| RF9.3 | Filtros: período, Faixa, Operador, na URL | Sem filtro de Carteira (é uma só); safra na F21 | Backoffice 4 | F14 |
+| RF9.3 | Filtros: período e Operador (só gestor), na URL; sem filtro de Faixa (o aging já mostra por Faixa; F21) | `daily_recovery` não tem Faixa na chave; sem filtro de Carteira (é uma só); safra na F21 | Backoffice 4 | F14 |
 | M1 | Notificações da moldura só do SSE, sem histórico | A tabela entra com a Régua (F16) | Backoffice 3 | F02, F04 |
 
 ---
@@ -184,6 +190,15 @@ Requisitos = `docs/foundation/business-requirements.md`; API = `docs/lld/api.md`
 | 2026-11-12 | F12 de P para M (+1 dia); janelas da F12 em diante andam 1 dia; calendário anterior intacto | Tamanho honesto | Roadmap |
 | 2026-11-12 | Mantidos, depois de revisar: `raw_line`/`error_type`, `failure_reason`, `template.csv`, `PUT /creditors/{id}/logo`, `PASSWORD_RESET_TTL`, `operator_id` pela `CollectionApi`, BFF em `/c/[slug]/bff/...`, F03 em P "no limite" | Cada um serve a algo que o usuário pediu (ciclo de correção, marca, senha, números do Operador) ou a uma restrição técnica (cookie por caminho) | — |
 | 2026-11-12 | Prazo +1 dia aceito; comprovante em PDF fora do MVP; Acordo de Proposta conta para quem enviou; pagamento fora recusado com Acordo vivo | Seção 6 | roadmap, API 5.5 e 5.12, portal 3, banco 5.3, ux-writing P08/P09, prompt P09 |
+| 2026-11-12 | **Login sem escolher a Credora:** um e-mail é de uma Credora só no MVP (índice único `lower(email)` global em `identity.app_user`); convite com e-mail já usado → 409 `EMAIL_ALREADY_IN_USE`; o login acha o usuário fora do filtro de tenant | A tela de login fica só com e-mail e senha; quem trabalha para duas Credoras é necessidade de depois | Requisitos RN1.5; API 5.13, 7; Banco 4, 5.1; ux B12; B12 |
+| 2026-11-12 | **Renovação do token do Devedor no `proxy`:** Server Components só leem cookies; o `proxy` renova antes de renderizar a rota autenticada e grava os cookies na resposta; Server Actions e route handlers também podem renovar | Server Component não grava cookie | Portal 5, 10 |
+| 2026-11-12 | **Simulação com o rascunho:** `POST /policies/simulations` (gestor), sem estado, com as regras do formulário, as configurações gerais e `{ principalAmount, overdueDays }`; valida e não grava | O simulador reage à edição não salva; salvar a cada tecla bateria na checagem de `version` | Requisitos RF3.3; API 5.3, 7; Backoffice 9; roadmap F06 |
+| 2026-11-12 | **Simulador → revisão pela URL:** "Revisar acordo" leva `?installments=&downPayment=`; a P07 recalcula no servidor pela API; "Fechar acordo" envia `{ debtId, installments, downPayment }` com `Idempotency-Key`, e a API recalcula ao criar | Nada a perder ao recarregar, link válido na sessão, dinheiro nunca calculado no navegador | Portal 3, 6; API 5.4; prompts README (rota da P07) |
+| 2026-11-12 | **Jobs com a API dormindo:** `@Scheduled` no processo e um workflow agendado do GitHub Actions chamando `POST /internal/jobs/run` a cada hora (`X-Jobs-Secret` = `JOBS_TRIGGER_SECRET`, senão 401); jobs idempotentes e por condição; aceite e Pix conferem o vencimento na leitura | Sem chamada que acorde a API, o job das 03:00 nunca roda; a API acordada gasta cerca de 744 das 750 horas gratuitas do Render | ADR 0007; HLD 11; API 5.6, 7, 9, 12; roadmap F13 |
+| 2026-11-12 | **Filtro por Faixa no painel fora do MVP:** filtros da B14 = período e Operador (só gestor); o aging já mostra o valor por Faixa; filtro por Faixa na F21 | `daily_recovery` não tem Faixa na chave; acrescentar multiplica o modelo de leitura por um filtro que ninguém pediu | Requisitos RF9.3; API 5.10, 7; Backoffice 4, 8; ux B14; B14; roadmap F14, F21 |
+| 2026-11-12 | **`POST /proposals` exige a reserva do Devedor:** sem ela, 409 `DEBTOR_LOCKED` com `lockedBy` e `lockedUntil` | RN7.2: dois atendentes nunca negociam o mesmo Devedor; a B06 vive na ficha, que já reserva | API 5.4, 7 |
+| 2026-11-12 | **A versão da Política que vale é a da Proposta:** `proposal_validity_hours`, `breach_tolerance_days` e `min_installment_amount` da versão da Proposta valem para o Acordo inteiro; Quebra e janela do Pix leem por Acordo → Proposta → versão | Publicar uma Política nova nunca muda acordos já feitos (RF3.2) | Requisitos RN5.1; API 5.4, 5.5, 5.6; ux P07, P09; P07, P09 |
+| 2026-11-12 | **Sem `docs/design-system.md`:** o design system é o `design/DESIGN.md` mais os tokens; o portal guarda uma cópia do CSS dos tokens; sem pacote no GitHub Packages nem `NPM_TOKEN` | Um consumidor fora do monorepo não justifica um registro de pacotes; rever com um terceiro app | HLD "Design system", 12; Backoffice 14; Portal 1, 11; AGENTS; PRODUCT; F01 PRD e spec |
 
 ---
 
@@ -200,7 +215,7 @@ Base: `git diff` de `docs/lld/database.md` e `docs/lld/api.md` contra a versão 
 | `identity.creditor` | + `display_name`, `brand_color`, `support_email`, `support_phone`, `logo_version` | F02 cria a tabela; F03 acrescenta as colunas de marca | `POST /creditors`, `GET /public/creditors/{slug}` | B13, P01, P02, P09 |
 | `identity.creditor_logo` | Nova (global, sem tenant) | F03 | `PUT /creditors/{id}/logo`, `GET /public/creditors/{slug}/logo/{sha256}` | B13, P01 |
 | `identity.password_reset` | Nova (global) | F02 | `POST /auth/password-resets`, `POST /auth/password-resets/{token}` | B01 |
-| `identity.app_user` | `role`: `platform_admin`, `manager`, `operator` (sem `auditor`) | F02 | `PATCH /users/{id}`, `POST /invitations` | B02, B12 |
+| `identity.app_user` | `role`: `platform_admin`, `manager`, `operator` (sem `auditor`); índice único `lower(email)` global, no lugar de `(tenant_id, email)` | F02 | `PATCH /users/{id}`, `POST /invitations` | B02, B12 |
 | `portfolio.portfolio_import` | + `failure_reason` (`early_fail_rate`, `unexpected`) | F04 | `GET /portfolio-imports/{id}` | B08 |
 | `portfolio.import_row_error` | + `error_type`, `raw_line`; várias linhas por `row_number` | F04 | `GET /portfolio-imports/{id}/errors.csv` | B08 |
 | `portfolio.debtor` | `phone` só dígitos; índice `(tenant_id, phone)` | F04 (tabela); F05 (índice) | `GET /debtors?q=`, `POST /debts` | B04 |
@@ -237,19 +252,22 @@ Base: `git diff` de `docs/lld/database.md` e `docs/lld/api.md` contra a versão 
 | Rotas novas | `POST /auth/password-resets`, `POST /auth/password-resets/{token}` | F02 |
 | Rotas novas | `PUT /creditors/{id}/logo`, `PATCH /users/{id}`, `POST /invitations/{id}/resend`, `GET /public/creditors/{slug}`, `GET /public/creditors/{slug}/logo/{sha256}` | F03, F07 |
 | Rotas novas | `GET /portfolio-imports/template.csv`, `POST /debts` | F04, F05 |
+| Rotas novas | `POST /policies/simulations` (rascunho, sem gravar) | F06 |
 | Rotas novas | `GET /debtor/agreements` | F08 |
 | Rotas novas | `GET /debtor/proposals/{id}`, `POST /debtor/proposals/{id}/accept`, `POST /debts/{id}/external-payment` | F12 |
 | Rota removida | `POST /proposals/{id}/accept` (backoffice): o aceite é só da Ana | F12 |
+| Rotas novas | `POST /internal/jobs/run` (cabeçalho `X-Jobs-Secret`, fora do proxy dos fronts) | F13 |
+| Rota de tela nova | Portal `/c/[slug]/debts/[debtId]/review?installments=&downPayment=` (P07) | F09 |
 | Rota de tela nova | Portal `/c/[slug]/proposals/[proposalId]`; backoffice `/password-reset`, `/password-reset/:token` | F12, F02 |
-| Códigos novos | `PASSWORD_RESET_INVALID` (F02), `NO_PUBLISHED_POLICY` (F08), `PAYMENT_WINDOW_CLOSED` (F10); `PROPOSAL_EXPIRED` e `AGREEMENT_ALREADY_EXISTS` com novos casos (F12) | — |
-| Jobs | Entrada vencida: de a cada hora para 03:00 com conferência; Proposta vencida publica `ProposalClosed`; aging pelas Faixas publicadas; "Reservas vencidas" removido | F13, F14 |
-| Valores novos | `IMPORT_EARLY_FAIL_RATE`, `PASSWORD_RESET_TTL`, `CREDITOR_LOGO_MAX_SIZE`, `CREDITOR_LOGO_MAX_DIMENSION`; `PIX_EXPIRATION_HOURS` limitado ao último dia; `BREACH_JOB_CRON` explicado | — |
+| Códigos novos | `PASSWORD_RESET_INVALID` (F02), `NO_PUBLISHED_POLICY` (F08), `PAYMENT_WINDOW_CLOSED` (F10); `PROPOSAL_EXPIRED` e `AGREEMENT_ALREADY_EXISTS` com novos casos (F12); `EMAIL_ALREADY_IN_USE` (F03); `DEBTOR_LOCKED` também em `POST /proposals` sem a reserva (F12) | — |
+| Jobs | Entrada vencida: de a cada hora para 03:00 com conferência; Proposta vencida publica `ProposalClosed`; aging pelas Faixas publicadas; "Reservas vencidas" removido; todos por condição e idempotentes, disparados também pelo workflow de hora em hora (GitHub Actions no `quita-backend-api`) | F13, F14 |
+| Valores novos | `IMPORT_EARLY_FAIL_RATE`, `PASSWORD_RESET_TTL`, `CREDITOR_LOGO_MAX_SIZE`, `CREDITOR_LOGO_MAX_DIMENSION`; `PIX_EXPIRATION_HOURS` limitado ao último dia; `BREACH_JOB_CRON` explicado; variável `JOBS_TRIGGER_SECRET` (F13); `NPM_TOKEN` removido do portal | — |
 
 ---
 
 ## 5. Telas a regenerar no protótipo
 
-Todas já regeneradas, com status "gerada (auditoria), a revisar" em `design/prompts/README.md`.
+Todas já regeneradas, com status "gerada (auditoria), a revisar" em `design/prompts/README.md`, menos a B14, que volta a "a regenerar (auditoria)" (filtro por Faixa fora do MVP).
 
 | Tela | O que mudou |
 | --- | --- |
@@ -272,7 +290,7 @@ Todas já regeneradas, com status "gerada (auditoria), a revisar" em `design/pro
 | B11 | Motivo "cobrança encerrada"; sem crédito nem estorno |
 | B12 | Papéis gestor e operador (Pedro Nunes vira operador) |
 | B13 | Seção "Portal da credora" (marca e contato) |
-| B14 | Sem filtro de Carteira; blocos da F21 marcados |
+| B14 | Sem filtro de Carteira; blocos da F21 marcados; **a regenerar:** sem a pílula de Faixa (filtros = período e operador, este só para a gestora) |
 
 Sem mudança: P00, P02, P05, P10, B09 e o D1 (dark mode, refeito depois das regeneradas).
 

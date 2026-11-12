@@ -207,7 +207,7 @@ SSE para o que só vai do servidor ao navegador (progresso de importação, noti
 
 ### Design system
 
-Os tokens visuais têm uma fonte só e chegam aos três fronts (Angular, React, Next.js) pelo mesmo pacote. Como o pacote é distribuído: a definir (ver Questões em aberto).
+O design system é o `design/DESIGN.md` (gerado com o projeto do Claude Design) mais os tokens. Os tokens têm uma fonte só, `libs/shared/design-tokens` no monorepo do backoffice, usada pelo Angular e pelo React. No MVP, o portal guarda uma **cópia** do CSS dos tokens, como no walking skeleton: um consumidor fora do monorepo não justifica um registro de pacotes. Rever quando houver um terceiro app.
 
 ## 9. Implantação e ambientes
 
@@ -262,6 +262,7 @@ Decisões que ficam só no texto: SSE no lugar de WebSocket (seção "Tempo real
 | Risco | Mitigação |
 | --- | --- |
 | API dorme e o primeiro acesso demora cerca de 1 minuto | Estado "acordando" com nova tentativa nos fronts; aviso na demo |
+| API dormindo não roda os jobs agendados (a Quebra das 03:00) | Um workflow agendado do GitHub Actions acorda a API a cada hora e roda os jobs devidos; jobs idempotentes, por condição (LLD da API, seção 9) |
 | Memória curta da hospedagem gratuita para a JVM | Ajuste de memória da JVM; medir no walking skeleton |
 | Shell e remotes com versões incompatíveis das bibliotecas compartilhadas | Versões alinhadas no monorepo; o manifesto nunca fica em cache |
 | Estilo do React dentro do shell Angular vazando ou faltando | Web Component com estilos encapsulados e os mesmos tokens |
@@ -271,7 +272,7 @@ Decisões que ficam só no texto: SSE no lugar de WebSocket (seção "Tempo real
 ## 12. Questões em aberto
 
 - [x] Variante de federação: Native Federation (ADR 0012).
-- [ ] Como distribuir o pacote de tokens visuais entre os repos (pacote no GitHub Packages, ou outro).
+- [x] Distribuição dos tokens: o portal guarda uma cópia do CSS no MVP; sem pacote (seção "Design system").
 - [ ] Banco de prévia por PR com branch do Neon: sim ou não.
 - [ ] Domínio próprio para a demo (custo baixo, mas não zero).
 - [x] Pagamento depois da Quebra: sem crédito nem estorno no MVP; vai para a conciliação manual (LLD da API, 5.6).

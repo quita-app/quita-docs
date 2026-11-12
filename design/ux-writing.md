@@ -104,6 +104,7 @@ Valem em todas as telas. Cada tela usa estes textos salvo quando o catálogo (se
 | `ACCESS_CODE_LOCKED` | Por segurança, o acesso foi pausado por 15 minutos. Tente de novo às {hora}. |
 | `ACCESS_CODE_RATE_LIMITED` | Você já pediu 3 códigos nos últimos 15 minutos. Tente de novo às {hora}. |
 | `DEBTOR_LOCKED` | {nome} está atendendo este Devedor até {hora}. Você pode ver, mas não negociar. |
+| `EMAIL_ALREADY_IN_USE` | Este e-mail já tem acesso ao Quita. Use outro e-mail. |
 | `INVALID_CREDENTIALS` | E-mail ou senha incorretos. |
 | `LOGIN_RATE_LIMITED` | Muitas tentativas. Tente de novo em 1 minuto. |
 | `IMPORT_ALREADY_RUNNING` | Aguarde a importação em andamento terminar para enviar outra. |
@@ -180,7 +181,7 @@ Só o que é específico de cada tela. Títulos (T), textos de apoio (A), botõe
 ### P07 · Revisar e fechar
 - T: Confira seu acordo
 - Linhas: {n} parcelas · Total {total} · {p}% de desconto · cronograma com datas
-- A (regra de atraso, RN5.1 e RN5.2): Se uma parcela atrasar mais de {tolerância} dias, o acordo é cancelado e o desconto deixa de valer. O que você já pagou é descontado da dívida.
+- A (regra de atraso, RN5.1 e RN5.2): Se uma parcela atrasar mais de {tolerância} dias, o acordo é cancelado e o desconto deixa de valer. O que você já pagou é descontado da dívida. ({tolerância}: da versão da Política que rege esta condição, ver P09.)
 - A (ativação): O acordo começa a valer quando a entrada for paga.
 - Caixa: Li e concordo com as condições
 - B: **Fechar acordo** · Voltar e mudar · (carregando) Fechando
@@ -210,7 +211,7 @@ Só o que é específico de cada tela. Títulos (T), textos de apoio (A), botõe
 - M (quitado): **Dívida quitada.** Você pagou tudo o que combinou com a {credora}.
 - M (quebrado, RN5.2): Este acordo foi cancelado porque a parcela de {data} atrasou mais de {tolerância} dias. Os {valor pago} que você pagou foram descontados da dívida. · **Ver como pagar o restante**
 - Ajuda: Precisa mudar o acordo? Fale com a {credora}: {telefone} · {e-mail}.
-- {tolerância} = `breach_tolerance_days` da Política publicada (10 dias no exemplo da Ana); {telefone} e {e-mail} = contato do cadastro da credora.
+- {tolerância} = `breach_tolerance_days` da versão da Política que regeu a proposta do acordo, a mesma pela vida inteira dele (10 dias no exemplo da Ana); {telefone} e {e-mail} = contato do cadastro da credora.
 
 ### P10 · Estados globais
 - Usa só os padrões da seção 6.
@@ -312,7 +313,7 @@ Só o que é específico de cada tela. Títulos (T), textos de apoio (A), botõe
 ### B12 · Usuários
 - Papéis: Gestor · Operador (não há papel só leitura)
 - B: **Convidar pessoa** · Reenviar convite · Mudar papel · Desativar
-- M: Este e-mail já foi convidado. · Convite enviado para {email}. · Convite reenviado para {email}. O link anterior deixou de valer. · Papel alterado.
+- M: Este e-mail já foi convidado. · Este e-mail já tem acesso ao Quita. Use outro e-mail. (`EMAIL_ALREADY_IN_USE`: no MVP, um e-mail é de uma credora só) · Convite enviado para {email}. · Convite reenviado para {email}. O link anterior deixou de valer. · Papel alterado.
 - Confirmação de desativar: Desativar {nome}? A pessoa sai do Quita na hora e não entra mais. · **Desativar** / Cancelar → Usuário desativado
 
 ### B13 · Credoras
@@ -327,7 +328,7 @@ Só o que é específico de cada tela. Títulos (T), textos de apoio (A), botõe
 - MVP (F14): Recuperado no mês · Taxa de recuperação · Acordos ativos · Quebrados no mês · recuperação por semana · aging por Faixa da Política publicada. Conversão do autoatendimento, funil e ranking de operadores são da F21 (o hi-fi mostra o painel completo como visão de futuro).
 - KPIs: Recuperado no mês · Taxa de recuperação · Acordos ativos · Quebrados no mês · Conversão do autoatendimento (F21)
 - Linha de contexto dos KPIs: comparação com o mês anterior ("+2,1 pontos sobre outubro"), nunca com meta (o produto não tem meta cadastrada)
-- Filtros: Período · Faixa · Operador (não há filtro de carteira: a carteira é uma só; a comparação por safra é da F21)
+- Filtros: Período · Operador (só para o gestor). Sem filtro de Faixa no MVP: o card de aging já mostra o valor por Faixa (filtro na F21). Sem filtro de carteira: a carteira é uma só; a comparação por safra é da F21
 - KPI extra no lugar da meta (F21): **Tempo até o acordo** · mediana de 3 min 40 s do primeiro acesso ao portal até o acordo fechado (calculado com o horário do código de acesso e o da criação do Acordo)
 - KPI extra (F21): **Promessas cumpridas** · 72% das promessas de pagamento do mês foram pagas até a data
 - A: Números atualizados há {n} minutos.

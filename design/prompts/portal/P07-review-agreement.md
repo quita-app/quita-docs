@@ -36,4 +36,4 @@ Confirmar exatamente o que ela está aceitando, sem letra miúda escondida.
 ## Notas
 
 - O texto sobre atraso é informação, não ameaça: tom neutro, sem vermelho.
-- Os "10 dias" vêm da tolerância de quebra da Política da credora (`breach_tolerance_days`); outra credora pode ter outro número. No hi-fi, use 10.
+- Os "10 dias" vêm da tolerância de quebra da versão da Política que regeu a proposta (`breach_tolerance_days`); outra credora pode ter outro número. No hi-fi, use 10.

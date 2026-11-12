@@ -140,6 +140,7 @@ A distribuição entre apps é uma **proposta** para o HLD decidir:
 - RN1.2 Permissões por papel: o operador não altera política, não importa dívidas e não registra pagamento fora do Quita; o gestor faz tudo na credora dele. Um papel só de leitura não entra no MVP (ideia futura, seção 8).
 - RN1.3 Código de acesso do devedor: 6 dígitos, válido por 10 min, no máximo 5 tentativas; depois, bloqueio de 15 min.
 - RN1.4 Sessão do devedor expira após 15 min sem atividade.
+- RN1.5 No MVP, um e-mail pertence a **uma credora só** (único em toda a plataforma). Por isso o login é só e-mail e senha, sem escolher a credora: a credora vem do usuário encontrado. Convidar um e-mail que já é de um usuário ativo de qualquer credora é recusado. Uma pessoa que trabalha para duas credoras é necessidade de depois.
 
 ---
 
@@ -170,7 +171,7 @@ A distribuição entre apps é uma **proposta** para o HLD decidir:
 **RF**
 - RF3.1 Gestor configura a política por faixa de atraso: desconto máximo, número máximo de parcelas, entrada mínima, juros de parcelamento. Cada credora tem **de 1 a 5 faixas**: começa com as 5 da tabela abaixo, e o gestor edita os limites, remove (mínimo 1) e acrescenta (máximo 5), sem sobreposição nem buraco, e só a última sem teto. Filtros e painel usam as faixas da política publicada.
 - RF3.2 Política tem **versões**: editar cria uma versão nova com data de início, sem afetar acordos já feitos.
-- RF3.3 Simulador interno: o gestor testa a política com uma dívida de exemplo antes de publicar.
+- RF3.3 Simulador interno: o gestor testa a política com uma dívida de exemplo antes de publicar, inclusive com as regras ainda não salvas do rascunho (nada é gravado).
 - RF3.4 Operador pode pedir **exceção** (desconto acima da política), que o gestor aprova ou recusa (Fase 2, F15).
 
 **RN (propostas)** · faixas padrão de uma credora nova
@@ -243,7 +244,7 @@ A distribuição entre apps é uma **proposta** para o HLD decidir:
 
 **RN**
 - RN5.0 Um acordo é de **uma dívida só** no MVP. Quem tem duas dívidas fecha dois acordos. Juntar várias dívidas num acordo é questão da Fase 2 (seção 8).
-- RN5.1 Tolerância de quebra: parcela com mais de 10 dias de atraso quebra o acordo (configurável por credora).
+- RN5.1 Tolerância de quebra: parcela com mais de 10 dias de atraso quebra o acordo (configurável por credora). Vale a tolerância da versão da política que regeu a proposta do acordo, pela vida inteira dele: publicar uma política nova não muda acordos já feitos (RF3.2).
 - RN5.2 Na quebra, o que já foi pago abate o principal e a dívida volta a "em aberto" com o saldo recalculado.
 - RN5.3 Um acordo nunca quebra para depois "desquebrar". Por isso: o Pix de uma parcela vale até o fim do último dia em que ela pode ser paga (vencimento + tolerância; para a entrada, o próprio vencimento), e a quebra só roda horas depois desse fim, conferindo antes que nenhum pagamento feito no prazo ficou para trás. Enquanto o aviso do banco não chega, o devedor vê "pagamento em processamento".
 - RN5.4 Toda mudança de estado gera um evento (ex.: `AgreementBreached`) que outros módulos escutam (régua, painel, notificações).
@@ -308,7 +309,7 @@ A distribuição entre apps é uma **proposta** para o HLD decidir:
 **RF**
 - RF9.1 Indicadores: valor recuperado, taxa de recuperação, acordos ativos e quebrados, ticket médio.
 - RF9.2 Gráficos: recuperação no tempo, aging da carteira, funil (devedores → simulação → proposta → acordo → quitado), ranking de operadores.
-- RF9.3 Filtros combináveis (período, faixa, operador) refletidos na URL (link compartilhável). A comparação por safra (mês em que a dívida entrou no Quita) é da Fase 3 (F21).
+- RF9.3 Filtros combináveis (período e operador; o operador só para o gestor) refletidos na URL (link compartilhável). O card de aging já mostra o valor por faixa; o filtro por faixa e a comparação por safra (mês em que a dívida entrou no Quita) são da Fase 3 (F21).
 - RF9.4 Exportar o relatório (CSV no MVP; PDF na F21).
 
 **RN**

@@ -17,14 +17,14 @@ Responder "quanto recuperamos, onde e com quem?" num olhar. É a tela que vende 
 
 ## Conteúdo
 
-- Filtros no topo, em pílula: período (este mês), Faixa de atraso, operador. Os filtros vão para o endereço da página (link compartilhável). Não há filtro de Carteira: a Carteira é o conjunto de todas as dívidas da credora; a comparação por safra (mês em que a dívida entrou) é da F21.
+- Filtros no topo, em pílula: período (este mês) e operador (só para a gestora). Os filtros vão para o endereço da página (link compartilhável). Não há filtro de Faixa no MVP: o card de aging já mostra o valor por Faixa (o filtro é da F21). Não há filtro de Carteira: a Carteira é o conjunto de todas as dívidas da credora; a comparação por safra (mês em que a dívida entrou) é da F21.
 - Bento grid com:
   - **Recuperado no mês: R$ 184.320,00** (card de destaque, a cor de assinatura).
   - **Taxa de recuperação: 23,4%**.
   - **Acordos ativos: 412** · **Quebrados no mês: 37** (taxa de quebra 8,2%).
   - **Conversão do autoatendimento: 31%** (devedores que acessaram o portal e fecharam acordo). **F21**, fora do MVP.
   - Gráfico de recuperação por semana (barras; considere o estilo hachurado das referências).
-  - Aging da carteira: quanto está em cada Faixa de atraso, com as Faixas da Política publicada (de 1 a 5; no exemplo, as 5 padrão). O filtro de Faixa usa a mesma lista.
+  - Aging da carteira: quanto está em cada Faixa de atraso, com as Faixas da Política publicada (de 1 a 5; no exemplo, as 5 padrão).
   - Funil: acessaram o portal → simularam → fecharam acordo → pagaram a entrada → quitaram. **F21**, fora do MVP.
   - Ranking de operadores (só para o gestor). **F21**, fora do MVP.
 - Os blocos marcados **F21** ficam no hi-fi como visão de futuro, com uma etiqueta discreta "em breve"; o MVP (F14) entrega os indicadores, a recuperação por semana e o aging.
@@ -34,7 +34,7 @@ Responder "quanto recuperamos, onde e com quem?" num olhar. É a tela que vende 
 ## Estados
 
 1. Visão do gestor.
-2. Visão do operador (sem ranking, números só dele: os Acordos e o valor recuperado dos Devedores que estavam na Fila dele quando o Acordo nasceu).
+2. Visão do operador (sem ranking e sem a pílula de operador, números só dele: os Acordos e o valor recuperado dos Devedores que estavam na Fila dele quando o Acordo nasceu).
 3. Carregando por card (cada card tem o próprio esqueleto).
 4. Um card com erro, sem derrubar os outros: "Não foi possível carregar este gráfico" com **Tentar de novo**.
 5. Período sem dados: "Ainda não há acordos neste período."

@@ -2,7 +2,7 @@
 
 2026-11-10 · helloWorldRuan · Status: aprovado
 
-Como o backoffice funciona por dentro: o monorepo Nx, o shell, os remotes, a comunicação entre eles, rotas, estado, chamadas à API e testes. A composição dos micro front-ends está no HLD (seção "Arquitetura") e nos ADRs 0002 e 0012; o contrato da API, em `docs/lld/api.md`; a identidade visual e os componentes, em `docs/design-system.md` (a criar).
+Como o backoffice funciona por dentro: o monorepo Nx, o shell, os remotes, a comunicação entre eles, rotas, estado, chamadas à API e testes. A composição dos micro front-ends está no HLD (seção "Arquitetura") e nos ADRs 0002 e 0012; o contrato da API, em `docs/lld/api.md`; a identidade visual e os componentes, em `design/DESIGN.md`.
 
 ## Onde mora cada fato
 
@@ -10,7 +10,7 @@ Como o backoffice funciona por dentro: o monorepo Nx, o shell, os remotes, a com
 | --- | --- |
 | Rotas e telas do backoffice | Este documento, seção 5 |
 | Forma das chamadas e respostas da API | Tipos gerados do `openapi.json` (ADR 0011) |
-| Cores, tipografia, componentes visuais | `docs/design-system.md` |
+| Cores, tipografia, componentes visuais | `design/DESIGN.md` |
 | Comandos (servir, testar, gerar) | `AGENTS.md` do `quita-backoffice-web` |
 
 ## 1. Stack
@@ -24,7 +24,7 @@ Como o backoffice funciona por dentro: o monorepo Nx, o shell, os remotes, a com
 | Estado no Angular | Signals + NgRx SignalStore por funcionalidade; RxJS para fluxos assíncronos | Seção 6 |
 | Estado no React | TanStack Query (dados do servidor) + estado local; filtros vindos do shell | Seção 8 |
 | Formulários | Reactive Forms tipados | Formulários dinâmicos e validação cruzada da Política |
-| Estilo e componentes | Tailwind + Spartan UI (Angular) + shadcn/ui (React), com tokens compartilhados | Decisão final em `docs/design-system.md` |
+| Estilo e componentes | Tailwind + Spartan UI (Angular) + shadcn/ui (React), com tokens compartilhados | `design/DESIGN.md` |
 | Tabelas | TanStack Table (adaptadores Angular e React) | O mesmo modelo de tabela nos dois frameworks |
 | Gráficos | Recharts | Padrão de mercado no React |
 | Tipos da API | `openapi-typescript` | ADR 0011 |
@@ -96,7 +96,7 @@ Uma lib de Angular nunca é importada pelo React, e vice-versa; o que é comum a
 | Direção | Mecanismo | O quê |
 | --- | --- | --- |
 | Shell → Analytics | propriedade `getAccessToken` | Função que devolve o token atual (o Analytics nunca guarda token) |
-| Shell → Analytics | propriedade `filters` | Filtros atuais (período, Faixa, Operador). Não há filtro de Carteira: a Carteira é uma só por Credora (`GLOSSARY.md`); a comparação por safra é da F21 |
+| Shell → Analytics | propriedade `filters` | Filtros atuais: `{ from, to, operatorId? }` (período e Operador; o Operador só para o gestor). Sem filtro de Faixa no MVP: `daily_recovery` não tem Faixa na chave, e o card de aging já mostra o valor por Faixa (filtro na F21). Sem filtro de Carteira: a Carteira é uma só por Credora (`GLOSSARY.md`); a safra é da F21 |
 | Shell → Analytics | propriedade `user` | Nome, papel e tenant, para o Operador ver só os números dele |
 | Analytics → Shell | evento `quita-filters-change` | Novos filtros; o shell grava na URL |
 | Analytics → Shell | evento `quita-navigate` | Pede ao shell para navegar (ex.: abrir a ficha de um Devedor) |
@@ -186,7 +186,7 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 - **Dados:** TanStack Query, com a chave da consulta derivada dos filtros; tempo de "dado fresco" de 60 s (o painel tem até 5 min de atraso por natureza).
 - **Componentização:** um hook por consulta (`useRecoverySummary(filters)`), um componente por indicador ou gráfico, `memo` só onde o perfil do React mostrar render desnecessário.
 - **Estados:** carregando (esqueleto do card), vazio ("ainda sem acordos no período"), erro por card (um gráfico quebrado não derruba o painel, com error boundary por card).
-- **Faixas:** o filtro de Faixa e o gráfico de aging usam as Faixas da Política publicada, que vêm da API (`/analytics/aging`), nunca uma lista fixa.
+- **Faixas:** o gráfico de aging usa as Faixas da Política publicada, que vêm da API (`/analytics/aging`), nunca uma lista fixa. O filtro por Faixa é da F21.
 - **Números por Operador:** a visão do Operador lê `operator_performance` (LLD da API, 5.12); funil, conversão e ranking ficam para a F21.
 - **Exportação:** CSV gerado no navegador a partir dos dados da tela; PDF fica para a Fase 3.
 - **Propriedades do Web Component como fonte externa:** o shell muda `filters` e `user` por fora do React; a árvore lê esses valores por uma assinatura externa (`useSyncExternalStore`), sem cópia em estado local.
@@ -198,7 +198,7 @@ Artefatos reutilizáveis planejados em `libs/angular/ui` e `libs/angular/data-ac
 
 - Formulário reativo tipado com um `FormArray` de regras por Faixa de atraso: de 1 a 5 Faixas. A primeira Política começa com as 5 Faixas padrão (0–30, 31–90, 91–180, 181–360, > 360); o Gestor edita, acrescenta até 5 e remove até sobrar 1 (LLD da API, 5.10).
 - **Validação cruzada:** a primeira Faixa começa em 0; as Faixas não se sobrepõem, não deixam buraco e só a última não tem teto; de 1 a 5 Faixas; desconto entre 0 e 100%; Parcelas ≥ 1; Entrada mínima entre 0 e 100%.
-- **Simulador ao lado:** mudar a regra recalcula, na API, uma Dívida de exemplo (com o mesmo controle de tempo da busca).
+- **Simulador ao lado:** mudar a regra recalcula, na API, uma Dívida de exemplo (com o mesmo controle de tempo da busca), por `POST /policies/simulations`: o corpo leva as regras como estão no formulário, sem salvar, as configurações gerais e `{ principalAmount, overdueDays }`. Nada é gravado, então o simulador não mexe na `version` do rascunho (LLD da API, 5.3).
 - **Concorrência:** salvar envia a `version`; um 409 `STALE_VERSION` mostra o que mudou e oferece recarregar.
 - **Saída sem salvar:** guarda de rota pergunta antes de descartar alterações.
 
@@ -237,5 +237,5 @@ No texto: SignalStore em vez do NgRx Store clássico (seção 6); filtros do pai
 ## 14. Questões em aberto
 
 - [ ] Biblioteca de componentes final (decidida no design system).
-- [ ] Distribuição dos tokens para o portal (pacote no GitHub Packages da org): `docs/design-system.md`.
+- [x] Distribuição dos tokens para o portal: o portal guarda uma cópia do CSS no MVP, sem pacote (HLD, "Design system").
 - [ ] Prévia por PR com manifesto apontando para as prévias dos remotes.

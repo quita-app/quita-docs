@@ -74,7 +74,7 @@ Nenhuma. Os requisitos de qualidade que esta funcionalidade começa a provar est
 
 ## Questões em aberto
 
-- [ ] Como distribuir o pacote de tokens para o portal (HLD, "Questões em aberto"). No skeleton, o portal copia o CSS gerado.
+- [x] Como distribuir os tokens para o portal: decidido em 2026-11-12, o portal guarda uma cópia do CSS no MVP, sem pacote (HLD, "Design system").
 - [x] Versão do PostgreSQL oferecida pelo Neon no plano gratuito: **18** (fixada igual no Compose).
 - [x] Nome do projeto no Neon: `quita`, região AWS US East 1 (junto do Render em Virginia).
 - [x] Nome da organização e dos projetos na Vercel e no Render. Decidido em 2026-11-11: GitHub `quita-app`; Render `quitaapp-api` (`quitaapp-api.onrender.com`, o `quita-api` já estava tomado); Vercel: portal `quitaapp` (`quitaapp.vercel.app`), shell `quita-backoffice`, remotes `quita-operations` e `quita-analytics`.

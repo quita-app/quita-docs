@@ -140,7 +140,7 @@ Seta: "precisa estar publicada antes". A ordem numérica já respeita todas as s
 
 #### F06 · Política de negociação
 
-- **Objetivo:** o Gestor edita o rascunho da Política por Faixa de atraso (de 1 a 5 Faixas, começando pelas 5 padrão), testa no simulador ao lado com uma Dívida de exemplo, publica, e vê a lista de versões.
+- **Objetivo:** o Gestor edita o rascunho da Política por Faixa de atraso (de 1 a 5 Faixas, começando pelas 5 padrão), testa no simulador ao lado com uma Dívida de exemplo (as regras ainda não salvas, por `POST /policies/simulations`, sem gravar nada), publica, e vê a lista de versões.
 - **Telas:** B09 (versões), B10 (editor).
 - **Módulos da API:** `negotiation` (Política, publicação, Simulação).
 - **Repos:** `quita-backend-api`, `quita-backoffice-web` (`feature-policies`).
@@ -209,14 +209,14 @@ Seta: "precisa estar publicada antes". A ordem numérica já respeita todas as s
 
 - **Objetivo:** Parcela atrasada além da tolerância quebra o Acordo sozinha e devolve o Devedor à Fila, sem nunca quebrar um Acordo pago no prazo (a Quebra confere os pagamentos antes); Entrada e Proposta vencidas se encerram; o Gestor resolve pagamentos de valor diferente, sem Cobrança ou chegados depois da Quebra.
 - **Telas:** B11 (pagamentos não conciliados).
-- **Módulos da API:** `negotiation` (jobs de Quebra e de Entrada vencida às 03:00, Proposta vencida), `payment` (`PaymentApi` para a conferência da Quebra, cancelamento das Cobranças do Acordo encerrado, resolução manual; pagamento sem referência vai para o admin da plataforma), `collection` (volta à Fila, Promessa vencida).
+- **Módulos da API:** `negotiation` (jobs de Quebra e de Entrada vencida a partir das 03:00, por condição, Proposta vencida; `POST /internal/jobs/run` chamado a cada hora por um workflow agendado do GitHub Actions, que acorda a API), `payment` (`PaymentApi` para a conferência da Quebra, cancelamento das Cobranças do Acordo encerrado, resolução manual; pagamento sem referência vai para o admin da plataforma), `collection` (volta à Fila, Promessa vencida).
 - **Repos:** `quita-backend-api`, `quita-backoffice-web` (`feature-payments`).
 - **Depende de:** F10.
 - **Tamanho:** P.
 
 #### F14 · Painel
 
-- **Objetivo:** o Gestor vê quanto recuperou, a taxa de recuperação, Acordos ativos e quebrados, a recuperação por semana e o aging da Carteira, com filtros na URL (período, Faixa, Operador); o Operador vê só os números dele. A F14 também liga os indicadores "Acordos hoje" e "Recuperado hoje" da Fila (B03).
+- **Objetivo:** o Gestor vê quanto recuperou, a taxa de recuperação, Acordos ativos e quebrados, a recuperação por semana e o aging da Carteira, com filtros na URL (período e Operador, este só para o Gestor); o Operador vê só os números dele. O aging já mostra o valor por Faixa; o filtro por Faixa é da F21. A F14 também liga os indicadores "Acordos hoje" e "Recuperado hoje" da Fila (B03).
 - **Telas:** B14 (painel), B03 (indicadores do Operador).
 - **Módulos da API:** `analytics` (modelos de leitura por evento, `operator_performance` com a atribuição ao Operador da Fila, job de aging pelas Faixas da Política publicada, rotas de resumo).
 - **Repos:** `quita-backend-api`, `quita-backoffice-web` (`apps/analytics`, `libs/react/ui`, shell).
@@ -244,7 +244,7 @@ README de cada repo com o diagrama e os ADRs, demo pública com dados fictícios
 | # | Funcionalidade | Objetivo | Telas | Módulos da API | Repos | Depende de | Tam. |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | F20 | Atendimento em tempo real | Chat entre Devedor e Operador, com o mesmo componente nos dois apps | a desenhar | `collection` (WebSocket) | API, backoffice, portal | F11 | G |
-| F21 | Painel completo | Funil, ranking de operadores, conversão do autoatendimento, comparação por safra (mês em que a Dívida entrou), exportação em PDF | B14 (completo) | `analytics` | API, backoffice | F14 | M |
+| F21 | Painel completo | Funil, ranking de operadores, conversão do autoatendimento, comparação por safra (mês em que a Dívida entrou), filtro por Faixa, exportação em PDF | B14 (completo) | `analytics` | API, backoffice | F14 | M |
 | F22 | Escala e observabilidade | Carga de 1 milhão de Dívidas, p95 < 300 ms provado, Row Level Security, tracing | nenhuma | todos | API, `quita-docs` | F14 | G |
 
 ## Questões em aberto

@@ -25,7 +25,6 @@ Cada repo de código tem o próprio harness (`AGENTS.md`, `CLAUDE.md`, regras da
 | `docs/hld.md` | Arquitetura de alto nível | aprovado |
 | `docs/lld/<frente>.md` | Detalhe de implementação de cada frente | `database.md`, `api.md`, `backoffice.md` e `portal.md` aprovados |
 | `docs/adr/` | Decisões de arquitetura | aceitas: 0001 a 0013 (0005 substituída) |
-| `docs/design-system.md` | Identidade visual, tokens, componentes, fluxo design → código | a criar |
 | `docs/roadmap.md` | Funcionalidades, dependências e status | rascunho |
 | `design/PRODUCT.md` | Registro de produto para as skills de design (aponta para os documentos donos) | criado pelo Claude Design |
 | `design/ux-writing.md` | Voz, tom, formatos, padrões de mensagem e o catálogo de textos de cada tela | aprovado |

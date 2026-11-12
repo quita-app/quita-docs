@@ -11,7 +11,7 @@ Como o portal funciona por dentro: rotas, renderização, sessão do Devedor, o 
 | Rotas e estratégia de renderização de cada uma | Este documento, seções 3 e 4 |
 | Forma das chamadas e respostas da API | Tipos gerados do `openapi.json` (ADR 0011) |
 | Regras de cálculo (simulação, valores) | `docs/lld/api.md`, seção 5; o portal nunca calcula dinheiro |
-| Cores, tipografia, componentes | `docs/design-system.md` (a criar) |
+| Cores, tipografia, componentes | `design/DESIGN.md` |
 | Comandos | `AGENTS.md` do `quita-debtor-portal-web` |
 
 ## 1. Stack
@@ -20,7 +20,7 @@ Como o portal funciona por dentro: rotas, renderização, sessão do Devedor, o 
 | --- | --- | --- |
 | Framework | Next.js, App Router, versão atual (fixada no walking skeleton) | SSR, Server Components, streaming, cache por rota |
 | UI | React 19 | Server Components, hooks de formulário e `useOptimistic` |
-| Estilo e componentes | Tailwind + shadcn/ui, com os tokens compartilhados | `docs/design-system.md` |
+| Estilo e componentes | Tailwind + shadcn/ui, com uma cópia do CSS dos tokens do backoffice | `design/DESIGN.md`; sem pacote no MVP (HLD, "Design system") |
 | Validação | Zod | Mesmo schema valida o formulário no cliente e a Server Action no servidor |
 | Tipos da API | `openapi-typescript` | ADR 0011 |
 | Testes | Vitest + Testing Library, Playwright com viewport de celular, axe | Seção 10 |
@@ -49,6 +49,7 @@ Nomes de pasta em inglês (`AGENTS.md`). `[slug]` é o identificador público da
 | `/c/[slug]/access/verify` | Informar o código | público | dinâmica |
 | `/c/[slug]/debts` | Lista de Dívidas com Valor atualizado | Devedor | dinâmica, por usuário, streaming |
 | `/c/[slug]/debts/[debtId]` | Detalhe + simulador | Devedor | dinâmica |
+| `/c/[slug]/debts/[debtId]/review?installments=5&downPayment=135.15` | Revisar o Acordo (P07) com a condição escolhida no simulador | Devedor | dinâmica; recalcula no servidor pela API |
 | `/c/[slug]/debts/[debtId]/breakdown` | "O que compõe este valor" | Devedor | modal por rota interceptada sobre a lista; página inteira se acessada direto |
 | `/c/[slug]/proposals/[proposalId]` | Proposta enviada pelo Operador: a revisão da P07, com "Proposta enviada por {nome}, válida até {data}" e o aceite | Devedor | dinâmica |
 | `/c/[slug]/agreements/[agreementId]` | Acompanhar o Acordo: Parcelas pagas e próximas | Devedor | dinâmica |
@@ -105,7 +106,7 @@ Setas cheias são chamadas; tracejadas, respostas.
 
 - **Cookies do portal**, no domínio do portal: `quita_debtor_access` (token de acesso) e `quita_debtor_refresh` (refresh), ambos `HttpOnly`, `Secure`, `SameSite=Lax`, com `Path=/c/<slug>`. O JavaScript do navegador nunca vê os tokens.
 - **Uma Credora por sessão** (LLD da API, 5.7): a sessão vale só para a Credora do slug em que nasceu (o token leva o `tid`). Como o caminho do cookie inclui o slug, as sessões de duas Credoras convivem no mesmo navegador sem se misturar. Se a Ana, logada na escola, abrir o link da academia, não há cookie para aquele caminho e o `proxy` a manda para o acesso da academia, sem erro. Uma visão única de várias Credoras ("Meu Quita") é questão para depois do MVP (seção 13).
-- **Renovação:** toda chamada do servidor à API passa por uma função que, com o token de acesso vencido, renova pelo refresh e regrava os cookies antes de seguir.
+- **Renovação no `proxy`:** Server Components só **leem** cookies; eles não conseguem gravar. Por isso a renovação acontece no `proxy` do Next (antigo `middleware`), antes de renderizar uma rota `(authenticated)`: se o cookie de acesso venceu ou está para vencer e o de refresh existe, o `proxy` chama `POST /debtor/sessions/refresh` e grava os cookies novos na resposta. Server Actions e route handlers também podem renovar, porque gravam cookies. A função de chamada à API, nos Server Components, só lê o token.
 - **Inatividade:** o refresh do Devedor expira com `DEBTOR_SESSION_IDLE_TIMEOUT` sem uso; a próxima ação leva de volta para `/access` com aviso.
 - **Proteção das rotas:** o `proxy` do Next (antigo `middleware`) redireciona para `/access` quem chega a uma rota `(authenticated)` sem o cookie de sessão, guardando a rota pedida (`?next=`, só caminhos dentro de `/c/<slug>`). Depois do código, a Ana volta para ela: é assim que o link da Proposta, recebido por e-mail ou SMS, abre a Proposta. A checagem de verdade é a da API: o `proxy` só evita renderizar a página à toa.
 - **Sair:** Server Action que chama a API, apaga os cookies e volta para a página da Credora.
@@ -116,7 +117,8 @@ Setas cheias são chamadas; tracejadas, respostas.
 | --- | --- | --- |
 | CPF e código | Server Action + `useActionState` + `useFormStatus` | Valida com Zod no cliente e no servidor; erro por campo; botão desabilitado enquanto envia; funciona com JavaScript desligado |
 | Simulador | Client Component + route handler | Slider de Parcelas e campo de Entrada; recalcula na API sem travar o arraste (valor adiado com `useDeferredValue`); cancela a requisição anterior com `AbortController`; mostra o último resultado válido enquanto calcula |
-| Fechar Acordo e aceitar Proposta | Server Action com `Idempotency-Key` gerada uma vez por tela | Duplo clique não cria dois Acordos; 409 `AGREEMENT_ALREADY_EXISTS` explica que o acordo já foi fechado e leva até ele; 409 `PROPOSAL_EXPIRED` na Proposta recebida diz que ela não vale mais e leva às Dívidas |
+| Simulador → revisão | Link "Revisar acordo" | Navega com a escolha na URL (`?installments=5&downPayment=135.15`). A P07 recalcula no servidor pela API e nunca confia nos valores da URL. Sem estado para perder ao recarregar; o link funciona dentro da sessão; dinheiro nunca é calculado no navegador |
+| Fechar Acordo e aceitar Proposta | Server Action com `Idempotency-Key` gerada uma vez por tela; "Fechar acordo" envia só `{ debtId, installments, downPayment }`, e a API recalcula ao criar (LLD da API, 5.4) | Duplo clique não cria dois Acordos; 409 `AGREEMENT_ALREADY_EXISTS` explica que o acordo já foi fechado e leva até ele; 409 `PROPOSAL_EXPIRED` na Proposta recebida diz que ela não vale mais e leva às Dívidas |
 | Pix | Client Component com polling | Copiar o código com retorno visual; consulta o status a cada 3 s, só com a aba visível; para ao pagar ou expirar; confirmação aparece sem recarregar |
 | "Já paguei" | `useOptimistic` | Mostra "pagamento em processamento" na hora, e o polling confirma ou desfaz. A Quebra nunca chega antes do pagamento feito no prazo (LLD da API, 5.6) |
 
@@ -150,7 +152,7 @@ Os valores de tempo (intervalo do polling, validade do Pix) seguem `docs/lld/api
 
 | Nível | O que cobre | Ferramenta |
 | --- | --- | --- |
-| Unidade | Schemas Zod, formatação, a função de chamada à API com renovação | Vitest |
+| Unidade | Schemas Zod, formatação, a renovação no `proxy` | Vitest |
 | Componente | Simulador, tela do Pix, formulários | Vitest + Testing Library + MSW |
 | Ponta a ponta | O fluxo da Ana, do link ao Acordo pago, em viewport de celular | Playwright contra a API local, com o gateway fake |
 | Acessibilidade | Páginas principais | axe no Playwright + Lighthouse CI |
@@ -161,7 +163,6 @@ Os valores de tempo (intervalo do polling, validade do Pix) seguem `docs/lld/api
 | --- | --- |
 | `API_INTERNAL_URL` | Endereço da API, usado só no servidor |
 | `REVALIDATE_SECRET` | Assinatura da revalidação sob demanda |
-| `NPM_TOKEN` | Instalar o pacote de tokens da org (`docs/design-system.md`) |
 
 Nenhuma variável `NEXT_PUBLIC_*`: o navegador não precisa saber onde a API está.
 

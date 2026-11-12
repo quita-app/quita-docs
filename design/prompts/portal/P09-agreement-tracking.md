@@ -32,4 +32,4 @@ Ver em que pé está e pagar a próxima parcela em um toque.
 
 ## Notas
 
-- O prazo de tolerância ("Pague até 22/01", "atrasou mais de 10 dias") vem da Política da credora (`breach_tolerance_days`); no hi-fi, use 10 dias.
+- O prazo de tolerância ("Pague até 22/01", "atrasou mais de 10 dias") vem da versão da Política que regeu a proposta do acordo (`breach_tolerance_days`); no hi-fi, use 10 dias.

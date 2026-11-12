@@ -24,6 +24,6 @@ Gerenciar quem da Escola Horizonte usa o Quita.
 ## Estados
 
 1. Lista.
-2. Convidando: e-mail já convidado (validação enquanto digita).
+2. Convidando: e-mail já convidado (validação enquanto digita) ou e-mail que já tem acesso ao Quita, em qualquer credora (resposta ao enviar: "Este e-mail já tem acesso ao Quita. Use outro e-mail.").
 3. Convite enviado.
 4. Confirmar desativação.

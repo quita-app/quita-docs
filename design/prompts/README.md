@@ -43,7 +43,7 @@ Em 2026-11-11 cada prompt ganhou a seção "Na história" (ator, papel, momento 
 | P04 | Suas dívidas | portal | `/c/[slug]/debts` | gerada (auditoria), a revisar |
 | P05 | Detalhe da dívida e composição do valor | portal | `/c/[slug]/debts/[debtId]` + `breakdown` | gerada (história), a revisar |
 | P06 | Simulador | portal | `/c/[slug]/debts/[debtId]` | gerada (auditoria), a revisar |
-| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]` e `/c/[slug]/proposals/[proposalId]` | gerada (auditoria), a revisar |
+| P07 | Revisar e fechar acordo | portal | `/c/[slug]/debts/[debtId]/review` e `/c/[slug]/proposals/[proposalId]` | gerada (auditoria), a revisar |
 | P08 | Pix da entrada e acordo fechado | portal | `.../installments/[installmentId]/pay` | gerada (auditoria), a revisar |
 | P09 | Acompanhar o acordo | portal | `/c/[slug]/agreements/[agreementId]` | gerada (auditoria), a revisar |
 | P10 | Estados globais do portal | portal | todas | gerada (história), a revisar |
@@ -60,7 +60,7 @@ Em 2026-11-11 cada prompt ganhou a seção "Na história" (ator, papel, momento 
 | B11 | Pagamentos não conciliados | operations | `/operations/payments` | gerada (auditoria), a revisar |
 | B12 | Usuários e convites | operations | `/operations/admin/users` | gerada (auditoria), a revisar |
 | B13 | Credoras | operations | `/operations/admin/creditors` | gerada (auditoria), a revisar |
-| B14 | Painel | analytics | `/analytics` | gerada (auditoria), a revisar |
+| B14 | Painel | analytics | `/analytics` | a regenerar (auditoria) |
 | D1 | Dark mode de todas as telas aprovadas, numa passada só, com os tokens escuros do `DESIGN.md` | todos | — | gerada (história), a revisar |
 
 O portal vem primeiro porque é a vitrine do produto e onde a identidade aparece mais. Fase 2 e 3 (contestação, régua, white-label, auditoria, chat) ganham prompts quando chegarem.

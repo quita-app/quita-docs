@@ -76,7 +76,7 @@ O `openapi.json` é gerado e versionado já nesta funcionalidade (vazio de rotas
 - Projeto do `create-next-app`: TypeScript, App Router, Tailwind, ESLint, `src/`.
 - `src/lib/api/` com `server-only` e a função de health com timeout de 5 s.
 - Página inicial como Server Component dinâmico, mostrando o estado da API.
-- Tokens copiados de `libs/shared/design-tokens` (até a decisão de distribuição), fonte com `next/font`.
+- Tokens copiados de `libs/shared/design-tokens` (a cópia é a forma de distribuição do MVP, HLD "Design system"), fonte com `next/font`.
 - Projeto na Vercel com `API_INTERNAL_URL` em Preview e Production; CI com lint, tipos, testes e build.
 
 ### quita-docs
@@ -100,7 +100,7 @@ O mesmo do PRD.
 | --- | --- | --- |
 | Health check como única integração | Uma rota "hello" de negócio | O health já prova API + banco, e não cria código que será apagado |
 | Analytics lê a API pelo proxy do shell | Analytics chamando a API direto | Mesmo domínio, mesmo cookie depois (ADR 0007) |
-| Portal copia o CSS dos tokens no skeleton | Pacote publicado já agora | A forma de distribuição está em aberto; copiar é reversível |
+| Portal copia o CSS dos tokens | Pacote publicado no GitHub Packages | Um consumidor fora do monorepo não justifica um registro de pacotes; rever com um terceiro app |
 | Flyway na subida só no perfil local | Flyway sempre na subida | Na demo, a migração é passo próprio do deploy (LLD do banco, seção 8) |
 
 ## Questões em aberto

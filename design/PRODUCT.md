@@ -60,7 +60,7 @@ A credora de médio porte ganha o autoatendimento que hoje só grandes credoras 
 - Nome: **Quita**, escrito em minúsculas no logo.
 - Tom: calmo, honesto e humano. Cobrança costuma ser agressiva; o Quita é o oposto. Atraso é informação, não ameaça: vermelho nunca é a cor dominante de dívida ou atraso.
 - O momento mais importante do produto é o acordo fechado e a dívida quitada, que merecem uma celebração contida.
-- Decidido com o usuário em 2026-11-10: base de cor azul calma (no Brasil, quem está em dia "está no azul"); o estado quitado em verde; logo com o símbolo do "q" cujo rabinho é um visto (Versão 1, "Céu", no canvas de design). Detalhes visuais vão para o DESIGN.md e o `docs/design-system.md`, não para este arquivo.
+- Decidido com o usuário em 2026-11-10: base de cor azul calma (no Brasil, quem está em dia "está no azul"); o estado quitado em verde; logo com o símbolo do "q" cujo rabinho é um visto (Versão 1, "Céu", no canvas de design). Detalhes visuais vão para o `design/DESIGN.md`, não para este arquivo.
 
 ## Evidence on Hand
 
