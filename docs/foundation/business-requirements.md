@@ -309,7 +309,7 @@ A distribuição entre apps é uma **proposta** para o HLD decidir:
 - RF9.1 Indicadores: valor recuperado, taxa de recuperação, acordos ativos e quebrados, ticket médio.
 - RF9.2 Gráficos: recuperação no tempo, aging da carteira, funil (devedores → simulação → proposta → acordo → quitado), ranking de operadores.
 - RF9.3 Filtros combináveis (período, faixa, operador) refletidos na URL (link compartilhável). A comparação por safra (mês em que a dívida entrou no Quita) é da Fase 3 (F21).
-- RF9.4 Exportar o relatório (CSV/PDF).
+- RF9.4 Exportar o relatório (CSV no MVP; PDF na F21).
 
 **RN**
 - RN9.1 Operador vê só os próprios números; gestor vê tudo da credora.

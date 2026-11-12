@@ -240,7 +240,7 @@ Caixas agrupadas são plataformas; setas dizem o gatilho ou o protocolo.
 | --- | --- | --- |
 | Local | Desenvolvimento | Banco no Docker Compose do `quita-backend-api` e API pelo Maven; fronts com o servidor de desenvolvimento de cada ferramenta |
 | Prévia | Revisar um PR | Prévia automática da Vercel por PR; banco de prévia como branch do Neon: a definir |
-| Demo (produção) | Portfólio público, dados fictícios | Vercel + Render + Neon |
+| Demo (produção) | Demonstração pública, dados fictícios | Vercel + Render + Neon |
 
 ## 10. Decisões
 

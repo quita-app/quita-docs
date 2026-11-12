@@ -12,7 +12,7 @@ O brief diz **o quê e para quem**. Arquitetura, telas e implementação ficam f
 ## Antes de começar
 
 1. Leia `assets/product-brief.md` inteiro.
-2. Leia `docs/foundation/business-requirements.md` e `docs/foundation/master-plan.md`. Eles já respondem boa parte das seções: não repita perguntas respondidas, **confirme** o que entendeu ("O documento diz X. Mantemos?").
+2. Leia `docs/foundation/business-requirements.md`. Ele já responde boa parte das seções: não repita perguntas respondidas, **confirme** o que entendeu ("O documento diz X. Mantemos?").
 3. O destino é `docs/product-brief.md`. Se já existir, mostre e pergunte se é revisão ou recomeço; nunca sobrescreva sem aviso.
 4. Na abertura, pergunte só o que falta: o nome do autor para o cabeçalho.
 

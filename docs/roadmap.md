@@ -24,7 +24,7 @@ A ordem em que o Quita é construído. Cada funcionalidade é uma **fatia vertic
 A soma do MVP, com uma pessoa aprendendo as tecnologias enquanto constrói, ocupa o prazo inteiro: 1 dia de planejamento + 53 dias de funcionalidades + 3 dias de vitrine = 57 dias, **1 dia além** dos 56 (a F12 cresceu com a Proposta do Operador e o pagamento fora do Quita, decisão de 2026-11-12; ver "Questões em aberto"). Por isso:
 
 - **Dentro do prazo:** F01 a F14 (o MVP completo, publicado) e a vitrine.
-- **Fora do prazo (backlog priorizado):** a Fase 2 (F15 a F19) e a Fase 3 (F20 a F22). O brief previa essas fases nas semanas 6 a 8; elas passam a ser continuação depois de 2027-01-04, na ordem deste documento.
+- **Fora do prazo (backlog priorizado):** a Fase 2 (F15 a F19) e a Fase 3 (F20 a F22), continuação depois de 2027-01-05, na ordem deste documento.
 - **Já simplificado no MVP para caber:** o painel (F14) entra com indicadores, recuperação por semana e aging (funil e ranking vão para a F21); as versões da Política (F06) entram como lista simples, sem exceções; a tela de Credoras (F03) é lista e cadastro; o cadastro leva os dados de marca do portal (nome de exibição, logo, cor, contato), preenchidos pelo admin, e o editor de marca do Gestor fica na F18.
 
 **Ordem de corte, se atrasar** (corta de baixo para cima, sem quebrar o fluxo da Ana):
@@ -55,7 +55,7 @@ O chat (F20) é o primeiro item a nunca entrar se o backlog também apertar (`do
 | F12 | Proposta do Operador e pagamento fora do Quita | MVP | M | 3 | 26/12 – 28/12 | a fazer |
 | F13 | Quebra e pagamentos não conciliados | MVP | P | 2 | 29/12 – 30/12 | a fazer |
 | F14 | Painel | MVP | M | 3 | 31/12 – 02/01 | a fazer |
-| – | Vitrine (READMEs, demo, vídeo, caderno de entrevista) | – | M | 3 | 03/01 – 05/01 | a fazer |
+| – | Vitrine (READMEs, demo, vídeo) | – | M | 3 | 03/01 – 05/01 | a fazer |
 | F15 | Versões e exceções da Política | Fase 2 | M | – | depois do prazo | backlog |
 | F16 | Régua de cobrança e notificações | Fase 2 | G | – | depois do prazo | backlog |
 | F17 | Auditoria e LGPD | Fase 2 | M | – | depois do prazo | backlog |
