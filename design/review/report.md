@@ -36,12 +36,18 @@ Fechamento das rodadas de geração em lote e de correção (10/11). Os PNGs (s�
 
 ## Canvas
 - Fundação à esquerda; Portal (P00 a P10) e Backoffice (Shell, Operação, Carteira, Política, Pagamentos, Administração, Analytics) à direita, com títulos de seção.
-- Mesmo cabeçalho em todas as pranchas (id, nome, rota, status); tamanhos na ordem desktop → 1024 → 390, com os estados depois.
+- Mesmo cabeçalho em todas as pranchas (id, nome, rota, status); tamanhos na ordem 1440 → 390, com os estados depois.
 - Removidas as pranchas antigas da B03 e da B14.
 
 ## Rodada final e D1
 - P00 · Landing: o celular do hero ficou completo no quadro final (resumo, **Ver meu acordo**, "Baixar comprovante" e o indicador do loop); "devedor" virou "cliente" no subtítulo, nos passos, no bento e na demo ("Entrar como cliente (Ana)"); a landing virou duas pranchas (1440 e 390; a 1280 saiu, a 1440 basta para o desktop), porque o canvas corta prancha acima de 8.000 px.
 - D1 · Dark mode: cada tela ganhou a prancha escura ao lado da clara, com os tokens escuros do `DESIGN.md`, e o PNG `-escuro` na mesma pasta do `hi-fi` (a P01 já tinha claro e escuro na mesma prancha).
+
+## Decisão de tamanhos (2026-11-11)
+- Uma única versão web por tela, em 1440 px, mais o celular em 390 px. Saíram o 1024 do backoffice (B01 a B14; os estados que só existiam em 1024 foram refeitos em 1440) e o 1280 do portal (P01 a P10 passaram para 1440).
+- O comportamento entre 1024 e 1439 px continua no `DESIGN.md` como regra de implementação, sem prancha.
+- Login escuro (B01): o brilho do painel claro ficou mais discreto.
+- P00 · Landing: tom de produto real (sem "portfólio", "fictício" ou GitHub); rodapé com contato, termos de uso e política de privacidade, e um Q fantasma bem apagado ao fundo.
 
 ## Ficou para depois
 - Fase 2: contestação ("Não reconheço esta dívida"), exceção ao gestor, "entrar como" da plataforma e a expiração da reserva da ficha.
