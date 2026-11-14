@@ -22,6 +22,7 @@ colors:
   destructive: "#AB413E"
   destructive-foreground: "#FFFFFF"
   success: "#186E4E"
+  success-foreground: "#FFFFFF"
   warning: "#9D621E"
   info: "#4B72C0"
   signature: "#8DB0F7"
@@ -58,6 +59,7 @@ colors:
   dark-destructive: "#EB827B"
   dark-destructive-foreground: "#13203A"
   dark-success: "#65CFA1"
+  dark-success-foreground: "#13203A"
   dark-warning: "#EAB26B"
   dark-info: "#AFCBFF"
   dark-signature: "#8DB0F7"
@@ -252,6 +254,8 @@ components:
     rounded: "{rounded.card}"
     padding: "12px 12px 12px 16px"
 ---
+> **Em código:** os tokens completos (cores, tipografia, raios, espaço, sombras, movimento) estão em `design/tokens/` (`tokens.css` e `tailwind.css`), e os assets em `design/assets/`. Se este arquivo e o `tokens.css` divergirem, vale o `tokens.css`.
+
 
 # Design System: Quita · Céu
 
