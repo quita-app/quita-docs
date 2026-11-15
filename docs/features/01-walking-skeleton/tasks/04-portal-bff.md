@@ -1,6 +1,6 @@
 # F01-T04 · Portal reads the API from the server
 
-**Status:** a fazer
+**Status:** em revisão
 **Repos:** `quita-debtor-portal-web`
 **Bloqueada por:** F01-T01 · API foundation running locally
 

@@ -1,6 +1,6 @@
 # F01-T03 · Shell composes the remotes at runtime
 
-**Status:** a fazer
+**Status:** em revisão
 **Repos:** `quita-backoffice-web`
 **Bloqueada por:** F01-T01 · API foundation running locally, F01-T02 · Backoffice workspace with enforced boundaries
 

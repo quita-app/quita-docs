@@ -1,6 +1,6 @@
 # F01-T02 · Backoffice workspace with enforced boundaries
 
-**Status:** a fazer
+**Status:** em revisão
 **Repos:** `quita-backoffice-web`
 **Bloqueada por:** Nenhuma
 

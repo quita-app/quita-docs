@@ -1,6 +1,6 @@
 # F01-T06 · Fronts published and talking to the API
 
-**Status:** a fazer
+**Status:** em andamento
 **Repos:** `quita-backoffice-web`, `quita-debtor-portal-web`
 **Bloqueada por:** F01-T03 · Shell composes the remotes at runtime, F01-T04 · Portal reads the API from the server, F01-T05 · API published with migration before deploy
 

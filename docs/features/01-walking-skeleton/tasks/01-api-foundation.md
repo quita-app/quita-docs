@@ -1,6 +1,6 @@
 # F01-T01 · API foundation running locally
 
-**Status:** a fazer
+**Status:** em revisão
 **Repos:** `quita-backend-api`
 **Bloqueada por:** Nenhuma
 
