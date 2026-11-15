@@ -585,7 +585,7 @@ Os exemplos numéricos da seção 5 são casos de teste obrigatórios.
 | `CORS_ALLOWED_ORIGINS` | Só no perfil `local` |
 | `JAVA_TOOL_OPTIONS` | Ajuste de memória da JVM |
 
-**Memória:** a hospedagem gratuita tem pouca memória. Ponto de partida: `-XX:MaxRAMPercentage=70 -XX:+UseSerialGC -Xss512k`, com virtual threads ligadas (`spring.threads.virtual.enabled=true`). Valores fixados na F01 e medidos no plano gratuito do Render: partida a frio de 176 s e resposta quente do health de ~200 ms.
+**Memória:** a hospedagem gratuita tem pouca memória. Ponto de partida: `-XX:MaxRAMPercentage=70 -XX:+UseSerialGC -Xss512k`, com virtual threads ligadas (`spring.threads.virtual.enabled=true`). Valores fixados na F01. No plano gratuito do Render: partida a frio de 176 s e resposta quente do health de ~200 ms. Memória em repouso de 303 MiB em 512 MiB, medida localmente com `docker stats`.
 
 **Contêiner:** imagem multi-stage (build com Maven, execução só com o JRE), usuário não root, health check no Actuator.
 
